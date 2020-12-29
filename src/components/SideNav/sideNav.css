@@ -1,0 +1,101 @@
+@import "/src/global.css";
+.sideNav {
+	position: absolute;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	/* background: linear-gradient(303.87deg, var(--primary) 2.77%, #ffa589 99.94%); */
+
+	transition: all 0.2s;
+	border-radius: 0 3rem 3rem 0;
+	padding-left: 2.4rem;
+	padding-top: 4.9rem;
+	overflow: hidden;
+}
+
+.sideNav::after {
+	content: "";
+	background: linear-gradient(303.87deg, var(--primary) 2.77%, #ffa589 99.94%);
+	opacity: 0.05;
+	height: 100vh;
+	border-radius: 0 3rem 3rem 0;
+	content: "";
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.sideNav-text-with-icon {
+	text-decoration: none;
+	margin-bottom: 3.6rem;
+	display: flex;
+	align-items: center;
+}
+.sideNav-text-with-icon:last-child {
+	margin-top: auto;
+}
+.sideNav-link-icon path {
+	width: 3.2rem;
+	height: 3.101rem;
+	margin-right: 2.4rem;
+}
+.sideNav-link-text {
+	font-family: Poppins;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 2rem;
+	line-height: 2.4rem;
+	margin-left: 2.4rem;
+	text-transform: capitalize;
+	opacity: 0.5;
+	color: #000000;
+}
+
+.sideNav-toggler {
+	box-shadow: 0px 0px 0px transparent;
+	border: 0px solid transparent;
+	text-shadow: 0px 0px 0px transparent;
+	width: 16px;
+	height: 0px;
+	margin-bottom: 6.4rem;
+	/* border: 2px solid #000000; */
+	/* transform: matrix(-1, 0, 0, 1, 0, 0); */
+}
+
+.sideNav-toggler path {
+	stroke: black;
+}
+
+.sideNav-open {
+	width: 20rem;
+	margin-left: 0px;
+}
+.sideNav-close {
+	/* width: 5.6rem; */
+	/* border-radius: 1rem; */
+}
+
+.side-nav-link-active > .sideNav-link-text {
+	color: var(--primary);
+	opacity: 1;
+}
+
+/* .side-nav-link-active > .sideNav-link-icon > svg > path, */
+/* .side-nav-link-active > .sideNav-link-icon > svg > circle, */
+.side-nav-link-active > .sideNav-link-icon > svg > * {
+	opacity: 1;
+	stroke-width: 0.5px;
+}
+.side-nav-link-active > .sideNav-link-icon > svg > g > * {
+	fill: var(--primary);
+	stroke: var(--primary);
+}
+.side-nav-link-active > .sideNav-link-icon > #profileIcon > g > * {
+	fill: none;
+}
+
+.side-nav-link-active > .sideNav-link-icon > #logoutIcon > g > * {
+	fill: none;
+}
