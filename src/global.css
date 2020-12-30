@@ -1,3 +1,39 @@
 :root {
 	--primary: #ff8058;
+	--secondary: #ffb038;
+	--info: #57628e;
+}
+
+.primary {
+	color: var(--primary);
+}
+
+.secondary {
+	color: var(--secondary);
+}
+
+.info {
+	color: var(--info);
+}
+
+h1 {
+	font-size: 3.2rem;
+	line-height: 38px;
+	font-weight: 600;
+}
+
+h2 {
+	font-weight: 600;
+	font-size: 2.4rem;
+	line-height: 2.8rem;
+}
+
+.text-align-left {
+	text-align: left;
+}
+.text-align-center {
+	text-align: center;
+}
+.text-align-right {
+	text-align: right;
 }

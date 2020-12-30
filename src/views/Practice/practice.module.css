@@ -1,0 +1,195 @@
+.h2 {
+	margin-top: 4rem;
+	margin-bottom: 3.2rem;
+}
+.h2:nth-of-type(1) {
+	margin-bottom: 2.4rem;
+	margin-top: 5.4rem;
+}
+
+.statistics {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.statisticsBlock:first-child {
+	/* margin-left: 0; */
+}
+.statisticsBlock {
+	position: relative;
+	/* margin: 0 3.2rem; */
+}
+
+/* view dashboard  */
+.statisticsBlock:last-child {
+	cursor: pointer !important;
+}
+
+@keyframes moveTop {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-2%);
+	}
+}
+.statisticsBlock:hover {
+	/* animation: moveTop 0.2s forwards; */
+
+	/* transform: translateY(-2%); */
+}
+.statisticsBlockValue {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	left: 50%;
+	text-align: center;
+	transform: translateX(-50%) translateY(-50%);
+	font-family: Raleway;
+	font-weight: 600;
+	font-size: 5.6rem;
+	line-height: 6.6rem;
+	color: white;
+}
+
+/* continue where you left off */
+
+.continueCard {
+	width: 24rem;
+	height: 20rem;
+	padding: 0.8rem;
+	margin: 0 2rem;
+	margin-bottom: 1.2rem;
+	/* White */
+	background: #ffffff;
+	/* Tile */
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	border-radius: 1.5rem;
+	position: relative;
+	font-family: Raleway;
+	flex: 0 0 auto;
+}
+.continueCard:first-child {
+	margin-left: 5px;
+	/* same as box shadow spread */
+}
+.continueCard > img {
+	width: 22.4rem;
+	height: 13.6rem;
+
+	object-fit: cover;
+	border-radius: 1.5rem 1.5rem 0rem 0rem;
+}
+
+.continueCard > .title {
+	font-family: Raleway;
+	font-weight: 600;
+	font-size: 1.2rem;
+	line-height: 1.2rem;
+	width: 75%;
+	margin-bottom: 0.2rem;
+	margin-top: 0.5rem;
+	/* Bluish grey */
+
+	color: var(--info);
+}
+
+.continueCard > .subtitle {
+	font-family: Raleway;
+	font-weight: 100;
+	font-size: 1rem;
+	line-height: 1.2rem;
+	/* identical to box height */
+
+	/* Bluish grey */
+	color: var(--info);
+}
+
+.filledButton {
+	cursor: pointer !important;
+	width: 8.8rem;
+	height: 2.4rem;
+	background: linear-gradient(303.87deg, #ff8058 2.77%, #ffa589 99.94%);
+	border-radius: 1rem;
+	filter: drop-shadow(0px 0px 10px rgba(87, 98, 142, 0.25));
+
+	font-size: 1.2rem;
+	line-height: 1.4rem;
+	text-align: center;
+	color: #ffffff;
+	text-transform: capitalize;
+	position: absolute;
+	bottom: 0;
+	right: 1.6rem;
+	transform: translateY(50%);
+}
+
+/* subject */
+.subjects {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.subjectsBlock {
+	position: relative;
+}
+.subjectArrow {
+	position: absolute;
+	top: 1.823rem;
+	right: 1.527rem;
+	cursor: pointer !important;
+}
+
+/* rs corner */
+.rsCornerCard {
+	width: 28.2rem;
+	height: 12.2rem;
+	display: flex;
+	padding: 2.6rem 1.6rem;
+	padding-right: 0;
+	margin: 0 2rem;
+	margin-bottom: 1.2rem;
+	flex: 0 0 auto;
+
+	/* White */
+	background: #ffffff;
+	/* Tile */
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	border-radius: 1.5rem;
+	position: relative;
+}
+.rsCornerCard:first-child {
+	margin-left: 5px;
+	/* same as box shadow spread */
+}
+
+.rsCornerCard > img {
+	width: 7rem;
+	height: 7rem;
+	border-radius: 1rem;
+	margin-right: 0.8rem;
+}
+
+.rsCornerCard > .title {
+	font-weight: 600;
+	font-size: 1.8rem;
+	line-height: 2.1rem;
+	color: var(--info);
+	font-family: Raleway;
+}
+
+.rsCornerCard > .title > .subTitle {
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 1.6rem;
+	color: var(--info);
+	font-family: Raleway;
+	margin-top: 1.2rem;
+}
+.rsCornerCard > button {
+	width: 6.4rem;
+	height: 2.4rem;
+}

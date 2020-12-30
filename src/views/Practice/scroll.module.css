@@ -1,0 +1,27 @@
+.container {
+	position: relative;
+}
+.scrollMenu {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	overflow-x: hidden;
+	/* height: 24rem; */
+
+	width: calc(100% + 4rem);
+}
+
+.arrowLeft {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	z-index: 1;
+}
+.arrowRight {
+	position: absolute;
+	right: 0 !important;
+	z-index: 1;
+	top: 50%;
+	transform: translateY(-50%);
+}
