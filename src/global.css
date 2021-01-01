@@ -1,7 +1,10 @@
 :root {
 	--primary: #ff8058;
 	--secondary: #ffb038;
+	--success: #49c0c1;
+	--pink: #ff78a3;
 	--info: #57628e;
+	--danger: #f36450;
 }
 
 .primary {
@@ -11,9 +14,17 @@
 .secondary {
 	color: var(--secondary);
 }
-
+.success {
+	color: var(--success);
+}
+.pink {
+	color: var(--pink);
+}
 .info {
 	color: var(--info);
+}
+.danger {
+	color: var(--danger);
 }
 
 h1 {
@@ -26,6 +37,7 @@ h2 {
 	font-weight: 600;
 	font-size: 2.4rem;
 	line-height: 2.8rem;
+	color: white;
 }
 
 .text-align-left {

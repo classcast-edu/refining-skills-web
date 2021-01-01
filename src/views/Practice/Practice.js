@@ -27,7 +27,7 @@ const Statistics = () => {
 
 	return (
 		<>
-			<h2 className={`primary ${style.h2}`}>Your Statistics</h2>
+			<h2 className={` ${style.h2}`}>Your Statistics</h2>
 			<div className={style.statistics}>
 				{listBlock(<OverallScoreIcon />, 123)}
 				{listBlock(<TestAttemptsIcon />, 123)}
@@ -62,7 +62,7 @@ const Continue = () => {
 
 	return (
 		<>
-			<h2 className={`primary ${style.h2}`}>Continue where you left</h2>
+			<h2 className={`${style.h2}`}>Continue where you left</h2>
 			<ScrollMenu menuItems={listBlock()} />
 		</>
 	);
@@ -82,7 +82,7 @@ const Subjects = () => {
 
 	return (
 		<>
-			<h2 className={`primary ${style.h2}`}>Practice by Subject</h2>
+			<h2 className={`${style.h2}`}>Practice by Subject</h2>
 			<div className={style.subjects}>
 				{listBlock(<EnglishIcon />)}
 				{listBlock(<HindiIcon />)}
@@ -104,6 +104,7 @@ const RsCorner = () => {
 						src={
 							"https://images.unsplash.com/photo-1609269310346-e03f6800ca12?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80"
 						}
+						alt=""
 					/>
 					<div className={style.title}>
 						How I scored 98/100 without coaching
@@ -116,7 +117,7 @@ const RsCorner = () => {
 	};
 	return (
 		<>
-			<h2 className={`primary ${style.h2}`}>Rs Corner</h2>
+			<h2 className={`${style.h2}`}>Rs Corner</h2>
 			<ScrollMenu menuItems={listBlock()} />
 		</>
 	);

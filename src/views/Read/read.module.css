@@ -1,0 +1,21 @@
+.read {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.readBlock {
+	position: relative;
+	margin: 3.2rem 2rem;
+
+	/* margin-bottom: 2rem; */
+	width: 30.5rem;
+	height: 24rem;
+}
+.readArrow {
+	position: absolute;
+	top: 1.823rem;
+	right: 1.527rem;
+	cursor: pointer !important;
+}

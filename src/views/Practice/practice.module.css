@@ -1,10 +1,22 @@
+@import "/src/global.css";
+
 .h2 {
-	margin-top: 4rem;
+	/* margin-top: 4rem; */
 	margin-bottom: 3.2rem;
+	color: var(--danger);
 }
+
+/* statistics */
 .h2:nth-of-type(1) {
-	margin-bottom: 2.4rem;
 	margin-top: 5.4rem;
+	margin-bottom: 2.4rem;
+}
+/* practice by subject */
+.h2:nth-of-type(3) {
+	margin-top: 2rem;
+}
+.h2:nth-of-type(4) {
+	margin-top: 2rem;
 }
 
 .statistics {
@@ -19,6 +31,7 @@
 }
 .statisticsBlock {
 	position: relative;
+	margin-bottom: 4rem;
 	/* margin: 0 3.2rem; */
 }
 
@@ -61,7 +74,7 @@
 	height: 20rem;
 	padding: 0.8rem;
 	margin: 0 2rem;
-	margin-bottom: 1.2rem;
+	margin-bottom: 3.2rem;
 	/* White */
 	background: #ffffff;
 	/* Tile */
@@ -119,6 +132,7 @@
 	line-height: 1.4rem;
 	text-align: center;
 	color: #ffffff;
+
 	text-transform: capitalize;
 	position: absolute;
 	bottom: 0;
@@ -135,6 +149,7 @@
 }
 .subjectsBlock {
 	position: relative;
+	margin-bottom: 2rem;
 }
 .subjectArrow {
 	position: absolute;
@@ -151,7 +166,7 @@
 	padding: 2.6rem 1.6rem;
 	padding-right: 0;
 	margin: 0 2rem;
-	margin-bottom: 1.2rem;
+	margin-bottom: 2.6rem;
 	flex: 0 0 auto;
 
 	/* White */
@@ -181,7 +196,7 @@
 	font-family: Raleway;
 }
 
-.rsCornerCard > .title > .subTitle {
+.rsCornerCard .subTitle {
 	font-size: 1.4rem;
 	font-weight: 400;
 	line-height: 1.6rem;

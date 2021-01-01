@@ -1,0 +1,174 @@
+.profileContainer {
+	margin: auto calc(18rem - 4.4rem);
+	position: relative;
+}
+
+.dp {
+	margin: auto;
+	display: block;
+	height: 12rem;
+	width: 12rem;
+	margin-top: 5.4rem;
+	margin-bottom: 1.9rem;
+}
+.editSquare {
+	position: absolute;
+	top: calc(5.4rem + 3.2rem);
+	right: 0;
+}
+.name {
+	font-family: Raleway;
+	color: var(--info);
+}
+
+.class {
+	margin-top: 0.8rem;
+	font-weight: 400;
+	font-family: Raleway;
+	color: var(--info);
+}
+
+.pointsScoredContainer {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	margin-top: 3.8rem;
+	margin-bottom: 5.2rem;
+}
+
+.pointsScoredContainer > div {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	color: var(--info);
+	background-color: #ffffff;
+}
+.points {
+	text-align: center;
+	font-family: Raleway;
+
+	font-weight: 600;
+	font-size: 4.2rem;
+	line-height: 4.9rem;
+	text-align: center;
+	color: var(--pink);
+	/* 1 */
+}
+
+.pointsScored {
+	color: var(--info);
+	margin-top: 0.4rem;
+	margin-bottom: 1.6rem;
+	font-weight: 500;
+}
+
+/* subjects */
+.subjectsContainer {
+	display: flex;
+	justify-content: center;
+	/* width: 70%; */
+	margin: 2.4rem auto;
+	margin-bottom: 0;
+
+	border-top: 1px solid rgba(0, 0, 0, 0.25);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+.subjectBlock {
+	text-align: center;
+	margin: 2.4rem 0;
+
+	/* width: 5.6rem; */
+}
+.subjectBlock > svg {
+	margin: 0 2rem;
+}
+.subjectBlock > div {
+	margin-top: 0.8rem;
+	font-family: Raleway;
+
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
+	/* identical to box height */
+
+	/* text-align: center; */
+
+	color: #000000;
+
+	opacity: 0.5;
+}
+
+/*progress card */
+
+.progressContainer {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.progressCardContainer {
+	width: 38.2rem;
+	height: 16rem;
+	/* White */
+	padding: 2.4rem 1.8rem 1.2rem 1.8rem;
+	background: #ffffff;
+	border: 0.5px solid var(--danger);
+	border-radius: 1.5rem;
+	filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.1));
+	margin: 2.4rem 1rem;
+}
+
+.header {
+	display: flex;
+}
+
+.header h2 {
+	color: var(--info);
+	line-height: 2.818rem;
+}
+
+.header div {
+	font-family: Raleway;
+	font-size: 42px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 49px;
+	letter-spacing: 0em;
+	text-align: right;
+	color: var(--secondary);
+}
+
+.progressBarContainer {
+	height: 2.4rem;
+
+	/* Background */
+	background: #fdfeff;
+	box-shadow: inset 0px -3px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 1.2rem;
+	position: relative;
+}
+.progressBar {
+	width: 50%;
+	height: 2.4rem;
+	position: absolute;
+	border-radius: 1.2rem;
+	background: linear-gradient(16.72deg, #ffb138 10.21%, #ffc977 87.25%);
+	box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lessons {
+	display: flex;
+	justify-content: space-between;
+	margin: 0.4rem 1.2rem;
+	margin-top: 2.8rem;
+	font-family: Raleway;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 10px;
+	line-height: 12px;
+	color: var(--secondary);
+}
+.lessons span:last-child {
+	opacity: 0.5;
+}
