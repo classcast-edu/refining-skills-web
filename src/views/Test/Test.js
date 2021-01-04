@@ -2,6 +2,7 @@ import style from "./test.module.css";
 import { ReactComponent as TestIcon } from "../../assets/test/TestIcon.svg";
 import { ReactComponent as TimeCircleIcon } from "../../assets/test/TimeCircleIcon.svg";
 import { ReactComponent as ViewAllIcon } from "../../assets/test/ViewAllIcon.svg";
+import SingleTest from "./SingleTest/SingleTest";
 const UpcomingLiveTests = () => {
 	const colors = [
 		"#ff8058",
@@ -73,8 +74,9 @@ const Test = () => {
 	return (
 		<div className="test">
 			<h1 className="secondary text-align-center">Test</h1>
-			<UpcomingLiveTests />
-			<OngoingTestSeries />
+			<SingleTest />
+			{/* <UpcomingLiveTests /> */}
+			{/* <OngoingTestSeries /> */}
 		</div>
 	);
 };

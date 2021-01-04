@@ -1,0 +1,17 @@
+.progressBarContainer {
+	height: 2.4rem;
+
+	/* Background */
+	background: #fdfeff;
+	box-shadow: inset 0px -3px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 1.2rem;
+	position: relative;
+}
+.progressBar {
+	width: 50%;
+	height: 2.4rem;
+	position: absolute;
+	border-radius: 1.2rem;
+	background: linear-gradient(16.72deg, #ffb138 10.21%, #ffc977 87.25%);
+	box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+}

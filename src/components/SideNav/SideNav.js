@@ -8,20 +8,25 @@ import { ReactComponent as ReadIcon } from "../../assets/sidenav/Read.svg";
 import { ReactComponent as DPIcon } from "../../assets/sidenav/dp.svg";
 import { ReactComponent as LogoutIcon } from "../../assets/sidenav/Logout.svg";
 import "./sideNav.css";
+import { signOut } from "store/actions/authActions";
+import { useDispatch } from "react-redux";
 const NavTextWithIcon = (props) => {
-	const { icon, text } = props;
+	const { icon, text, onClick } = props;
 	return (
 		<NavLink
 			className="sideNav-text-with-icon"
-			to={`/${text}`}
+			to={`/admin/${text}`}
 			activeClassName={"side-nav-link-active"}
 		>
 			<span className="sideNav-link-icon">{icon}</span>
-			<span className="sideNav-link-text">{text}</span>
+			<span className="sideNav-link-text" onClick={onClick}>
+				{text}
+			</span>
 		</NavLink>
 	);
 };
 const SideNav = () => {
+	const dispatch = useDispatch();
 	const [isOpen, setIsOpen] = useState(true);
 
 	const toggle = () => {
@@ -54,7 +59,11 @@ const SideNav = () => {
 			<NavTextWithIcon icon={<ReadIcon />} text="read" />
 			<NavTextWithIcon icon={<TestIcon />} text="test" />
 			<NavTextWithIcon icon={<PracticeIcon />} text="practice" />
-			<NavTextWithIcon icon={<LogoutIcon id="logoutIcon" />} text="logout" />
+			<NavTextWithIcon
+				icon={<LogoutIcon id="logoutIcon" />}
+				text="logout"
+				onClick={() => dispatch(signOut())}
+			/>
 		</div>
 	);
 };

@@ -10,6 +10,7 @@ import { ReactComponent as EditSquare } from "../../assets/profile/EditSquare.sv
 import { ReactComponent as DPIcon } from "../../assets/sidenav/dp.svg";
 
 import style from "./profile.module.css";
+import ProgressBar from "components/ProgressBar/ProgressBar";
 
 const UserProfile = () => {
 	return (
@@ -42,9 +43,7 @@ const ProgressCard = () => {
 				<span>22 lessons</span>
 				<span>44 lessons</span>
 			</div>
-			<div className={style.progressBarContainer}>
-				<span className={style.progressBar}></span>
-			</div>
+			<ProgressBar progress={"50%"} />
 		</div>
 	);
 };

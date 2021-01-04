@@ -1,6 +1,9 @@
 .profileContainer {
 	margin: auto calc(18rem - 4.4rem);
 	position: relative;
+	/* display: flex;
+	justify-content: center;
+	flex-direction: column; */
 }
 
 .dp {
@@ -32,8 +35,15 @@
 	position: relative;
 	display: flex;
 	justify-content: center;
+	margin: auto;
 	margin-top: 3.8rem;
 	margin-bottom: 5.2rem;
+	/* Tile */
+	background-color: #ffffff;
+	width: 44rem;
+	height: 12rem;
+	border-radius: 1.5rem;
+	filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.1));
 }
 
 .pointsScoredContainer > div {
@@ -42,7 +52,36 @@
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
 	color: var(--info);
-	background-color: #ffffff;
+}
+.pointsScoredContainer svg {
+	/* animation: start 1.2s ease-out 1s 1 forwards; */
+}
+/* .pointsScoredContainer > svg > path:nth-of-type(6),
+path:nth-of-type(8),
+path:nth-of-type(10),
+path:nth-of-type(11) {
+	animation: rotate 2s linear 1.2s infinite forwards;
+
+	transform-origin: center;
+	transform-box: fill-box;
+} */
+/* @keyframes rotate {
+	0% {
+		transform: rotateZ(0deg);
+	}
+	100% {
+		transform: rotateZ(360deg);
+	}
+} */
+@keyframes start {
+	0% {
+		transform: scale(0.1);
+		opacity: 0.1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
 .points {
 	text-align: center;
@@ -67,6 +106,7 @@
 .subjectsContainer {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 	/* width: 70%; */
 	margin: 2.4rem auto;
 	margin-bottom: 0;
@@ -105,6 +145,10 @@
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	/* display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+	justify-content: center;
+	justify-items: center; */
 }
 
 .progressCardContainer {
@@ -137,24 +181,6 @@
 	letter-spacing: 0em;
 	text-align: right;
 	color: var(--secondary);
-}
-
-.progressBarContainer {
-	height: 2.4rem;
-
-	/* Background */
-	background: #fdfeff;
-	box-shadow: inset 0px -3px 10px rgba(0, 0, 0, 0.1);
-	border-radius: 1.2rem;
-	position: relative;
-}
-.progressBar {
-	width: 50%;
-	height: 2.4rem;
-	position: absolute;
-	border-radius: 1.2rem;
-	background: linear-gradient(16.72deg, #ffb138 10.21%, #ffc977 87.25%);
-	box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .lessons {

@@ -1,0 +1,25 @@
+.container {
+	height: 100vh;
+	width: 640px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+
+.container h1 {
+	margin-bottom: 1rem;
+}
+.container p {
+	font-size: 1.6rem;
+}
+.container p:last-child {
+	font-size: 1.6rem;
+	text-align: center;
+	cursor: pointer;
+	color: var(--info);
+}
+/* .container > form {
+	width: 12rem;
+} */
