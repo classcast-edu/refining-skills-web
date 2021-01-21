@@ -1,21 +1,102 @@
 .container {
-	width: 70%;
-	margin: 4.4rem auto;
+	/* width: 70%; */
+	/* margin: 0 auto; */
+	/* overflow: hidden; */
+}
+
+.qaContainer {
+	background-color: #ffffff;
+	padding: 3rem;
+	border-radius: 1rem;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	margin-top: 3rem;
+	height: 80vh;
+	display: flex;
+	flex-direction: column;
+}
+.timerContainer {
+	display: flex;
+	align-items: center;
+}
+.timer {
+	color: var(--info);
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
+.timer > * {
+	margin-right: 1rem;
+}
+
+.endButton {
+	cursor: pointer !important;
+	width: 10rem;
+	height: 4.6rem;
+	border: 1px solid var(--danger);
+	border-radius: 1rem;
+	filter: drop-shadow(0px 0px 10px rgba(87, 98, 142, 0.25));
+
+	font-size: 1.6rem;
+	line-height: 1.4rem;
+	text-align: center;
+	color: var(--danger);
 }
 .question {
 	/* font-family: poppins; */
 	font-size: 1.6rem;
-	margin: 1rem auto;
+	margin: 1rem initial;
+	margin-top: 0rem;
+	display: flex;
+	align-items: baseline;
+
+	/* flex-wrap: wrap; */
+	min-height: 10rem;
+	flex: 1;
+	word-wrap: break-word;
+
+	/* background-color: #ffffff; */
+	/* border-radius: 1rem; */
+	/* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 .questionNumber {
 	/* background: var(--primary); */
 	/* border-radius: 50%; */
 	font-size: 2rem;
-	padding-right: 0.5rem;
+	padding-right: 1.5rem;
 	color: var(--secondary);
+	flex-shrink: 0;
+}
+.questionNumberButton {
+	font-size: 2rem;
+	/* background-color: var(--secondary); */
+	border: 1px solid var(--primary);
+	color: var(--primary);
+	margin: 1rem;
+	min-width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	transition: all 0.3s;
+}
+/* .questionNumberButton:first-child {
+	margin-left: 0;
+}
+.questionNumberButton:last-child {
+	margin-right: 0;
+} */
+.solution {
+	max-height: 12rem;
+	overflow-y: scroll;
+}
+.solution * {
+	font-size: 1.6rem;
+	/* white-space: initial;
+	word-wrap: break-word; */
 }
 
 .actions {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 }
@@ -29,18 +110,19 @@
 	border-radius: 1rem;
 	filter: drop-shadow(0px 0px 10px rgba(87, 98, 142, 0.25));
 
-	font-size: 1.6rem;
+	font-size: 2rem;
+	letter-spacing: 0.2rem;
 	line-height: 1.4rem;
 	text-align: center;
 	color: #ffffff;
 
-	text-transform: capitalize;
+	text-transform: uppercase;
 
 	margin: 1.5rem auto;
-}
-.nextButton:disabled,
-.previousButton:disabled {
-	opacity: 0.5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 600;
 }
 .previousButton {
 	margin-right: 10%;

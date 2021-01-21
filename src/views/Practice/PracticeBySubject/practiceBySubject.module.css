@@ -1,0 +1,127 @@
+.h2 {
+	margin-bottom: 3.2rem;
+}
+
+/* subject */
+.subjects {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: wrap;
+}
+.subjectsBlock {
+	position: relative;
+	margin-bottom: 2rem;
+}
+.subjectArrow {
+	position: absolute;
+	top: 1.823rem;
+	right: 1.527rem;
+	cursor: pointer !important;
+}
+
+/* PerSubjectPractice */
+
+.perSubjectPractice {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-wrap: wrap;
+	flex-direction: column;
+
+	margin-top: 5.4rem;
+}
+.subBlock {
+	display: flex;
+	flex-wrap: wrap;
+	cursor: pointer;
+	padding: 0.8rem;
+	height: 10rem;
+	width: 100%;
+	align-items: center;
+	margin-bottom: 2.2rem;
+	transition: all 0.3s linear;
+	background: #ffffff;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.155);
+	border-radius: 1.5rem;
+	background: bisque;
+}
+.subBlock > img {
+	object-fit: cover;
+	border-radius: 1.5rem;
+	height: calc(10rem - 1.6rem);
+	width: calc(10rem - 1.6rem);
+}
+.subBlock:hover {
+	transform: translateY(-2%);
+	box-shadow: 0 0 11px rgba(0, 0, 0, 0.2);
+}
+
+.title,
+.subTitle {
+	font-size: 2rem;
+	font-weight: 600;
+	text-align: left;
+	color: var(--info);
+	margin-top: 0.4rem;
+}
+.title {
+	margin-left: 2rem;
+}
+
+.subTitle {
+	font-weight: 400;
+	margin-top: 0;
+}
+
+.subSubjects {
+	height: 24rem;
+	width: 24rem;
+	display: block;
+	background: #f7f7f7;
+	border-radius: 1.5rem;
+}
+
+/* SubjectModules */
+.SubjectModules {
+	width: 640px;
+	margin: auto;
+	margin-top: 5.4rem;
+}
+.progressOfStudent {
+	position: relative !important;
+	width: 100%;
+	background: #fff;
+	border: 1px solid var(--primary);
+	box-shadow: 0 2px 4px var(--primary);
+	border-radius: 1.5rem;
+	width: 640px;
+	margin: auto;
+	margin-top: 5.4rem;
+	display: flex;
+	align-items: center;
+	padding: 2rem;
+	justify-content: space-between;
+}
+
+.progressText {
+	font-weight: 400;
+}
+.progressOfStudent div:first-child {
+	/* position: static !important; */
+	flex: 1;
+}
+
+.progressCircleBar {
+	/* position: static !important; */
+	height: 12rem !important;
+	width: 12rem !important;
+	margin: 0 !important;
+	margin-left: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.progressOfStudent div > img {
+	margin: 0;
+}

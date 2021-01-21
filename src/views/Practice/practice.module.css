@@ -140,24 +140,6 @@
 	transform: translateY(50%);
 }
 
-/* subject */
-.subjects {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: wrap;
-}
-.subjectsBlock {
-	position: relative;
-	margin-bottom: 2rem;
-}
-.subjectArrow {
-	position: absolute;
-	top: 1.823rem;
-	right: 1.527rem;
-	cursor: pointer !important;
-}
-
 /* rs corner */
 .rsCornerCard {
 	width: 28.2rem;

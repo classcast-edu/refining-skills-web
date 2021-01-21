@@ -1,11 +1,40 @@
 .container {
 	height: 100vh;
-	width: 640px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	margin: auto;
+	background: url("../../assets/background.svg");
+	background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+	position: relative;
+}
+
+.box1 {
+	z-index: 10;
+	background: #fff;
+	border-radius: 1rem;
+	min-height: 40rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0 3rem;
+	box-shadow: 0 2px 2rem rgba(0, 0, 0, 0.1);
+	position: relative;
+}
+
+.box1 > h2 {
+	margin-bottom: 1rem;
+}
+.box2 {
+	background: linear-gradient(303.87deg, #ff8058 2.77%, #ffa589 99.94%);
+	height: 50vh;
+	width: 100%;
+	position: absolute;
+	top: 0;
+
+	clip-path: polygon(0 0, 100% 0%, 100% 86%, 0 100%);
 }
 
 .container h1 {
@@ -20,6 +49,17 @@
 	cursor: pointer;
 	color: var(--info);
 }
-/* .container > form {
-	width: 12rem;
-} */
+.logo {
+	position: absolute;
+	bottom: 2.5rem;
+	/* margin-top: auto; */
+
+	animation: enter 3s linear 0s 1 forwards;
+}
+
+@keyframes enter {
+	from {
+		margin-top: -10px;
+		opacity: 0;
+	}
+}

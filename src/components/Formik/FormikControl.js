@@ -6,6 +6,8 @@ import RadioButtons from "./RadioButtons";
 import CheckboxGroup from "./CheckboxGroup";
 import FilePicker from "./FilePicker";
 import CustomCheckBoxGroup from "./CustomCheckBoxGroup";
+import CustomRadioGroup from "./CustomRadioGroup";
+
 function FormikControl(props) {
 	const { control, ...rest } = props;
 	switch (control) {
@@ -22,6 +24,8 @@ function FormikControl(props) {
 			return <CheckboxGroup {...rest} />;
 		case "customCheckBox":
 			return <CustomCheckBoxGroup {...rest} />;
+		case "customRadio":
+			return <CustomRadioGroup {...rest} />;
 
 		case "file":
 			return <FilePicker {...rest} />;

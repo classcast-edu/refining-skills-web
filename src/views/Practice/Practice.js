@@ -4,17 +4,8 @@ import { ReactComponent as TestAttemptsIcon } from "../../assets/stats/TestAttem
 import { ReactComponent as TopicsPracticedIcon } from "../../assets/stats/TopicsPracticed.svg";
 import { ReactComponent as ViewDashBoardIcon } from "../../assets/stats/ViewDashBoardIcon.svg";
 
-//subjects
-import { ReactComponent as EnglishIcon } from "../../assets/subjects/EnglishIcon.svg";
-import { ReactComponent as HindiIcon } from "../../assets/subjects/Hindi.svg";
-import { ReactComponent as KannadaIcon } from "../../assets/subjects/Kannada.svg";
-import { ReactComponent as MathIcon } from "../../assets/subjects/MathIcon.svg";
-import { ReactComponent as ScienceIcon } from "../../assets/subjects/ScienceIcon.svg";
-import { ReactComponent as SocialSciencesIcon } from "../../assets/subjects/SocialSciences.svg";
-
-import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
-
-import ScrollMenu from "./ScrollMenu";
+import ScrollMenu from "../../components/ScrollMenu";
+import PracticeBySubject from "./PracticeBySubject/PracticeBySubject";
 const Statistics = () => {
 	const listBlock = (block, value) => {
 		return (
@@ -43,7 +34,7 @@ const Continue = () => {
 	const listBlock = () => {
 		return fakeItems.map((item) => {
 			return (
-				<div className={style.continueCard}>
+				<div className={style.continueCard} key={item}>
 					<img
 						src={
 							"https://images.unsplash.com/photo-1609269310346-e03f6800ca12?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80"
@@ -68,38 +59,11 @@ const Continue = () => {
 	);
 };
 
-const Subjects = () => {
-	const listBlock = (block) => {
-		return (
-			<div className={style.subjectsBlock}>
-				{block}
-				<button className={style.subjectArrow}>
-					<ArrowRightCircleIcon style={{ height: "4.5rem", width: "4.5rem" }} />
-				</button>
-			</div>
-		);
-	};
-
-	return (
-		<>
-			<h2 className={`${style.h2}`}>Practice by Subject</h2>
-			<div className={style.subjects}>
-				{listBlock(<EnglishIcon />)}
-				{listBlock(<HindiIcon />)}
-				{listBlock(<SocialSciencesIcon />)}
-				{listBlock(<ScienceIcon />)}
-				{listBlock(<MathIcon />)}
-				{listBlock(<KannadaIcon />)}
-			</div>
-		</>
-	);
-};
-
 const RsCorner = () => {
 	const listBlock = () => {
 		return [1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => {
 			return (
-				<div className={style.rsCornerCard}>
+				<div className={style.rsCornerCard} key={item}>
 					<img
 						src={
 							"https://images.unsplash.com/photo-1609269310346-e03f6800ca12?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1868&q=80"
@@ -123,14 +87,14 @@ const RsCorner = () => {
 	);
 };
 
-const Practice = () => {
+const Practice = (props) => {
 	return (
-		<div className={"practice"}>
+		<div className={style.root}>
 			<h1 className="secondary text-align-center">Practice</h1>
 			<Statistics />
-			<Continue />
-			<Subjects />
-			<RsCorner />
+			{/* <Continue /> */}
+			<PracticeBySubject {...props} />
+			{/* <RsCorner /> */}
 		</div>
 	);
 };

@@ -1,0 +1,18 @@
+.react-pdf__Document {
+	margin-left: -4.4rem;
+	margin-right: -4.4rem;
+	margin-top: -3.2rem;
+	margin-bottom: -4.6rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.reactPdf_error {
+	height: 80vh;
+	margin: auto;
+	display: flex;
+	align-items: center;
+}

@@ -6,7 +6,8 @@ import { useFirebase } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import { signIn } from "store/actions/authActions";
 import style from "./login.module.css";
-
+import RsIcon from "../../assets/RsIcon.svg";
+import axios from "axios";
 const Login = (props) => {
 	const firebase = useFirebase();
 	const history = useHistory();
@@ -17,14 +18,12 @@ const Login = (props) => {
 
 	useEffect(() => {
 		if (authFireBase.uid) {
-			console.log("login");
 			history.push(
 				// props.location.state
 				// 	? props.location.state.from.pathname
 				// :
-				"/admin/test"
+				"/admin"
 			);
-			// history.push("/admin/enrollments");
 		}
 		// eslint-disable-next-line
 	}, [authFireBase]);
@@ -36,13 +35,13 @@ const Login = (props) => {
 				size: "invisible",
 				callback: (response) => {
 					// reCAPTCHA solved, allow signInWithPhoneNumber.
-					console.log(response);
-					console.log("hello");
+					// console.log(response);
+					// console.log("hello");
 					// onSignInSubmit();
 				},
 			}
 		);
-	}, []);
+	});
 
 	const signIn = (phoneNumber, submitProps) => {
 		const appVerifier = window.recaptchaVerifier;
@@ -66,13 +65,21 @@ const Login = (props) => {
 		code: "",
 	};
 
+	const checkIfUserExists = async (token) => {
+		const res = await axios.get("/users/check_if_user_exists", {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		if (res.data.status) {
+			history.push("/admin");
+		} else history.push("/auth/setProfile");
+	};
 	const onSubmit = (values, submitProps) => {
 		submitProps.setSubmitting(true);
 		if (showOtpScreen) {
 			return window.confirmationResult
 				.confirm(values.code)
 				.then((result) => {
-					history.push("/admin/test");
+					checkIfUserExists(result.user.ya);
 					submitProps.setSubmitting(false);
 				})
 				.catch((error) => {
@@ -96,44 +103,48 @@ const Login = (props) => {
 
 	return (
 		<div className={style.container}>
-			<h1 className="primary">
-				{showOtpScreen
-					? `Enter the OTP sent to ${mobileNumber} `
-					: "Login with your phone number"}
-			</h1>
-			<p className="text-align-center" style={{ color: "red" }}>
-				{error}
-			</p>
-			<Formik initialValues={initialValues} onSubmit={onSubmit}>
-				{(formik) => (
-					<Form>
-						<FormikControl
-							control={"input"}
-							type="tel"
-							name={showOtpScreen ? "code" : "phoneNumber"}
-							// maxlength="10"
-							pattern="\d*"
-							maxlength="10"
-							placeholder={showOtpScreen ? null : "Enter 10-digit number"}
-							validate={!showOtpScreen && validatePhoneNumber}
-							// label="Phone Number"
-						/>
-						<div id="sign-in-button"></div>
-						<button
-							className="btn-primary"
-							type="submit"
-							disabled={!formik.dirty || formik.isSubmitting || disable}
-						>
-							{showOtpScreen ? "Submit" : "Get OTP"}
-						</button>
-						{showOtpScreen && (
-							<p onClick={() => setShowOtpScreen(false)}>
-								Go back to the login screen ?
-							</p>
-						)}
-					</Form>
-				)}
-			</Formik>
+			<div className={style.box2}></div>
+			<div className={style.box1}>
+				<h2 className="primary">
+					{showOtpScreen
+						? `Enter the OTP sent to ${mobileNumber} `
+						: "Login with your phone number"}
+				</h2>
+				<p className="text-align-center" style={{ color: "red" }}>
+					{error}
+				</p>
+				<Formik initialValues={initialValues} onSubmit={onSubmit}>
+					{(formik) => (
+						<Form>
+							<FormikControl
+								control={"input"}
+								type="tel"
+								name={showOtpScreen ? "code" : "phoneNumber"}
+								// maxlength="10"
+								pattern="\d*"
+								maxlength="10"
+								placeholder={showOtpScreen ? null : "Enter 10-digit number"}
+								validate={!showOtpScreen && validatePhoneNumber}
+								// label="Phone Number"
+							/>
+							<div id="sign-in-button"></div>
+							<button
+								className="btn-primary sign-in-button"
+								type="submit"
+								disabled={!formik.dirty || formik.isSubmitting || disable}
+							>
+								{showOtpScreen ? "Submit" : "Get OTP"}
+							</button>
+							{showOtpScreen && (
+								<p onClick={() => setShowOtpScreen(false)}>
+									Go back to the login screen ?
+								</p>
+							)}
+						</Form>
+					)}
+				</Formik>
+				<img className={style.logo} src={RsIcon} />
+			</div>
 		</div>
 	);
 };

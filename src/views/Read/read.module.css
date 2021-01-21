@@ -19,3 +19,123 @@
 	right: 1.527rem;
 	cursor: pointer !important;
 }
+.filteredReadablesContainer {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 5.4rem;
+}
+.filteredReadable {
+	font-size: 1.6rem;
+	cursor: pointer !important;
+	color: white;
+	margin: 0.5rem;
+	padding: 0.8rem;
+	border-radius: 1rem;
+	transition: all 0.1s;
+}
+.filteredReadable:hover {
+	transform: scale(1.01);
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.searchBox {
+	width: 50%;
+	position: relative;
+	display: flex;
+	width: 100%;
+	border: 3px solid var(--primary);
+	margin: 2rem 10rem;
+	padding: 5px;
+	height: 5.4rem;
+	font-size: 1.6rem;
+	border-radius: 5px 0 0 5px;
+	outline: none;
+}
+
+.filterBySubjectContainer {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 2rem;
+	padding: 2rem;
+	border-top: 2px solid #edebeb;
+	border-bottom: 2px solid #edebeb;
+	position: sticky;
+	top: -4rem;
+	background-color: #ffffff;
+	z-index: 999;
+}
+.filterBySubjectContainer > h2 {
+	display: block;
+	width: 100%;
+	margin-bottom: 2rem;
+}
+.filterBySubjectButton {
+	cursor: pointer !important;
+
+	height: 4.6rem;
+	min-width: 1rem;
+
+	border-radius: 1rem;
+	filter: drop-shadow(0px 0px 10px rgba(87, 98, 142, 0.25));
+
+	font-size: 2rem;
+	line-height: 1.4rem;
+	text-align: center;
+	color: #ffffff;
+
+	text-transform: capitalize;
+	padding: 1rem;
+	margin: 0.8rem;
+}
+.filterBySubjectButton:focus {
+	transform: scale(1.05);
+	outline: none;
+	filter: drop-shadow(0px 0px 10px rgba(87, 98, 142, 0.3));
+}
+
+/* reduant css for collapse */
+
+.details {
+	/* width: 100%; */
+	border: 1px solid var(--primary);
+	border-radius: 1rem;
+	padding: 1rem;
+	margin: 1rem;
+}
+
+.summary {
+	color: var(--info);
+	font-size: 1.8rem;
+	outline: none;
+}
+
+.content {
+	font-size: 1.6rem;
+}
+
+.content li {
+	margin: 1rem 2rem;
+
+	/* border: 1px solid rgba(87, 98, 142, 0.25); */
+	box-shadow: 0px 0px 5px rgba(87, 98, 142, 0.25);
+	border-radius: 1rem;
+	padding: 1rem;
+}
+
+details[open] summary ~ * {
+	animation: sweep 0.5s ease-in-out;
+}
+
+@keyframes sweep {
+	0% {
+		opacity: 0;
+		margin-left: -1rem;
+		/* transform: translateX (-3rem); */
+	}
+	100% {
+		opacity: 1;
+		/* transform: translateX (0rem); */
+	}
+}

@@ -2,7 +2,8 @@ import style from "./test.module.css";
 import { ReactComponent as TestIcon } from "../../assets/test/TestIcon.svg";
 import { ReactComponent as TimeCircleIcon } from "../../assets/test/TimeCircleIcon.svg";
 import { ReactComponent as ViewAllIcon } from "../../assets/test/ViewAllIcon.svg";
-import SingleTest from "./SingleTest/SingleTest";
+import axios from "axios";
+import { useEffect, useState } from "react";
 const UpcomingLiveTests = () => {
 	const colors = [
 		"#ff8058",
@@ -12,6 +13,21 @@ const UpcomingLiveTests = () => {
 		// "#57628e",
 		"#f36450",
 	];
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				setLoading(true);
+				const res = await axios(`/content/past_test_series/28/`);
+				console.log(res.data);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
+		fetchData();
+	}, []);
 
 	const listBlock = () => {
 		return [1, 2, 3].map(() => (
@@ -74,9 +90,8 @@ const Test = () => {
 	return (
 		<div className="test">
 			<h1 className="secondary text-align-center">Test</h1>
-			<SingleTest />
-			{/* <UpcomingLiveTests /> */}
-			{/* <OngoingTestSeries /> */}
+			<UpcomingLiveTests />
+			<OngoingTestSeries />
 		</div>
 	);
 };
