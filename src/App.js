@@ -1,5 +1,4 @@
 import { Router, Switch, Route, Link, Redirect } from "react-router-dom";
-
 import Login from "views/Login/Login";
 import DashBoardLayout from "components/Layout/DashBoardLayout";
 import history from "./history";

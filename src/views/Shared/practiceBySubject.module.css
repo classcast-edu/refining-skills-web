@@ -2,29 +2,6 @@
 	margin-bottom: 3.2rem;
 }
 
-/* subject */
-
-.subjects {
-	/* display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	flex-wrap: wrap; */
-	display: grid;
-	width: 100%;
-	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-}
-.subjectsBlock {
-	position: relative;
-	/* margin-bottom: 2rem;
-	margin-right: 2rem; */
-}
-.subjectArrow {
-	position: absolute;
-	top: 1.823rem;
-	right: 15%;
-	cursor: pointer !important;
-}
-
 /* PerSubjectPractice */
 
 .perSubjectPractice {
@@ -103,7 +80,7 @@
 	margin-top: 5.4rem;
 	display: flex;
 	align-items: center;
-	padding: 2rem;
+	padding: 3rem;
 	justify-content: space-between;
 }
 
@@ -117,16 +94,17 @@
 
 .progressCircleBar {
 	/* position: static !important; */
-	height: 12rem !important;
-	width: 12rem !important;
+	height: 10rem !important;
+	width: 10rem !important;
 	margin: 0 !important;
 	margin-left: auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	transform: scale(1.1);
+	transform: scale(1.3);
 }
 .progressOfStudent div > svg {
 	margin: auto;
+	/* height: 10rem; */
 	/* padding: 1rem; */
 }

@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { fetchSubjects } from "store/actions/practiceBySubjectActions";
+import CustomSpinner from "components/CustomSpinner";
 const PracticeBySubject = (props) => {
 	const subjects = useSelector((state) => Object.values(state.subjects));
 	const history = useHistory();
@@ -64,11 +65,13 @@ const PracticeBySubject = (props) => {
 		);
 	};
 
-	return (
+	return subjects.length > 0 ? (
 		<>
 			<h2 className={`${style.h2} primary`}>Practice by Subject</h2>
 			<div className={style.subjects}>{listBlock()}</div>
 		</>
+	) : (
+		<CustomSpinner height="40vh" />
 	);
 };
 

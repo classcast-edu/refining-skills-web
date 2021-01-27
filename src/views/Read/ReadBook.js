@@ -33,7 +33,7 @@ const ReadBook = () => {
 			}
 		);
 
-		setUrl(res.data);
+		setUrl(`https://cors-anywhere.herokuapp.com/${res.data}`);
 	};
 
 	useEffect(() => {
@@ -71,7 +71,7 @@ const ReadBook = () => {
 					loading={<CustomSpinner />}
 				>
 					{Array.from(Array(numPages).keys()).map((item) => (
-						<Page pageNumber={item + 1} />
+						<Page pageNumber={item + 1} key={item + 1} />
 					))}
 				</Document>
 			) : (

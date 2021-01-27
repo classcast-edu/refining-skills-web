@@ -1,5 +1,6 @@
 import FormikControl from "components/Formik/FormikControl";
-import { Form, Formik } from "formik";
+import ProgressBar from "components/ProgressBar/ProgressBar";
+import { Form, Formik, useFormik, useFormikContext } from "formik";
 
 import style from "./singleTest.module.css";
 import { useEffect, useRef, useState } from "react";
@@ -10,11 +11,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import TimerClock from "./TimerClock";
 import QuestionsScroll from "./QuestionsScroll";
+import CustomModal from "components/CustomModal";
 import TestResults from "./TestResults";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
-
 const SingleTest = () => {
 	const [options, setOptions] = useState([]);
 	const timerClockRef = useRef(null);
@@ -28,8 +29,10 @@ const SingleTest = () => {
 
 	const [testData, setTestData] = useState([]);
 	const [testMeta, setTestMeta] = useState({});
-
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+	const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
+	const [disableSolutionButton, setDisableSolutionButton] = useState(true);
+	const [correctAnswer, setCorrectAnswer] = useState(null);
 	const [initialValues, setInitialValues] = useState({
 		option: Number(studentAnswers[Number(currentQuestionIndex)]),
 	});
@@ -70,6 +73,10 @@ const SingleTest = () => {
 		setInitialValues({
 			option: Number(studentAnswers[Number(currentQuestionIndex)]),
 		});
+		setCorrectAnswer(null);
+		setShowCorrectAnswer(false);
+		setDisableSolutionButton(true);
+		setShowSolution(false);
 	}, [currentQuestionIndex]);
 
 	const [studentTestData, setStudentTestData] = useState({});
@@ -167,7 +174,6 @@ const SingleTest = () => {
 
 	const changeQuestion = (value, answer, shouldNotScroll) => {
 		if (currentQuestionIndex + value === testData.length) {
-			// timerClockRef.current.stop();
 			return endTestHandler();
 		}
 		if (formikRef.current && formikRef.current.values.option) {
@@ -202,12 +208,10 @@ const SingleTest = () => {
 		if (testData[currentQuestionIndex + value].question_type != 6) {
 			setOptions(Object.values({ option_1, option_2, option_3, option_4 }));
 		}
+		return formikRef.current && formikRef.current.resetForm();
 
-		formikRef.current && formikRef.current.resetForm();
-		!shouldNotScroll && executeScroll();
+		// !shouldNotScroll && executeScroll();
 	};
-
-	const [correctAnswers, setCorrectAnswers] = useState(0);
 
 	const onSubmit = (values, submitProps) => {
 		//saving user option
@@ -229,40 +233,35 @@ const SingleTest = () => {
 
 		// changeQuestion(1);
 		// submitProps.resetForm();
-		if (checkOptions[Number(values.option) - 1]) {
-			setCorrectAnswers((ca) => ca + 1);
-		}
+		// if (checkOptions[Number(values.option) - 1]) {
+		// 	setCorrectAnswers((ca) => ca + 1);
+		// }
 		// submitProps.resetForm();
-		changeQuestion(1);
+		// changeQuestion(1);
 		//same concept as pulling options
 		//we pull which options are correct arrange them in array
 		//then check it it's true since we get the option number from
 		//values object which comes from formik valus.option
+		setDisableSolutionButton(false);
+		setCorrectAnswer(
+			_.findIndex(checkOptions, (option) => option === true) + 1
+		);
+		if (checkOptions[Number(values.option) - 1]) {
+			setCorrectAnswer(
+				_.findIndex(checkOptions, (option) => option === true) + 1
+			);
+			return setShowCorrectAnswer(true);
 
-		// if (!values.option) {
-		// 	changeQuestion(1);
-		// 	submitProps.resetForm();
-		// } else if (checkOptions[Number(values.option) - 1]) {
-		// 	changeQuestion(1);
-		// 	submitProps.resetForm();
-		// } else {
-		// 	// console.log(submitProps);
-		// 	submitProps.setErrors({ option: values.option });
-		// }
-	};
-	const questionButtonRef = useRef(null);
-	const dummyRef = useRef(null);
-	const executeScroll = () => {
-		// console.log(questionButtonRef.current);
-		questionButtonRef.current &&
-			questionButtonRef.current.scrollIntoView({
-				behavior: "smooth",
-				block: "center",
-				inline: "center",
-			});
+			// changeQuestion(1);
+			// submitProps.resetForm();
+		} else {
+			submitProps.setErrors({ option: values.option });
+			// setShowSolution(true);
+		}
 	};
 
 	const [open, setOpen] = useState(false);
+
 	const onOpenModal = () => setOpen(true);
 	const onCloseModal = () => setOpen(false);
 	const [endTest, setEndTest] = useState(false);
@@ -291,9 +290,7 @@ const SingleTest = () => {
 	};
 
 	return loading ? (
-		<>
-			<CustomSpinner />
-		</>
+		<CustomSpinner />
 	) : (
 		<>
 			<Modal
@@ -320,16 +317,9 @@ const SingleTest = () => {
 			</Modal>
 
 			<div className={style.container}>
-				<QuestionsScroll
-					dummyRef={dummyRef}
-					changeQuestion={changeQuestion}
-					questionButtonRef={questionButtonRef}
-					questionsLength={testData.length}
-					currentQuestionIndex={currentQuestionIndex}
-				/>
 				<div className={style.qaContainer}>
 					<div className={style.timerContainer}>
-						{testMeta.duration_minutes && testData.length > 0 && (
+						{testMeta.duration_minutes && (
 							<TimerClock
 								timerClockRef={timerClockRef}
 								time={testMeta.duration_minutes}
@@ -369,6 +359,9 @@ const SingleTest = () => {
 										control="customRadio"
 										name={"option"}
 										options={options}
+										showCorrectAnswer={showCorrectAnswer}
+										correctAnswer={correctAnswer}
+										// disabled={showCorrectAnswer}
 									/>
 									{showSolution && (
 										<div>
@@ -384,27 +377,35 @@ const SingleTest = () => {
 									<div className={style.actions}>
 										<button
 											className={style.previousButton}
-											disabled={currentQuestionIndex < 1}
+											disabled={disableSolutionButton}
 											type="button"
-											onClick={() => changeQuestion(-1)}
+											onClick={() => {
+												setShowSolution(true);
+												setShowCorrectAnswer(true);
+											}}
 										>
-											<FaAngleLeft />
-											Previous
+											View Solution
 										</button>
-										<button
-											className={style.nextButton}
-											type="button"
-											onClick={() => changeQuestion(1)}
-										>
-											{currentQuestionIndex + 1 === testData.length ? (
-												"Submit"
-											) : (
-												<>
-													Next
-													<FaAngleRight />
-												</>
-											)}
-										</button>
+										{!showCorrectAnswer ? (
+											<button className={style.nextButton} type="submit">
+												Check
+											</button>
+										) : (
+											<button
+												className={style.nextButton}
+												type="button"
+												onClick={() => changeQuestion(1)}
+											>
+												{currentQuestionIndex + 1 === testData.length ? (
+													"Submit"
+												) : (
+													<>
+														Next
+														<FaAngleRight />
+													</>
+												)}
+											</button>
+										)}
 									</div>
 								</Form>
 							);

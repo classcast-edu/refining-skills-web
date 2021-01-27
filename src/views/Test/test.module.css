@@ -135,6 +135,7 @@
 	line-height: 2.3rem;
 	text-align: right;
 	font-family: Raleway;
+	margin-left: auto;
 
 	color: var(--danger);
 }

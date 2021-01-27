@@ -11,8 +11,19 @@ import { ReactComponent as DPIcon } from "../../assets/sidenav/dp.svg";
 
 import style from "./profile.module.css";
 import ProgressBar from "components/ProgressBar/ProgressBar";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const UserProfile = () => {
+	const [points, setPoints] = useState(0);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await axios.get("/content/get_points/24/");
+			setPoints(response.data.points);
+		};
+		fetchData();
+	}, []);
 	return (
 		<>
 			<button className={style.editSquare}>
@@ -24,7 +35,7 @@ const UserProfile = () => {
 			<div className={style.pointsScoredContainer}>
 				<Group1637 />
 				<div>
-					<div className={style.points}>199</div>
+					<div className={style.points}>{points}</div>
 					<h2 className={style.pointsScored}>Points Scored</h2>
 				</div>
 			</div>

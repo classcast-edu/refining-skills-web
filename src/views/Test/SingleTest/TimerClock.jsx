@@ -3,7 +3,7 @@ import Timer from "react-compound-timer/build";
 import style from "./singleTest.module.css";
 import { RiTimerLine } from "react-icons/ri";
 
-const TimerClock = ({ time, timerClockRef }) => {
+const TimerClock = ({ time, timerClockRef, endTestHandler, stopTime }) => {
 	return (
 		<Timer
 			initialTime={time * 60000}
@@ -13,12 +13,14 @@ const TimerClock = ({ time, timerClockRef }) => {
 			formatValue={(value) => `${value < 10 ? `0${value}` : value} `}
 			checkpoints={[
 				{
-					time: 29 * 60000,
-					callback: () => console.log("Checkpoint A"),
+					time: 0 * 60000,
+					callback: () => endTestHandler(),
 				},
 			]}
 		>
 			{({ start, stop, reset, timerState }) => {
+				!stopTime && start();
+
 				return (
 					<div className={style.timer}>
 						<RiTimerLine size={"2em"} />

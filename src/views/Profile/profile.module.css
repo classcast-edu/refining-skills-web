@@ -153,7 +153,7 @@ path:nth-of-type(11) {
 
 .progressCardContainer {
 	width: 38.2rem;
-	height: 16rem;
+	min-height: 16rem;
 	/* White */
 	padding: 2.4rem 1.8rem 1.2rem 1.8rem;
 	background: #ffffff;

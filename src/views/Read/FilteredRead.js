@@ -7,6 +7,7 @@ import { fetchReadables } from "store/actions/readActions";
 // import colors from "nice-color-palettes/200";
 import styles from "./read.module.css";
 import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
+import CustomSpinner from "components/CustomSpinner";
 
 const FilteredRead = () => {
 	const { id } = useParams();
@@ -157,7 +158,9 @@ const FilteredRead = () => {
 		);
 	};
 
-	return (
+	return loading ? (
+		<CustomSpinner />
+	) : (
 		<>
 			<button
 				style={{

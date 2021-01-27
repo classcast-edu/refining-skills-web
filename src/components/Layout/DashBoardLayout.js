@@ -7,8 +7,11 @@ import ReadBook from "views/Read/ReadBook";
 
 //practice routes
 import Practice from "views/Practice/Practice";
-import PerSubjectPractice from "views/Practice/PracticeBySubject/PerSubjectPractice";
-import SubjectModules from "views/Practice/PracticeBySubject/SubjectModules";
+import SinglePractice from "views/Test/SingleTest/SinglePractice";
+
+// Shared
+import SubjectModules from "views/Shared/SubjectModules";
+import PerSubjectPractice from "views/Shared/PerSubjectPractice";
 
 //test routes
 import Test from "views/Test/Test";
@@ -32,6 +35,11 @@ const DashBoardLayout = () => {
 					<Route path="/admin/read">
 						<Read />
 					</Route>
+					<Route path="/admin/practice/:id/:courseId/:testId">
+						<div className="w-70">
+							<SinglePractice />
+						</div>
+					</Route>
 					<Route path="/admin/practice/:id/:courseId">
 						<div className="w-70">
 							<SubjectModules />
@@ -45,9 +53,15 @@ const DashBoardLayout = () => {
 					<Route path="/admin/practice">
 						<Practice />
 					</Route>
-					<Route path="/admin/test/:id">
+
+					<Route path="/admin/test/:courseId/:testId">
 						<div className="w-70">
 							<SingleTest />
+						</div>
+					</Route>
+					<Route path="/admin/test/:courseId">
+						<div className="w-70">
+							<SubjectModules />
 						</div>
 					</Route>
 					<Route path="/admin/test">

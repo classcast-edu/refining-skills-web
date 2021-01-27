@@ -1,6 +1,8 @@
 import React from "react";
 import { css } from "@emotion/core";
 import SquareLoader from "react-spinners/GridLoader";
+import Lottie from "react-lottie";
+import * as animationData from "assets/lottie/spinner2.json";
 
 const CustomSpinner = ({
 	size,
@@ -16,6 +18,15 @@ const CustomSpinner = ({
 	// 	border-color: red;
 	// `;
 
+	const defaultOptions = {
+		loop: true,
+		autoPlay: true,
+		animationData: animationData.default,
+		rendererSettings: {
+			preserveAspectRatio: "xMidYMid slice",
+		},
+	};
+
 	return (
 		<div
 			className={className}
@@ -23,17 +34,17 @@ const CustomSpinner = ({
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
-
 				height,
 			}}
 		>
-			<SquareLoader
-				// css={override}
+			<Lottie options={defaultOptions} height={"200"} width={"200"} />
+			{/* <SquareLoader
+				// 		// css={override}
 				size={size || 50}
 				margin={margin || 10}
 				color={color || "var(--secondary)"}
 				loading={true}
-			/>
+			/> */}
 		</div>
 	);
 };

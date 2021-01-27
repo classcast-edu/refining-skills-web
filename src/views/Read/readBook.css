@@ -16,3 +16,9 @@
 	display: flex;
 	align-items: center;
 }
+
+.react-pdf__Page__canvas {
+	width: auto !important;
+	height: auto !important;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
