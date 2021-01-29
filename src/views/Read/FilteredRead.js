@@ -15,7 +15,7 @@ const FilteredRead = () => {
 	const isMount = useIsMount();
 	const dispatch = useDispatch();
 	const history = useHistory();
-
+	const [search, setSearch] = useState("");
 	useEffect(() => {
 		resetReadables();
 		dispatch(fetchSubjects());
@@ -98,7 +98,7 @@ const FilteredRead = () => {
 		});
 	};
 	const resetReadables = () => {
-		console.log(books);
+		// console.log(books);
 		setReadablesList(books.filter((item) => item.parent.includes(id)));
 	};
 	const filterReadables = (key, parameter) => {
@@ -116,6 +116,7 @@ const FilteredRead = () => {
 				.filter((item) => item.parent.includes(id))
 				.filter((item) => item[key].includes(parameter))
 		);
+		setSearch("");
 	};
 	const renderSubjects = () => {
 		const colors = [
@@ -151,7 +152,9 @@ const FilteredRead = () => {
 				type="search"
 				className={styles.searchBox}
 				placeholder="Search by readable name"
+				value={search}
 				onChange={(e) => {
+					setSearch(e.target.value);
 					filterReadables("display_name", e.target.value);
 				}}
 			/>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Lottie from "react-lottie";
-import * as animationData from "assets/lottie/celebrate1.json";
+import * as animationData from "assets/lottie/correct1.json";
 import style from "./testResults.module.css";
 import {
 	RiCheckboxCircleLine,
@@ -10,12 +10,13 @@ import {
 import { FaTimesCircle } from "react-icons/fa";
 import { GiArrowScope } from "react-icons/gi";
 import { GrScorecard } from "react-icons/gr";
+import { useHistory } from "react-router-dom";
 
 const DisplayDataBlock = ({ icon, heading, score }) => (
 	<div className={style.data}>
 		{icon}
 		<div className={style.text}>
-			<div>{heading}</div>
+			<div className={style.textHeading}>{heading}</div>
 			<div>{score}</div>
 		</div>
 	</div>
@@ -25,13 +26,15 @@ const TestResults = ({
 	stats: { correct, attempt, score, totalQuestions, timeTaken, totalMarks },
 }) => {
 	const defaultOptions = {
-		loop: true,
+		loop: false,
 		autoPlay: true,
 		animationData: animationData.default,
 		rendererSettings: {
 			preserveAspectRatio: "xMidYMid slice",
 		},
 	};
+
+	const history = useHistory();
 
 	return (
 		<div className={style.container}>
@@ -70,7 +73,9 @@ const TestResults = ({
 				<button className="btn-primary" onClick={onClick}>
 					See all solutions
 				</button>
-				<button className="btn-primary">Another Button</button>
+				<button className="btn-primary" onClick={() => history.goBack(-1)}>
+					Take another test
+				</button>
 			</div>
 		</div>
 	);

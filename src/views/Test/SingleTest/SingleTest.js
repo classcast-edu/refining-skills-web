@@ -23,7 +23,7 @@ const SingleTest = () => {
 	const [loading, setLoading] = useState(false);
 	const [studentAnswers, setStudentAnswers] = useState({});
 	const [question, setQuestion] = useState(<p></p>);
-	const [solution, setSolution] = useState(<p></p>);
+	const [solution, setSolution] = useState("");
 	const [showSolution, setShowSolution] = useState(false);
 
 	const [testData, setTestData] = useState([]);
@@ -200,7 +200,11 @@ const SingleTest = () => {
 		setQuestion(question);
 		setSolution(solution);
 		if (testData[currentQuestionIndex + value].question_type != 6) {
-			setOptions(Object.values({ option_1, option_2, option_3, option_4 }));
+			setOptions(
+				Object.values({ option_1, option_2, option_3, option_4 }).filter((x) =>
+					Boolean(x)
+				)
+			);
 		}
 
 		formikRef.current && formikRef.current.resetForm();
@@ -270,7 +274,7 @@ const SingleTest = () => {
 
 	useEffect(() => {
 		if (endTest) {
-			setStopTime(true);
+			// setStopTime(true);
 			calculateStats();
 			onOpenModal();
 			setEndTest(false);
@@ -370,9 +374,9 @@ const SingleTest = () => {
 										name={"option"}
 										options={options}
 									/>
-									{showSolution && (
+									{showSolution && solution && (
 										<div>
-											<h2 className="black">Solution</h2>
+											<h3 className={style.solutionText}>Solution</h3>
 											<div
 												className={style.solution}
 												dangerouslySetInnerHTML={{

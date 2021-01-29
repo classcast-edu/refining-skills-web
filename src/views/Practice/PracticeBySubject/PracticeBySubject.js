@@ -65,13 +65,15 @@ const PracticeBySubject = (props) => {
 		);
 	};
 
-	return subjects.length > 0 ? (
-		<>
+	return (
+		<div className="w-100">
 			<h2 className={`${style.h2} primary`}>Practice by Subject</h2>
-			<div className={style.subjects}>{listBlock()}</div>
-		</>
-	) : (
-		<CustomSpinner height="40vh" />
+			{subjects.length > 0 ? (
+				<div className={style.subjects}> {listBlock()}</div>
+			) : (
+				<CustomSpinner height="100%" />
+			)}
+		</div>
 	);
 };
 

@@ -13,17 +13,19 @@ import style from "./profile.module.css";
 import ProgressBar from "components/ProgressBar/ProgressBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const UserProfile = () => {
 	const [points, setPoints] = useState(0);
+	const instituteId = useSelector((state) => state.instituteId);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await axios.get("/content/get_points/24/");
+			const response = await axios.get(`/content/get_points/${instituteId}/`);
 			setPoints(response.data.points);
 		};
 		fetchData();
-	}, []);
+	}, [instituteId]);
 	return (
 		<>
 			<button className={style.editSquare}>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { FaLeaf } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import CustomSpinner from "components/CustomSpinner";
+import Practice from "views/Practice/Practice";
 const UpcomingLiveTests = () => {
 	const colors = [
 		"#ff8058",
@@ -151,7 +152,7 @@ const Test = () => {
 		<div className="test">
 			<h1 className="secondary text-align-center">Test</h1>
 			<UpcomingLiveTests />
-			<OngoingTestSeries />
+			{/* <OngoingTestSeries /> */}
 		</div>
 	);
 };

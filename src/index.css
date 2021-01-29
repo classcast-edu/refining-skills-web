@@ -79,13 +79,6 @@ input[type="number"] {
 	background: url("./assets/background.svg");
 }
 
-.auth {
-	background: url("./assets/background.svg");
-}
-.root {
-	background: url("./assets/background.svg");
-}
-
 /* dynamic colors for collapsed elements */
 .#FF78A3 {
 	background: #ff78a3 !important;

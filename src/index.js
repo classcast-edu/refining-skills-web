@@ -23,6 +23,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import App from "App";
 import { Provider, useSelector } from "react-redux";
+import CustomSpinner from "components/CustomSpinner";
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_API_KEY,
 	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -63,15 +64,7 @@ const rrfProps = {
 
 function AuthIsLoaded({ children }) {
 	const auth = useSelector((state) => state.firebase.auth);
-	if (!isLoaded(auth))
-		return (
-			<div
-				className=" d-flex flex-column align-items-center  justify-content-center text-center"
-				style={{ height: "15rem", width: "100%" }}
-			>
-				<strong>Loading ...</strong>
-			</div>
-		);
+	if (!isLoaded(auth)) return <CustomSpinner height="100vh" />;
 	return children;
 }
 

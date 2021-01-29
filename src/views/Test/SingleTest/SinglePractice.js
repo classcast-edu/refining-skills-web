@@ -12,19 +12,19 @@ import axios from "axios";
 import TimerClock from "./TimerClock";
 import QuestionsScroll from "./QuestionsScroll";
 import CustomModal from "components/CustomModal";
-import TestResults from "./TestResults";
+import PracticeResults from "./PracticeResults";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
 const SingleTest = () => {
 	const [options, setOptions] = useState([]);
 	const timerClockRef = useRef(null);
-	const { testId } = useParams();
+	const { id, courseId, testId } = useParams();
 	const formikRef = useRef();
 	const [loading, setLoading] = useState(false);
 	const [studentAnswers, setStudentAnswers] = useState({});
 	const [question, setQuestion] = useState(<p></p>);
-	const [solution, setSolution] = useState(<p></p>);
+	const [solution, setSolution] = useState("");
 	const [showSolution, setShowSolution] = useState(false);
 
 	const [testData, setTestData] = useState([]);
@@ -195,18 +195,16 @@ const SingleTest = () => {
 			option_4,
 			question,
 			solution,
-			is_option_1_correct,
-			is_option_2_correct,
-			is_option_3_correct,
-			is_option_4_correct,
-			max_marks,
-			negative_marks,
 		} = testData[currentQuestionIndex + value];
 		//putting 4 options in an array and setting it whenever question changes
 		setQuestion(question);
 		setSolution(solution);
 		if (testData[currentQuestionIndex + value].question_type != 6) {
-			setOptions(Object.values({ option_1, option_2, option_3, option_4 }));
+			setOptions(
+				Object.values({ option_1, option_2, option_3, option_4 }).filter((x) =>
+					Boolean(x)
+				)
+			);
 		}
 		return formikRef.current && formikRef.current.resetForm();
 
@@ -277,6 +275,13 @@ const SingleTest = () => {
 	}, [studentTestData]);
 
 	const endTestHandler = () => {
+		axios.post("/content/update_progress/", {
+			courseid: courseId,
+			subject: id,
+			block_id: testId,
+			insti: instituteId,
+			percentage: 100,
+		});
 		setStopTime(true);
 		timerClockRef.current.stop();
 		setEndTest(() => true);
@@ -299,11 +304,11 @@ const SingleTest = () => {
 				center
 				classNames={{
 					// overlay: "customOverlay",
-					modal: "customModal",
+					modal: "customModalPractice",
 				}}
 			>
 				<div>
-					<TestResults
+					<PracticeResults
 						changeQuestion={changeQuestion}
 						showSolution={(value) => setShowSolution(value)}
 						onClick={() => {
@@ -363,9 +368,9 @@ const SingleTest = () => {
 										correctAnswer={correctAnswer}
 										// disabled={showCorrectAnswer}
 									/>
-									{showSolution && (
+									{showSolution && solution && (
 										<div>
-											<h2 className="black">Solution</h2>
+											<h3 className={style.solutionText}>Solution</h3>
 											<div
 												className={style.solution}
 												dangerouslySetInnerHTML={{

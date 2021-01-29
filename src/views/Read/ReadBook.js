@@ -49,6 +49,7 @@ const ReadBook = () => {
 				style={{
 					transform: "rotate(180deg)",
 					position: "absolute",
+					zIndex: 1000,
 				}}
 				onClick={() => history.push(`/admin/read/${id}`)}
 			>

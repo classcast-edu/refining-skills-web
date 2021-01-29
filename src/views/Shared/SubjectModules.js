@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-	useHistory,
-	useLocation,
-	useParams,
-	useRouteMatch,
-} from "react-router-dom";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
 import CustomSpinner from "components/CustomSpinner";
 import axios from "axios";
 import Collapsible from "react-collapsible";
@@ -24,7 +19,7 @@ const CollapseContent = (props) => {
 	const fetchTestMeta = async (url) => {
 		console.log(url);
 		const response = await axios.get(`/content/test_meta/${url}/`);
-		console.log(response.data.data);
+		// console.log(response.data.data);
 	};
 	const match = useRouteMatch();
 	// console.log(match, location);
@@ -32,7 +27,10 @@ const CollapseContent = (props) => {
 		<ul key={props.key}>
 			{data &&
 				data.map(
-					({ datafields: { display_name, url, block_type, chapter_id } }) => {
+					(
+						{ datafields: { display_name, url, block_type, chapter_id } },
+						index
+					) => {
 						return (
 							<>
 								<li
@@ -64,7 +62,7 @@ const SubjectModules = () => {
 	const [blocks, setBlocks] = useState([]);
 	const [progress, setProgress] = useState(0);
 	const defaultOptions = {
-		loop: true,
+		loop: false,
 		autoPlay: true,
 		animationData: animationData.default,
 		rendererSettings: {
@@ -84,7 +82,6 @@ const SubjectModules = () => {
 					0
 				);
 				setProgress(((res2.data.blocks / totalBlocks) * 100).toFixed(2));
-
 				setLoading(false);
 			} catch (error) {
 				// console.log(error.message);
@@ -92,8 +89,8 @@ const SubjectModules = () => {
 			}
 		};
 		fetchData();
-	}, []);
-
+	}, [courseId]);
+	const [open, setOpen] = useState(false);
 	const renderBlocks = () => {
 		return (
 			blocks.study &&
@@ -108,6 +105,8 @@ const SubjectModules = () => {
 								<div key={index}>{`Module ${i + 1} —  ${chapter_name}`}</div>
 							}
 							key={index}
+							open={open}
+							onClick={() => setOpen(!open)}
 						>
 							<CollapseContent data={data} key={index} />
 						</Collapsible>
@@ -116,7 +115,9 @@ const SubjectModules = () => {
 			})
 		);
 	};
-	return (
+	return loading ? (
+		<CustomSpinner />
+	) : (
 		<>
 			<button
 				style={{
@@ -155,18 +156,10 @@ const SubjectModules = () => {
 					}}
 				>
 					<Lottie options={defaultOptions} />
-
-					{/* <img
-						style={{ width: "40px", objectFit: "cover", margin: 0 }}
-						src="https://i.imgur.com/b9NyUGm.png"
-						alt="doge"
-					/> */}
 				</CircularProgressbarWithChildren>
 			</div>
 
-			<div className={style.SubjectModules}>
-				{loading ? <CustomSpinner height="50vh" /> : <>{renderBlocks()}</>}
-			</div>
+			<div className={style.SubjectModules}>{renderBlocks()}</div>
 		</>
 	);
 };

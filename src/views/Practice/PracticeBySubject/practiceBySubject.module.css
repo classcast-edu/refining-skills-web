@@ -11,13 +11,13 @@
 	flex-wrap: wrap; */
 	display: grid;
 	width: 100%;
-	grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(181.27px, 1fr));
 }
+
 .subjectsBlock {
 	position: relative;
-	/* margin-bottom: 2rem;
-	margin-right: 2rem; */
 }
+
 .subjectArrow {
 	position: absolute;
 	top: 1.823rem;
