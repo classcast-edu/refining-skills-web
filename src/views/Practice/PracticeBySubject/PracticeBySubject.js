@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { fetchSubjects } from "store/actions/practiceBySubjectActions";
 import CustomSpinner from "components/CustomSpinner";
+import getColorById from "components/helpers/getColorById";
 const PracticeBySubject = (props) => {
 	const subjects = useSelector((state) => Object.values(state.subjects));
 	const history = useHistory();

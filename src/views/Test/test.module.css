@@ -52,6 +52,12 @@
 	align-items: center;
 	flex-wrap: wrap;
 }
+.ongoingLiveTestContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(36.6rem, 1fr));
+	align-items: center;
+	flex-wrap: wrap;
+}
 .upcomingBlock {
 	font-family: Raleway;
 	height: 22.4rem;

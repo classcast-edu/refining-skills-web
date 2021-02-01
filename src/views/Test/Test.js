@@ -100,7 +100,7 @@ const OngoingTestSeries = () => {
 			try {
 				setLoading(true);
 				const res = await axios(`/content/past_test_series/28/`);
-				setTestData(res.data.data);
+				setTestData(res.data.data ? res.data.data : []);
 				setLoading(false);
 			} catch (error) {
 				setLoading(false);
@@ -138,8 +138,8 @@ const OngoingTestSeries = () => {
 	};
 	return (
 		<>
-			<h2 className={`${style.h2}`}>Ongoing Test Series</h2>
-			<div className={style.upcomingLiveTestContainer}>
+			<h2 className={`${style.h2}`}>Past Test Series</h2>
+			<div className={style.ongoingLiveTestContainer}>
 				{listBlock()}
 				{/* <ViewAllIcon className={style.viewAllIcon} /> */}
 			</div>
@@ -152,7 +152,7 @@ const Test = () => {
 		<div className="test">
 			<h1 className="secondary text-align-center">Test</h1>
 			<UpcomingLiveTests />
-			{/* <OngoingTestSeries /> */}
+			<OngoingTestSeries />
 		</div>
 	);
 };

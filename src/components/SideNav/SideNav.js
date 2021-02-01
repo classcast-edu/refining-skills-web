@@ -55,10 +55,10 @@ const SideNav = () => {
 				<span>Hi! deepak</span>
 			</div> */}
 			{/* <NavTextWithIcon icon={<DPIcon />} text="Hi! Ayush" /> */}
-			<NavTextWithIcon icon={<ProfileIcon id="profileIcon" />} text="profile" />
-			<NavTextWithIcon icon={<ReadIcon />} text="read" />
-			<NavTextWithIcon icon={<TestIcon />} text="test" />
 			<NavTextWithIcon icon={<PracticeIcon />} text="practice" />
+			<NavTextWithIcon icon={<TestIcon />} text="test" />
+			<NavTextWithIcon icon={<ReadIcon />} text="read" />
+			<NavTextWithIcon icon={<ProfileIcon id="profileIcon" />} text="profile" />
 			<NavTextWithIcon
 				icon={<LogoutIcon id="logoutIcon" />}
 				text="logout"

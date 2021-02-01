@@ -28,9 +28,9 @@ const UserProfile = () => {
 	}, [instituteId]);
 	return (
 		<>
-			<button className={style.editSquare}>
+			{/* <button className={style.editSquare}>
 				<EditSquare />
-			</button>
+			</button> */}
 			<DPIcon className={style.dp} />
 			<h2 className={`info text-align-center ${style.name}`}>Deepak Jha</h2>
 			<h2 className={`info text-align-center ${style.class}`}>Class 10</h2>
@@ -75,7 +75,7 @@ const Profile = () => {
 		<div className={style.profileContainer}>
 			<h1 className="secondary text-align-center">Profile</h1>
 			<UserProfile />
-			<div className={style.subjectsContainer}>
+			{/* <div className={style.subjectsContainer}>
 				{listSubjects(<Group16685 />, "All")}
 				{listSubjects(<Group1668 />, "Maths")}
 				{listSubjects(<Group1674 />, "Science")}
@@ -88,7 +88,7 @@ const Profile = () => {
 				{[1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => (
 					<ProgressCard />
 				))}
-			</div>
+			</div> */}
 		</div>
 	);
 };

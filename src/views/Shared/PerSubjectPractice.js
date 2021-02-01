@@ -7,6 +7,7 @@ import style from "./practiceBySubject.module.css";
 import { fetchSubjects } from "store/actions/practiceBySubjectActions";
 import CustomSpinner from "components/CustomSpinner";
 import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
+import getColorById from "components/helpers/getColorById";
 
 const PerSubjectPractice = () => {
 	const { id } = useParams();
@@ -49,7 +50,10 @@ const PerSubjectPractice = () => {
 			>
 				<ArrowRightCircleIcon />
 			</button>
-			<h1 className="text-align-center secondary">
+			<h1
+				className="text-align-center secondary"
+				style={{ color: getColorById(id) }}
+			>
 				{subjects[id] && subjects[id].name}
 			</h1>
 			{loading ? (

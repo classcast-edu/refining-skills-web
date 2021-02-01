@@ -7,10 +7,11 @@
 .qaContainer {
 	background-color: #ffffff;
 	padding: 3rem;
+	padding-bottom: 1rem;
 	border-radius: 1rem;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	margin-top: 3rem;
-	height: calc(100vh - 10rem);
+	height: 80vh;
 	display: flex;
 	flex-direction: column;
 }
