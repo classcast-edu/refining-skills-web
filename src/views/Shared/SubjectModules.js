@@ -11,18 +11,12 @@ import "react-circular-progressbar/dist/styles.css";
 import getColorById from "components/helpers/getColorById";
 import Lottie from "react-lottie";
 import * as animationData from "assets/lottie/progress.json";
+import "./collapse.css";
 const CollapseContent = (props) => {
 	const { data } = props;
 	const history = useHistory();
-	// const location = useLocation();
 
-	const fetchTestMeta = async (url) => {
-		console.log(url);
-		const response = await axios.get(`/content/test_meta/${url}/`);
-		// console.log(response.data.data);
-	};
 	const match = useRouteMatch();
-	// console.log(match, location);
 	return (
 		<ul key={props.key}>
 			{data &&
@@ -35,7 +29,6 @@ const CollapseContent = (props) => {
 							<>
 								<li
 									onClick={() => {
-										if (parseInt(block_type) === 4) fetchTestMeta(url);
 										history.push(`${match.url}/${url}`);
 									}}
 									key={chapter_id}

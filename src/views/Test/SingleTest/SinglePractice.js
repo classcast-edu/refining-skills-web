@@ -222,6 +222,7 @@ const SingleTest = () => {
 			is_option_3_correct,
 			is_option_4_correct,
 		} = testData[currentQuestionIndex];
+
 		const checkOptions = [
 			is_option_1_correct,
 			is_option_2_correct,
@@ -285,6 +286,8 @@ const SingleTest = () => {
 		setStopTime(true);
 		timerClockRef.current.stop();
 		setEndTest(() => true);
+		// if user is on a question and clicks on end test then
+		// we still need to store the answer and calc stats accordingly
 		if (formikRef.current.values.option) {
 			changeQuestion(0);
 		} else {

@@ -189,12 +189,6 @@ const SingleTest = () => {
 			option_4,
 			question,
 			solution,
-			is_option_1_correct,
-			is_option_2_correct,
-			is_option_3_correct,
-			is_option_4_correct,
-			max_marks,
-			negative_marks,
 		} = testData[currentQuestionIndex + value];
 		//putting 4 options in an array and setting it whenever question changes
 		setQuestion(question);
