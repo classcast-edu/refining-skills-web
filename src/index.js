@@ -42,7 +42,7 @@ firebase.initializeApp(firebaseConfig);
 firebase.firestore().settings({ timestampsInSnapshots: true });
 
 const initialState = {
-	instituteId: Number(process.env.REACT_APP_INSTITUTE_ID),
+	// instituteId: Number(process.env.REACT_APP_INSTITUTE_ID),
 };
 
 const middlewares = [thunk.withExtraArgument(getFirebase)];
