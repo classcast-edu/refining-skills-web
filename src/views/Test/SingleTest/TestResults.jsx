@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Lottie from "react-lottie";
 import * as animationData from "assets/lottie/correct1.json";
 import style from "./testResults.module.css";
@@ -10,7 +9,7 @@ import {
 import { FaTimesCircle } from "react-icons/fa";
 import { GiArrowScope } from "react-icons/gi";
 import { GrScorecard } from "react-icons/gr";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const DisplayDataBlock = ({ icon, heading, score }) => (
 	<div className={style.data}>
@@ -35,6 +34,7 @@ const TestResults = ({
 	};
 
 	const history = useHistory();
+	const { courseId } = useParams();
 
 	return (
 		<div className={style.container}>
@@ -73,7 +73,10 @@ const TestResults = ({
 				<button className="btn-primary" onClick={onClick}>
 					See all solutions
 				</button>
-				<button className="btn-primary" onClick={() => history.goBack(-1)}>
+				<button
+					className="btn-primary"
+					onClick={() => history.push(`/admin/test/${courseId}?redirect=true`)}
+				>
 					Take another test
 				</button>
 			</div>

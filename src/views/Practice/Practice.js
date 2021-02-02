@@ -6,7 +6,26 @@ import { ReactComponent as ViewDashBoardIcon } from "../../assets/stats/ViewDash
 
 import ScrollMenu from "../../components/ScrollMenu";
 import PracticeBySubject from "./PracticeBySubject/PracticeBySubject";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 const Statistics = () => {
+	const instituteId = useSelector((state) => state.instituteId);
+	const [data, setData] = useState({});
+	useEffect(() => {
+		const fetchData = async () => {
+			const response = await axios.get(
+				`/content/total_completion/${instituteId}/`
+			);
+			setData(response.data);
+			const response2 = await axios.get(`/content/get_points/${instituteId}/`);
+			setData((data) => {
+				return { ...data, points: response2.data.points };
+			});
+		};
+		fetchData();
+	}, [instituteId]);
+
 	const listBlock = (block, value) => {
 		return (
 			<div className={style.statisticsBlock}>
@@ -20,10 +39,10 @@ const Statistics = () => {
 		<>
 			<h2 className={` ${style.h2}`}>Your Statistics</h2>
 			<div className={style.statistics}>
-				{listBlock(<OverallScoreIcon />, 123)}
-				{listBlock(<TestAttemptsIcon />, 123)}
-				{listBlock(<TopicsPracticedIcon />, 123)}
-				{listBlock(<ViewDashBoardIcon />)}
+				{listBlock(<OverallScoreIcon />, data?.points)}
+				{listBlock(<TestAttemptsIcon />, data?.test)}
+				{listBlock(<TopicsPracticedIcon />, data?.practiced)}
+				{/* {listBlock(<ViewDashBoardIcon />)} */}
 			</div>
 		</>
 	);

@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams, useRouteMatch } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import {
+	useHistory,
+	useLocation,
+	useParams,
+	useRouteMatch,
+} from "react-router-dom";
 import CustomSpinner from "components/CustomSpinner";
 import axios from "axios";
 import Collapsible from "react-collapsible";
@@ -12,6 +17,9 @@ import getColorById from "components/helpers/getColorById";
 import Lottie from "react-lottie";
 import * as animationData from "assets/lottie/progress.json";
 import "./collapse.css";
+
+import useQuery from "components/hooks/useQuery";
+
 const CollapseContent = (props) => {
 	const { data } = props;
 	const history = useHistory();
@@ -50,7 +58,8 @@ const CollapseContent = (props) => {
 const SubjectModules = () => {
 	const { courseId, id } = useParams();
 	const history = useHistory();
-
+	const query = useQuery();
+	const match = useRouteMatch();
 	const [loading, setLoading] = useState(false);
 	const [blocks, setBlocks] = useState([]);
 	const [progress, setProgress] = useState(0);
@@ -70,6 +79,7 @@ const SubjectModules = () => {
 				const res = await axios(`/content/course_details/${courseId}/`);
 				const res2 = await axios(`/content/course_completion/${courseId}/`);
 				setBlocks(res.data.data);
+
 				const totalBlocks = res.data.data.study.reduce(
 					(acc, obj) => acc + obj.datafields.data.length,
 					0
@@ -83,7 +93,17 @@ const SubjectModules = () => {
 		};
 		fetchData();
 	}, [courseId]);
-	const [open, setOpen] = useState(false);
+
+	const [open, setOpen] = useState({});
+
+	useEffect(() => {
+		if (query.get("redirect")) {
+			// console.log("hello");
+			setOpen(JSON.parse(window.localStorage.getItem("subjectModules")));
+			history.push(`${match.url}`);
+		}
+	}, [query]);
+
 	const renderBlocks = () => {
 		return (
 			blocks.study &&
@@ -95,11 +115,26 @@ const SubjectModules = () => {
 					<div key={index}>
 						<Collapsible
 							trigger={
-								<div key={index}>{`Module ${i + 1} —  ${chapter_name}`}</div>
+								<div key={index} className="cursor-pointer">{`Module ${
+									i + 1
+								} —  ${chapter_name}`}</div>
 							}
 							key={index}
-							open={open}
-							onClick={() => setOpen(!open)}
+							open={open && open[i]}
+							onOpening={() => {
+								window.localStorage.setItem(
+									"subjectModules",
+									JSON.stringify(open)
+								);
+								setOpen((prevState) => ({ ...prevState, [i]: true }));
+							}}
+							onClosing={() => {
+								window.localStorage.setItem(
+									"subjectModules",
+									JSON.stringify(open)
+								);
+								setOpen((prevState) => ({ ...prevState, [i]: false }));
+							}}
 						>
 							<CollapseContent data={data} key={index} />
 						</Collapsible>
@@ -118,7 +153,9 @@ const SubjectModules = () => {
 					position: "absolute",
 					marginTop: "-2rem",
 				}}
-				onClick={() => history.push(`/admin/practice/${id}`)}
+				onClick={() =>
+					history.push(`${id ? `/admin/practice/${id}` : "/admin/test"}`)
+				}
 			>
 				<ArrowRightCircleIcon />
 			</button>
