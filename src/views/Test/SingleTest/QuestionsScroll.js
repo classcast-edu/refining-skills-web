@@ -23,6 +23,7 @@ const QuestionsScroll = ({
 								item === currentQuestionIndex && "var(--primary)",
 							color: item === currentQuestionIndex && "white",
 						}}
+						type="button"
 						onClick={() =>
 							changeQuestion(item - currentQuestionIndex, null, true)
 						}
