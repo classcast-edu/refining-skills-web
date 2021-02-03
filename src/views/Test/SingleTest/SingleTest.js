@@ -4,7 +4,6 @@ import { Form, Formik } from "formik";
 import style from "./singleTest.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import _ from "lodash";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -19,7 +18,11 @@ const SingleTest = () => {
 	const [options, setOptions] = useState([]);
 	const timerClockRef = useRef(null);
 	const { testId } = useParams();
+
 	const formikRef = useRef();
+	const solutionRef = useRef();
+	const containerRef = useRef();
+
 	const [loading, setLoading] = useState(false);
 	const [studentAnswers, setStudentAnswers] = useState({});
 	const [question, setQuestion] = useState(<p></p>);
@@ -35,24 +38,24 @@ const SingleTest = () => {
 	});
 	const instituteId = useSelector((state) => state.instituteId);
 
-	const fetchTestMeta = async () => {
-		const response = await axios.get(`/content/test_meta/${testId}/`);
-		setTestMeta(response.data.data);
-	};
-	const fetchData = async () => {
-		try {
-			setLoading(true);
-			const response = await axios.get(
-				`/content/test_data_v2/${instituteId}/${testId}`
-			);
-			setTestData(response.data.data);
-			setLoading(false);
-			// console.log(response.data.data);
-		} catch (error) {
-			setLoading(false);
-		}
-	};
 	useEffect(() => {
+		const fetchTestMeta = async () => {
+			const response = await axios.get(`/content/test_meta/${testId}/`);
+			setTestMeta(response.data.data);
+		};
+		const fetchData = async () => {
+			try {
+				setLoading(true);
+				const response = await axios.get(
+					`/content/test_data_v2/${instituteId}/${testId}`
+				);
+				setTestData(response.data.data);
+				setLoading(false);
+				// console.log(response.data.data);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
 		fetchTestMeta();
 		fetchData();
 	}, []);
@@ -71,6 +74,9 @@ const SingleTest = () => {
 			option: Number(studentAnswers[Number(currentQuestionIndex)]),
 		});
 	}, [currentQuestionIndex]);
+	useEffect(() => {
+		if (containerRef.current) containerRef.current.scrollTop = 0;
+	}, [containerRef, question]);
 
 	const [studentTestData, setStudentTestData] = useState({});
 	const handleStudentTestData = () => {
@@ -125,7 +131,7 @@ const SingleTest = () => {
 		totalQuestions: 0,
 	});
 	const calculateStats = () => {
-		const { h, m, s } = timerClockRef.current.state;
+		const { m, s } = timerClockRef.current.state;
 		setStats(() => {
 			return {
 				correct: 0,
@@ -293,7 +299,7 @@ const SingleTest = () => {
 			<CustomSpinner />
 		</>
 	) : (
-		<>
+		<div className={style.paddingBox}>
 			<Modal
 				open={open}
 				onClose={onCloseModal}
@@ -317,100 +323,98 @@ const SingleTest = () => {
 				</div>
 			</Modal>
 
-			<div className={style.container}>
-				<QuestionsScroll
-					dummyRef={dummyRef}
-					changeQuestion={changeQuestion}
-					questionButtonRef={questionButtonRef}
-					questionsLength={testData.length}
-					currentQuestionIndex={currentQuestionIndex}
-				/>
-				<div className={style.qaContainer}>
-					<div className={style.timerContainer}>
-						{testMeta.duration_minutes && testData.length > 0 && (
-							<TimerClock
-								timerClockRef={timerClockRef}
-								time={testMeta.duration_minutes}
-								endTestHandler={endTestHandler}
-								stopTime={stopTime}
+			<Formik
+				initialValues={initialValues}
+				enableReinitialize
+				onSubmit={onSubmit}
+				innerRef={formikRef}
+			>
+				{(formik) => {
+					return (
+						<Form>
+							<QuestionsScroll
+								dummyRef={dummyRef}
+								changeQuestion={changeQuestion}
+								questionButtonRef={questionButtonRef}
+								questionsLength={testData.length}
+								currentQuestionIndex={currentQuestionIndex}
 							/>
-						)}
-
-						<button
-							className={style.endButton}
-							onClick={stopTime ? onOpenModal : endTestHandler}
-						>
-							{stopTime ? "View Results" : "End"}
-						</button>
-					</div>
-					<div className={style.question}>
-						<span className={style.questionNumber}>
-							Q {currentQuestionIndex + 1}{" "}
-						</span>
-						<span
-							dangerouslySetInnerHTML={{
-								__html: question,
-							}}
-						></span>
-					</div>
-
-					<Formik
-						initialValues={initialValues}
-						enableReinitialize
-						onSubmit={onSubmit}
-						innerRef={formikRef}
-					>
-						{(formik) => {
-							return (
-								<Form>
-									<FormikControl
-										control="customRadio"
-										name={"option"}
-										options={options}
+							<div className={style.timerContainer}>
+								{testMeta.duration_minutes && testData.length > 0 && (
+									<TimerClock
+										timerClockRef={timerClockRef}
+										time={testMeta.duration_minutes}
+										endTestHandler={endTestHandler}
+										stopTime={stopTime}
 									/>
-									{showSolution && solution && (
-										<div>
-											<h3 className={style.solutionText}>Solution</h3>
-											<div
-												className={style.solution}
-												dangerouslySetInnerHTML={{
-													__html: solution,
-												}}
-											></div>
-										</div>
-									)}
-									<div className={style.actions}>
-										<button
-											className={style.previousButton}
-											disabled={currentQuestionIndex < 1}
-											type="button"
-											onClick={() => changeQuestion(-1)}
-										>
-											<FaAngleLeft />
-											Previous
-										</button>
-										<button
-											className={style.nextButton}
-											type="button"
-											onClick={() => changeQuestion(1)}
-										>
-											{currentQuestionIndex + 1 === testData.length ? (
-												"Submit"
-											) : (
-												<>
-													Next
-													<FaAngleRight />
-												</>
-											)}
-										</button>
+								)}
+
+								<button
+									className={style.endButton}
+									onClick={stopTime ? onOpenModal : endTestHandler}
+								>
+									{stopTime ? "View Results" : "End"}
+								</button>
+							</div>
+							<div className={style.container} ref={containerRef}>
+								<div className={style.question}>
+									<span className={style.questionNumber}>
+										Q {currentQuestionIndex + 1}{" "}
+									</span>
+									<span
+										dangerouslySetInnerHTML={{
+											__html: question,
+										}}
+									></span>
+								</div>
+
+								<FormikControl
+									control="customRadio"
+									name={"option"}
+									options={options}
+								/>
+								{showSolution && solution && (
+									<div className={style.solutionBox} ref={solutionRef}>
+										<h3 className={style.solutionText}>Solution</h3>
+										<span
+											className={style.solution}
+											dangerouslySetInnerHTML={{
+												__html: solution,
+											}}
+										></span>
 									</div>
-								</Form>
-							);
-						}}
-					</Formik>
-				</div>
-			</div>
-		</>
+								)}
+							</div>
+							<div className={style.actions}>
+								<button
+									className={style.previousButton}
+									disabled={currentQuestionIndex < 1}
+									type="button"
+									onClick={() => changeQuestion(-1)}
+								>
+									<FaAngleLeft />
+									Previous
+								</button>
+								<button
+									className={style.nextButton}
+									type="button"
+									onClick={() => changeQuestion(1)}
+								>
+									{currentQuestionIndex + 1 === testData.length ? (
+										"Submit"
+									) : (
+										<>
+											Next
+											<FaAngleRight />
+										</>
+									)}
+								</button>
+							</div>
+						</Form>
+					);
+				}}
+			</Formik>
+		</div>
 	);
 };
 

@@ -1,26 +1,29 @@
 import FormikControl from "components/Formik/FormikControl";
-import ProgressBar from "components/ProgressBar/ProgressBar";
-import { Form, Formik, useFormik, useFormikContext } from "formik";
+import { Form, Formik } from "formik";
 
-import style from "./singleTest.module.css";
+import style from "./singlePractice.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import _ from "lodash";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import TimerClock from "./TimerClock";
-import QuestionsScroll from "./QuestionsScroll";
-import CustomModal from "components/CustomModal";
+
 import PracticeResults from "./PracticeResults";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
 const SingleTest = () => {
-	const [options, setOptions] = useState([]);
-	const timerClockRef = useRef(null);
 	const { id, courseId, testId } = useParams();
+
+	const timerClockRef = useRef(null);
 	const formikRef = useRef();
+	const questionRef = useRef();
+	const solutionRef = useRef();
+
+	const [options, setOptions] = useState([]);
+
 	const [loading, setLoading] = useState(false);
 	const [studentAnswers, setStudentAnswers] = useState({});
 	const [question, setQuestion] = useState(<p></p>);
@@ -38,24 +41,24 @@ const SingleTest = () => {
 	});
 	const instituteId = useSelector((state) => state.instituteId);
 
-	const fetchTestMeta = async () => {
-		const response = await axios.get(`/content/test_meta/${testId}/`);
-		setTestMeta(response.data.data);
-	};
-	const fetchData = async () => {
-		try {
-			setLoading(true);
-			const response = await axios.get(
-				`/content/test_data_v2/${instituteId}/${testId}`
-			);
-			setTestData(response.data.data);
-			setLoading(false);
-			// console.log(response.data.data);
-		} catch (error) {
-			setLoading(false);
-		}
-	};
 	useEffect(() => {
+		const fetchTestMeta = async () => {
+			const response = await axios.get(`/content/test_meta/${testId}/`);
+			setTestMeta(response.data.data);
+		};
+		const fetchData = async () => {
+			try {
+				setLoading(true);
+				const response = await axios.get(
+					`/content/test_data_v2/${instituteId}/${testId}`
+				);
+				setTestData(response.data.data);
+				setLoading(false);
+				// console.log(response.data.data);
+			} catch (error) {
+				setLoading(false);
+			}
+		};
 		fetchTestMeta();
 		fetchData();
 	}, []);
@@ -68,7 +71,7 @@ const SingleTest = () => {
 	}, [testData]);
 
 	useEffect(() => {
-		//if user has answered a question it iw stored in an object
+		//if user has answered a question it is stored in an object
 		//which is accessed whenever that question is again viewed
 		setInitialValues({
 			option: Number(studentAnswers[Number(currentQuestionIndex)]),
@@ -172,7 +175,7 @@ const SingleTest = () => {
 		});
 	};
 
-	const changeQuestion = (value, answer, shouldNotScroll) => {
+	const changeQuestion = (value) => {
 		if (currentQuestionIndex + value === testData.length) {
 			return endTestHandler();
 		}
@@ -212,6 +215,10 @@ const SingleTest = () => {
 	};
 
 	const onSubmit = (values, submitProps) => {
+		//if there is no value then we have to make sure nothing happens
+		if (!values.option && testData[currentQuestionIndex].question_type != 6) {
+			return null;
+		}
 		//saving user option
 		setStudentAnswers((ans) => {
 			return { ...ans, [currentQuestionIndex]: Number(values.option) };
@@ -230,13 +237,6 @@ const SingleTest = () => {
 			is_option_4_correct,
 		];
 
-		// changeQuestion(1);
-		// submitProps.resetForm();
-		// if (checkOptions[Number(values.option) - 1]) {
-		// 	setCorrectAnswers((ca) => ca + 1);
-		// }
-		// submitProps.resetForm();
-		// changeQuestion(1);
 		//same concept as pulling options
 		//we pull which options are correct arrange them in array
 		//then check it it's true since we get the option number from
@@ -250,12 +250,8 @@ const SingleTest = () => {
 				_.findIndex(checkOptions, (option) => option === true) + 1
 			);
 			return setShowCorrectAnswer(true);
-
-			// changeQuestion(1);
-			// submitProps.resetForm();
 		} else {
 			submitProps.setErrors({ option: values.option });
-			// setShowSolution(true);
 		}
 	};
 
@@ -273,7 +269,7 @@ const SingleTest = () => {
 			onOpenModal();
 			setEndTest(false);
 		}
-	}, [studentTestData]);
+	}, [studentTestData, endTest, calculateStats]);
 
 	const endTestHandler = () => {
 		axios.post("/content/update_progress/", {
@@ -296,11 +292,19 @@ const SingleTest = () => {
 			setEndTest(false);
 		}
 	};
+	useEffect(() => {
+		if (showSolution) {
+			solutionRef.current.scrollIntoView("alignToTop");
+		}
+	}, [showSolution]);
+	useEffect(() => {
+		if (questionRef.current) questionRef.current.scrollTop = 0;
+	}, [questionRef, question]);
 
 	return loading ? (
 		<CustomSpinner />
 	) : (
-		<>
+		<div className={style.paddingBox}>
 			<Modal
 				open={open}
 				onClose={onCloseModal}
@@ -324,104 +328,101 @@ const SingleTest = () => {
 				</div>
 			</Modal>
 
-			<div className={style.container}>
-				<div className={style.qaContainer}>
-					<div className={style.timerContainer}>
-						{testMeta.duration_minutes && (
-							<TimerClock
-								timerClockRef={timerClockRef}
-								time={testMeta.duration_minutes}
-								endTestHandler={endTestHandler}
-								stopTime={stopTime}
-							/>
-						)}
-
-						<button
-							className={style.endButton}
-							onClick={stopTime ? onOpenModal : endTestHandler}
-						>
-							{stopTime ? "View Results" : "End"}
-						</button>
-					</div>
-					<div className={style.question}>
-						<span className={style.questionNumber}>
-							Q {currentQuestionIndex + 1}{" "}
-						</span>
-						<span
-							dangerouslySetInnerHTML={{
-								__html: question,
-							}}
-						></span>
-					</div>
-
-					<Formik
-						initialValues={initialValues}
-						enableReinitialize
-						onSubmit={onSubmit}
-						innerRef={formikRef}
-					>
-						{(formik) => {
-							return (
-								<Form>
-									<FormikControl
-										control="customRadio"
-										name={"option"}
-										options={options}
-										showCorrectAnswer={showCorrectAnswer}
-										correctAnswer={correctAnswer}
-										// disabled={showCorrectAnswer}
+			<Formik
+				initialValues={initialValues}
+				enableReinitialize
+				onSubmit={onSubmit}
+				innerRef={formikRef}
+			>
+				{(formik) => {
+					return (
+						<Form>
+							<div className={style.timerContainer}>
+								{testMeta.duration_minutes && (
+									<TimerClock
+										timerClockRef={timerClockRef}
+										time={testMeta.duration_minutes}
+										endTestHandler={endTestHandler}
+										stopTime={stopTime}
 									/>
-									{showSolution && solution && (
-										<div>
-											<h3 className={style.solutionText}>Solution</h3>
-											<div
-												className={style.solution}
-												dangerouslySetInnerHTML={{
-													__html: solution,
-												}}
-											></div>
-										</div>
-									)}
-									<div className={style.actions}>
-										<button
-											className={style.previousButton}
-											disabled={disableSolutionButton}
-											type="button"
-											onClick={() => {
-												setShowSolution(true);
-												setShowCorrectAnswer(true);
+								)}
+
+								<button
+									className={style.endButton}
+									onClick={stopTime ? onOpenModal : endTestHandler}
+								>
+									{stopTime ? "View Results" : "End"}
+								</button>
+							</div>
+							<div className={style.container}>
+								<div className={style.question} ref={questionRef}>
+									<span className={style.questionNumber}>
+										Q {currentQuestionIndex + 1}{" "}
+									</span>
+									<span
+										dangerouslySetInnerHTML={{
+											__html: question,
+										}}
+									></span>
+								</div>
+								<FormikControl
+									control="customRadio"
+									name={"option"}
+									options={options}
+									showCorrectAnswer={showCorrectAnswer}
+									correctAnswer={correctAnswer}
+									// disabled={showCorrectAnswer}
+								/>
+								{showSolution && solution && (
+									<div className={style.solutionBox} ref={solutionRef}>
+										<h3 className={style.solutionText}>Solution</h3>
+										<span
+											className={style.solution}
+											dangerouslySetInnerHTML={{
+												__html: solution,
 											}}
-										>
-											View Solution
-										</button>
-										{!showCorrectAnswer ? (
-											<button className={style.nextButton} type="submit">
-												Check
-											</button>
-										) : (
-											<button
-												className={style.nextButton}
-												type="button"
-												onClick={() => changeQuestion(1)}
-											>
-												{currentQuestionIndex + 1 === testData.length ? (
-													"Submit"
-												) : (
-													<>
-														Next
-														<FaAngleRight />
-													</>
-												)}
-											</button>
-										)}
+										></span>
 									</div>
-								</Form>
-							);
-						}}
-					</Formik>
-				</div>
-			</div>
-		</>
+								)}
+							</div>
+							<div className={style.actions}>
+								<button
+									className={style.previousButton}
+									disabled={disableSolutionButton}
+									type="button"
+									onClick={() => {
+										setShowSolution(true);
+										setShowCorrectAnswer(true);
+									}}
+								>
+									View Solution
+								</button>
+								{!showCorrectAnswer ? (
+									<button className={style.nextButton} type="submit">
+										Check
+									</button>
+								) : (
+									<button
+										className={style.nextButton}
+										type="button"
+										onClick={() => changeQuestion(1)}
+									>
+										{currentQuestionIndex + 1 === testData.length ? (
+											"Submit"
+										) : (
+											<>
+												Next
+												<FaAngleRight />
+											</>
+										)}
+									</button>
+								)}
+							</div>
+						</Form>
+					);
+				}}
+			</Formik>
+		</div>
 	);
 };
 

@@ -4,10 +4,8 @@ import { ReactComponent as TimeCircleIcon } from "../../assets/test/TimeCircleIc
 import { ReactComponent as ViewAllIcon } from "../../assets/test/ViewAllIcon.svg";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaLeaf } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
-import CustomSpinner from "components/CustomSpinner";
-import Practice from "views/Practice/Practice";
+import { useSelector } from "react-redux";
 const UpcomingLiveTests = () => {
 	const colors = [
 		"#ff8058",
@@ -17,17 +15,17 @@ const UpcomingLiveTests = () => {
 		// "#57628e",
 		"#f36450",
 	];
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				setLoading(true);
+				// setLoading(true);
 				const res = await axios(`/content/past_test_series/28/`);
 				console.log(res.data);
-				setLoading(false);
+				// setLoading(false);
 			} catch (error) {
-				setLoading(false);
+				// setLoading(false);
 			}
 		};
 		fetchData();
@@ -93,21 +91,22 @@ const OngoingTestSeries = () => {
 			disabled: true,
 		},
 	]);
-	const [loading, setLoading] = useState(false);
+	// const [loading, setLoading] = useState(false);
 	const location = useLocation();
+	const instituteId = useSelector((state) => state.instituteId);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				setLoading(true);
-				const res = await axios(`/content/past_test_series/28/`);
+				// setLoading(true);
+				const res = await axios(`/content/past_test_series/${instituteId}/`);
 				setTestData(res.data.data ? res.data.data : []);
-				setLoading(false);
+				// setLoading(false);
 			} catch (error) {
-				setLoading(false);
+				// setLoading(false);
 			}
 		};
 		fetchData();
-	}, []);
+	}, [instituteId]);
 	const listBlock = () => {
 		return testData.map((test) => (
 			<div className={style.onGoingBlock}>

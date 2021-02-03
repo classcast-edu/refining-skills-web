@@ -9,13 +9,13 @@ import { ReactComponent as SocialSciencesIcon } from "../../../assets/subjects/S
 import { ReactComponent as ArrowRightCircleIcon } from "../../../assets/subjects/ArrowRightCircle.svg";
 import style from "./practiceBySubject.module.css";
 
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import axios from "axios";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { fetchSubjects } from "store/actions/practiceBySubjectActions";
 import CustomSpinner from "components/CustomSpinner";
-import getColorById from "components/helpers/getColorById";
+// import getColorById from "components/helpers/getColorById";
 const PracticeBySubject = (props) => {
 	const subjects = useSelector((state) => Object.values(state.subjects));
 	const history = useHistory();
