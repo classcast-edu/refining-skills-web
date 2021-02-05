@@ -12,10 +12,23 @@
 	display: grid;
 	width: 100%;
 	grid-template-columns: repeat(auto-fill, minmax(181.27px, 1fr));
+	gap: 1rem;
 }
 
 .subjectsBlock {
 	position: relative;
+}
+.subjectName {
+	position: absolute;
+	bottom: 15%;
+	left: 11%;
+
+	font-style: normal;
+	font-weight: 600;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+
+	color: #ffffff;
 }
 
 .subjectArrow {

@@ -39,7 +39,10 @@ const App = () => {
 				<Route path="/auth/setProfile">
 					<SetProfile />
 				</Route>
-				<Redirect from="*" to="/admin" />
+				{/* <Route path="/"> */}
+				{/* <Redirect push to={"/index.html"} /> */}
+				{/* </Route> */}
+				{/* <Redirect from="*" to="/admin" /> */}
 			</Switch>
 		</Router>
 	);
