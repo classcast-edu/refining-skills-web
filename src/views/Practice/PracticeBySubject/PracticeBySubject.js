@@ -30,20 +30,47 @@ const PracticeBySubject = (props) => {
 		switch (id) {
 			case 22:
 				return <MathIcon />;
+			case 23:
+			case 24:
 			case 25:
+			case 26:
 				return <ScienceIcon />;
 			case 33:
 				return <HindiIcon />;
+			case 20:
 			case 35:
 				return <SocialSciencesIcon />;
 			case 36:
 			case 37:
 			case 38:
+			case 41:
 				return <EnglishIcon />;
+			case 34:
+				return <KannadaIcon />;
 			default:
+				// console.log(id);
 				return <KannadaIcon />;
 		}
 	};
+	// const getIconById = (id) => {
+	// 	switch (id) {
+	// 		case 22:
+	// 			return <MathIcon />;
+	// 		case 25:
+	// 			return <ScienceIcon />;
+	// 		case 33:
+	// 			return <HindiIcon />;
+	// 		case 35:
+	// 			return <SocialSciencesIcon />;
+	// 		case 36:
+	// 		case 37:
+	// 		case 38:
+	// 			return <EnglishIcon />;
+	// 		default:
+	// 			console.log(id);
+	// 			return <KannadaIcon />;
+	// 	}
+	// };
 
 	const listBlock = () => {
 		return (
@@ -52,6 +79,7 @@ const PracticeBySubject = (props) => {
 				return (
 					<div className={style.subjectsBlock} key={subject.id}>
 						{getIconById(subject.id)}
+						<span className={style.subjectName}>{subject.name}</span>
 						<button
 							className={style.subjectArrow}
 							onClick={() => history.push(`${location.pathname}/${subject.id}`)}
