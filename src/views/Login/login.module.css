@@ -3,10 +3,14 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
+
+	align-items: flex-end;
+
 	margin: auto;
-	background: url("../../assets/background.svg");
-	background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+	background: url("../../assets/guy.jpg");
+	background-size: cover;
+	background-position: center;
+	/* background: linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important; */
 	position: relative;
 }
 
@@ -22,13 +26,15 @@
 	padding: 0 3rem;
 	box-shadow: 0 2px 2rem rgba(0, 0, 0, 0.1);
 	position: relative;
+
+	right: 10%;
 }
 
 .box1 > h2 {
 	margin-bottom: 1rem;
 }
 .box2 {
-	background: linear-gradient(303.87deg, #ff8058 2.77%, #ffa589 99.94%);
+	/* background: linear-gradient(303.87deg, #ff8058 2.77%, #ffa589 99.94%); */
 	height: 50vh;
 	width: 100%;
 	position: absolute;

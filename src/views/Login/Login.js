@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useFirebase } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
-import { signIn } from "store/actions/authActions";
 import style from "./login.module.css";
 import RsIcon from "../../assets/RsIcon.svg";
 import axios from "axios";
@@ -143,7 +142,7 @@ const Login = (props) => {
 						</Form>
 					)}
 				</Formik>
-				<img className={style.logo} src={RsIcon} />
+				<img className={style.logo} src={RsIcon} alt="refining-skills" />
 			</div>
 		</div>
 	);
