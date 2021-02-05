@@ -172,7 +172,7 @@ const SingleTest = () => {
 	};
 
 	const changeQuestion = (value, answer, shouldNotScroll) => {
-		if (currentQuestionIndex + value === testData.length) {
+		if (currentQuestionIndex + value === testData.length && shouldNotScroll) {
 			// timerClockRef.current.stop();
 			return endTestHandler();
 		}
@@ -282,16 +282,18 @@ const SingleTest = () => {
 	}, [studentTestData]);
 
 	const endTestHandler = () => {
-		setStopTime(true);
-		timerClockRef.current.stop();
-		setEndTest(() => true);
-		if (formikRef.current.values.option) {
-			changeQuestion(0);
-		} else {
-			calculateStats();
-			onOpenModal();
-			setEndTest(false);
-		}
+		if (window.confirm("Do you want to end the test?")) {
+			setStopTime(true);
+			timerClockRef.current.stop();
+			setEndTest(() => true);
+			if (formikRef.current.values.option) {
+				return changeQuestion(0);
+			} else {
+				calculateStats();
+				onOpenModal();
+				return setEndTest(false);
+			}
+		} else return;
 	};
 
 	return loading ? (
@@ -352,6 +354,7 @@ const SingleTest = () => {
 								<button
 									className={style.endButton}
 									onClick={stopTime ? onOpenModal : endTestHandler}
+									type="button"
 								>
 									{stopTime ? "View Results" : "End"}
 								</button>
