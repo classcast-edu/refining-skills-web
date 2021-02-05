@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { useFirebase } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import style from "./login.module.css";
+import RsIcon from "../../assets/RsIcon.svg";
+
 const SetProfile = () => {
 	const firebase = useFirebase();
 	const history = useHistory();
@@ -42,7 +44,6 @@ const SetProfile = () => {
 		user
 			.updateProfile({
 				displayName: values.firstname + " " + values.lastname,
-				gender: values.gender,
 			})
 			.then(function () {
 				saveDataInDatabase(values);
@@ -55,7 +56,7 @@ const SetProfile = () => {
 				initialValues={{ firstname: "", lastname: "" }}
 				onSubmit={onSubmit}
 			>
-				<Form>
+				<Form className={style.box1}>
 					<FormikControl
 						control="input"
 						type="text"
@@ -68,17 +69,18 @@ const SetProfile = () => {
 						name="lastname"
 						label="Last Name"
 					/>
-					<FormikControl
+					{/* <FormikControl
 						control="radio"
 						name="gender"
 						options={[
 							{ id: "Male", name: "Male" },
 							{ id: "Female", name: "Female" },
 						]}
-					/>
+					/> */}
 					<button className="btn-primary" type="submit">
 						Submit
 					</button>
+					<img className={style.logo} src={RsIcon} alt="refining-skills" />
 				</Form>
 			</Formik>
 		</div>
