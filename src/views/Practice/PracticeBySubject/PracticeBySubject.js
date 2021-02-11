@@ -12,7 +12,7 @@ import style from "./practiceBySubject.module.css";
 // import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { fetchSubjects } from "store/actions/practiceBySubjectActions";
 import CustomSpinner from "components/CustomSpinner";
 // import getColorById from "components/helpers/getColorById";
@@ -77,18 +77,19 @@ const PracticeBySubject = (props) => {
 			subjects &&
 			subjects.map((subject) => {
 				return (
-					<div className={style.subjectsBlock} key={subject.id}>
+					<Link
+						className={style.subjectsBlock}
+						key={subject.id}
+						to={`${location.pathname}/${subject.id}`}
+					>
 						{getIconById(subject.id)}
 						<span className={style.subjectName}>{subject.name}</span>
-						<button
-							className={style.subjectArrow}
-							onClick={() => history.push(`${location.pathname}/${subject.id}`)}
-						>
+						<button className={style.subjectArrow}>
 							<ArrowRightCircleIcon
 								style={{ height: "4.5rem", width: "4.5rem" }}
 							/>
 						</button>
-					</div>
+					</Link>
 				);
 			})
 		);
