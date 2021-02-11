@@ -111,9 +111,11 @@
 
 .solutionBox {
 	padding-top: 6rem;
+	margin: auto 4.25rem;
 }
 .solutionText {
 	font-size: 1.6rem;
+	margin-bottom: 1rem;
 }
 .solution {
 	/* max-height: 12rem; */
@@ -123,6 +125,7 @@
 
 .solution * {
 	font-size: 1.6rem;
+	text-align: justify;
 	/* white-space: initial;
 	word-wrap: break-word; */
 }

@@ -388,7 +388,11 @@ const SingleTest = () => {
 							<div className={style.actions}>
 								<button
 									className={style.previousButton}
-									disabled={disableSolutionButton}
+									disabled={
+										testData[currentQuestionIndex] &&
+										testData[currentQuestionIndex].question_type == 1 &&
+										disableSolutionButton
+									}
 									type="button"
 									onClick={() => {
 										setShowSolution(true);
@@ -397,11 +401,10 @@ const SingleTest = () => {
 								>
 									View Solution
 								</button>
-								{!showCorrectAnswer ? (
-									<button className={style.nextButton} type="submit">
-										Check
-									</button>
-								) : (
+								{/* if question type is not 1 then show next button */}
+								{showCorrectAnswer ||
+								(testData[currentQuestionIndex] &&
+									testData[currentQuestionIndex].question_type != 1) ? (
 									<button
 										className={style.nextButton}
 										type="button"
@@ -415,6 +418,10 @@ const SingleTest = () => {
 												<FaAngleRight />
 											</>
 										)}
+									</button>
+								) : (
+									<button className={style.nextButton} type="submit">
+										Check
 									</button>
 								)}
 							</div>

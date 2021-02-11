@@ -172,8 +172,11 @@ const SingleTest = () => {
 	};
 
 	const changeQuestion = (value, answer, shouldNotScroll) => {
-		if (currentQuestionIndex + value === testData.length && shouldNotScroll) {
-			// timerClockRef.current.stop();
+		// if (currentQuestionIndex + value === testData.length && shouldNotScroll) {
+		// 	// timerClockRef.current.stop();
+		// 	return endTestHandler();
+		// }
+		if (currentQuestionIndex + value === testData.length) {
 			return endTestHandler();
 		}
 		if (formikRef.current && formikRef.current.values.option) {
