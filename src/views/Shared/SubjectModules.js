@@ -100,7 +100,7 @@ const SubjectModules = () => {
 		if (query.get("redirect")) {
 			// console.log("hello");
 			setOpen(JSON.parse(window.localStorage.getItem("subjectModules")));
-			history.push(`${match.url}`);
+			history.replace(`${match.url}`);
 		}
 	}, [query]);
 
@@ -117,7 +117,9 @@ const SubjectModules = () => {
 							trigger={
 								<div key={index} className="cursor-pointer">{`Module ${
 									i + 1
-								} —  ${chapter_name}`}</div>
+								} —  
+								 ${chapter_name}
+								`}</div>
 							}
 							key={index}
 							open={open && open[i]}

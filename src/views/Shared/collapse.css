@@ -69,6 +69,7 @@
 	/* border: 1px solid darkgray; */
 	background-color: #fef1d440;
 	padding: 2rem;
+	padding-right: 2.4rem;
 }
 .Collapsible__trigger.is-open > div {
 	border-radius: 1rem 1rem 0 0;
