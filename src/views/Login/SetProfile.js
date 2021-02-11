@@ -7,6 +7,8 @@ import { useFirebase } from "react-redux-firebase";
 import { useHistory } from "react-router-dom";
 import style from "./login.module.css";
 import RsIcon from "../../assets/RsIcon.svg";
+import Rsa from "../../assets/RSA.png";
+import MobileStoreButton from "react-mobile-store-button/lib/MobileStoreButton";
 
 const SetProfile = () => {
 	const firebase = useFirebase();
@@ -51,25 +53,41 @@ const SetProfile = () => {
 			});
 	};
 	return (
-		<div className={style.container}>
-			<Formik
-				initialValues={{ firstname: "", lastname: "" }}
-				onSubmit={onSubmit}
-			>
-				<Form className={style.box1}>
-					<FormikControl
-						control="input"
-						type="text"
-						name="firstname"
-						label="First Name"
-					/>
-					<FormikControl
-						control="input"
-						type="text"
-						name="lastname"
-						label="Last Name"
-					/>
-					{/* <FormikControl
+		<>
+			<header className={style.header}>
+				<img
+					src={Rsa}
+					alt="rsacademy"
+					className={style.headerLogo}
+					height="56"
+				/>
+				<MobileStoreButton
+					store="android"
+					url={
+						"https://play.google.com/store/apps/details?id=com.classcast.rsacademy"
+					}
+					// linkProps={{ title: "iOS Store Button" }}
+				/>
+			</header>
+			<div className={style.container}>
+				<Formik
+					initialValues={{ firstname: "", lastname: "" }}
+					onSubmit={onSubmit}
+				>
+					<Form className={style.box1}>
+						<FormikControl
+							control="input"
+							type="text"
+							name="firstname"
+							label="First Name"
+						/>
+						<FormikControl
+							control="input"
+							type="text"
+							name="lastname"
+							label="Last Name"
+						/>
+						{/* <FormikControl
 						control="radio"
 						name="gender"
 						options={[
@@ -77,13 +95,14 @@ const SetProfile = () => {
 							{ id: "Female", name: "Female" },
 						]}
 					/> */}
-					<button className="btn-primary" type="submit">
-						Submit
-					</button>
-					<img className={style.logo} src={RsIcon} alt="refining-skills" />
-				</Form>
-			</Formik>
-		</div>
+						<button className="btn-primary" type="submit">
+							Submit
+						</button>
+						<img className={style.logo} src={RsIcon} alt="refining-skills" />
+					</Form>
+				</Formik>
+			</div>
+		</>
 	);
 };
 
