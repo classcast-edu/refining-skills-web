@@ -26,6 +26,22 @@
 	align-items: center;
 	padding: 0 5rem;
 }
+
+.loginLabel {
+	display: flex;
+	align-items: center;
+}
+
+.numberInput {
+	background: #eee;
+	font-size: 2rem;
+	height: 100%;
+	padding: 0.55rem;
+	border-radius: 1rem 0rem 0rem 1rem;
+	position: relative;
+	right: -0.5rem;
+}
+
 .paragraph {
 	color: #fff !important;
 	/* align-self: baseline; */
@@ -48,7 +64,9 @@
 	z-index: 10;
 	background: #fff;
 	border-radius: 1rem;
-	min-height: 40rem;
+
+	min-height: 33rem;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

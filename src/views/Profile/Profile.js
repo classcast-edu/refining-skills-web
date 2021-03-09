@@ -49,20 +49,20 @@ const UserProfile = () => {
 
 			<div className={style.actions}>
 				<button
-					className={28 === instituteId && style.btnActive}
-					onClick={() => dispatch(changeInstitute(28))}
+					className={30 === instituteId && style.btnActive}
+					onClick={() => dispatch(changeInstitute(30))}
 				>
 					CBSE
 				</button>
 				<button
-					className={30 === instituteId && style.btnActive}
-					onClick={() => dispatch(changeInstitute(30))}
+					className={31 === instituteId && style.btnActive}
+					onClick={() => dispatch(changeInstitute(31))}
 				>
 					IGSCE
 				</button>
 				<button
-					className={31 === instituteId && style.btnActive}
-					onClick={() => dispatch(changeInstitute(31))}
+					className={28 === instituteId && style.btnActive}
+					onClick={() => dispatch(changeInstitute(28))}
 				>
 					ICSE
 				</button>

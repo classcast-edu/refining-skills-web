@@ -95,7 +95,7 @@ const Login = (props) => {
 	const validatePhoneNumber = (value) => {
 		setError("");
 		if (!/^\d+$/.test(value)) {
-			setError("Type only numbers");
+			// setError("Type only numbers");
 
 			setDisable(true);
 		} else if (value.length < 10) {
@@ -133,25 +133,28 @@ const Login = (props) => {
 				</div>
 				<div className={style.box1}>
 					<h2 className="primary">
-						{showOtpScreen
-							? `Enter the OTP sent to ${mobileNumber} `
-							: "Login with your phone number"}
+						{showOtpScreen ? `Enter OTP sent to ${mobileNumber} ` : "Login "}
 					</h2>
 
 					<Formik initialValues={initialValues} onSubmit={onSubmit}>
 						{(formik) => (
 							<Form>
-								<FormikControl
-									control={"input"}
-									type="tel"
-									name={showOtpScreen ? "code" : "phoneNumber"}
-									// maxlength="10"
-									pattern="\d*"
-									maxlength="10"
-									placeholder={showOtpScreen ? null : "Enter 10-digit number"}
-									validate={!showOtpScreen && validatePhoneNumber}
-									// label="Phone Number"
-								/>
+								<div className={style.loginLabel}>
+									{!showOtpScreen && (
+										<div className={style.numberInput}>+91</div>
+									)}
+									<FormikControl
+										control={"input"}
+										type="tel"
+										name={showOtpScreen ? "code" : "phoneNumber"}
+										// maxlength="10"
+										pattern="\d*"
+										maxlength="10"
+										placeholder={showOtpScreen ? null : "Enter 10-digit number"}
+										validate={!showOtpScreen && validatePhoneNumber}
+										// label="Phone Number"
+									/>
+								</div>
 								<p className="text-align-center">{error}</p>
 								<div id="sign-in-button"></div>
 								<button
@@ -162,7 +165,12 @@ const Login = (props) => {
 									{showOtpScreen ? "Submit" : "Get OTP"}
 								</button>
 								{showOtpScreen && (
-									<p onClick={() => setShowOtpScreen(false)}>
+									<p
+										onClick={() => {
+											setError("");
+											return setShowOtpScreen(false);
+										}}
+									>
 										Go back to the login screen ?
 									</p>
 								)}
