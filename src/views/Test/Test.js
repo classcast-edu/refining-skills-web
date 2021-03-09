@@ -64,7 +64,7 @@ const UpcomingLiveTests = () => {
 		</>
 	);
 };
-const OngoingTestSeries = () => {
+const PastTestSeries = () => {
 	const [testData, setTestData] = useState([
 		{
 			description: "Loading..",
@@ -145,6 +145,92 @@ const OngoingTestSeries = () => {
 		</>
 	);
 };
+const OngoingTestSeries = () => {
+	const [testData, setTestData] = useState([
+		{
+			description: "Loading..",
+			display_name: "Loading... ",
+			id: 461,
+			start_time: new Date(),
+			study_material: [],
+			disabled: true,
+		},
+		{
+			description: "Loading..",
+			display_name: "Loading... ",
+			id: 461,
+			start_time: new Date(),
+			study_material: [],
+			disabled: true,
+		},
+		{
+			description: "Loading..",
+			display_name: "Loading... ",
+			id: 461,
+			start_time: new Date(),
+			study_material: [],
+			disabled: true,
+		},
+	]);
+	// const [loading, setLoading] = useState(false);
+	const location = useLocation();
+	const instituteId = useSelector((state) => state.instituteId);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				// setLoading(true);
+				const res = await axios(`/content/ongoing_test_series/${instituteId}/`);
+				setTestData(res.data.data ? res.data.data : []);
+				// setLoading(false);
+			} catch (error) {
+				// setLoading(false);
+			}
+		};
+		fetchData();
+	}, [instituteId]);
+	const listBlock = () => {
+		return testData.map((test) => (
+			<div className={style.onGoingBlock}>
+				<div className={style.header}>
+					<h2>
+						{test.display_name}
+						{/* {test.description} */}
+					</h2>
+					<div>
+						Started on{" "}
+						{Intl.DateTimeFormat("en-US", {
+							day: "numeric",
+							month: "short",
+							year: "numeric",
+						}).format(new Date(test.start_time))}
+					</div>
+				</div>
+				<div className={style.headerSub}>
+					{test.study_material.length} Test with solution
+				</div>
+				<Link to={`${location.pathname}/${test.id}`}>
+					<button className={style.whiteButton} disabled={test.disabled}>
+						Attempt
+					</button>
+				</Link>
+			</div>
+		));
+	};
+	return (
+		<>
+			<h2 className={`${style.h2}`}>Ongoing Test Series</h2>
+			<div className={style.ongoingLiveTestContainer}>
+				{listBlock()}
+				{testData.length === 0 && (
+					<h2 className="black " style={{ marginBottom: "3rem" }}>
+						No Ongoing test series
+					</h2>
+				)}
+				{/* <ViewAllIcon className={style.viewAllIcon} /> */}
+			</div>
+		</>
+	);
+};
 
 const Test = () => {
 	return (
@@ -152,6 +238,7 @@ const Test = () => {
 			<h1 className="secondary text-align-center">Test</h1>
 			<UpcomingLiveTests />
 			<OngoingTestSeries />
+			<PastTestSeries />
 		</div>
 	);
 };
