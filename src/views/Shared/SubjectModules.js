@@ -106,7 +106,7 @@ const SubjectModules = () => {
 
 	const renderBlocks = () => {
 		return (
-			blocks.study &&
+			Array.isArray(blocks.study) &&
 			blocks.study.map((block, i) => {
 				const {
 					datafields: { chapter_name, data, index },

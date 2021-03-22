@@ -21,7 +21,7 @@ const UpcomingLiveTests = () => {
 		const fetchData = async () => {
 			try {
 				// setLoading(true);
-				const res = await axios(`/content/past_test_series/28/`);
+				const res = await axios(`/content/upcoming_test_series/28/`);
 				console.log(res.data);
 				// setLoading(false);
 			} catch (error) {
@@ -236,7 +236,7 @@ const Test = () => {
 	return (
 		<div className="test">
 			<h1 className="secondary text-align-center">Test</h1>
-			<UpcomingLiveTests />
+			{/* <UpcomingLiveTests /> */}
 			<OngoingTestSeries />
 			<PastTestSeries />
 		</div>
