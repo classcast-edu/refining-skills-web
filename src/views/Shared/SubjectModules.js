@@ -6,6 +6,8 @@ import {
 	useRouteMatch,
 } from "react-router-dom";
 import CustomSpinner from "components/CustomSpinner";
+import Lottie from "react-lottie";
+
 import axios from "axios";
 import Collapsible from "react-collapsible";
 import { FaClipboardList, FaPlay } from "react-icons/fa";
@@ -14,11 +16,29 @@ import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/Ar
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import getColorById from "components/helpers/getColorById";
-import Lottie from "react-lottie";
-import * as animationData from "assets/lottie/progress.json";
+import * as animationData1 from "assets/lottie/progress.json";
+import * as animationData2 from "assets/lottie/hi2.json";
 import "./collapse.css";
 
 import useQuery from "components/hooks/useQuery";
+
+const defaultOptionsProgress = {
+	loop: false,
+	autoPlay: true,
+	animationData: animationData1.default,
+	rendererSettings: {
+		preserveAspectRatio: "xMidYMid slice",
+	},
+};
+
+const defaultOptionsPlaceholder = {
+	loop: false,
+	autoPlay: true,
+	animationData: animationData2.default,
+	rendererSettings: {
+		preserveAspectRatio: "xMidYMid slice",
+	},
+};
 
 const CollapseContent = (props) => {
 	const { data } = props;
@@ -63,14 +83,6 @@ const SubjectModules = () => {
 	const [loading, setLoading] = useState(false);
 	const [blocks, setBlocks] = useState([]);
 	const [progress, setProgress] = useState(0);
-	const defaultOptions = {
-		loop: false,
-		autoPlay: true,
-		animationData: animationData.default,
-		rendererSettings: {
-			preserveAspectRatio: "xMidYMid slice",
-		},
-	};
 
 	useEffect(() => {
 		setLoading(true);
@@ -105,8 +117,7 @@ const SubjectModules = () => {
 	}, [query]);
 
 	const renderBlocks = () => {
-		return (
-			Array.isArray(blocks.study) &&
+		return Array.isArray(blocks.study) ? (
 			blocks.study.map((block, i) => {
 				const {
 					datafields: { chapter_name, data, index },
@@ -143,6 +154,13 @@ const SubjectModules = () => {
 					</div>
 				);
 			})
+		) : (
+			<>
+				<Lottie options={defaultOptionsPlaceholder} height={200} width={200} />
+				<h3 className="text-align-center">
+					Preparing Awesome Content for you. Check back this section later
+				</h3>
+			</>
 		);
 	};
 	return loading ? (
@@ -187,7 +205,7 @@ const SubjectModules = () => {
 						},
 					}}
 				>
-					<Lottie options={defaultOptions} />
+					<Lottie options={defaultOptionsProgress} />
 				</CircularProgressbarWithChildren>
 			</div>
 

@@ -309,6 +309,7 @@ const SingleTest = () => {
 			style={{
 				display: "flex",
 				justifyContent: "center",
+				marginTop: "5.4rem",
 			}}
 		>
 			This test is not available yet

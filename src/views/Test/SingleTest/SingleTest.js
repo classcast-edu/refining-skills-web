@@ -303,6 +303,17 @@ const SingleTest = () => {
 		<>
 			<CustomSpinner />
 		</>
+	) : testData.length === 0 ? (
+		<h2
+			className={`black text-center`}
+			style={{
+				display: "flex",
+				justifyContent: "center",
+				marginTop: "5.4rem",
+			}}
+		>
+			This test is not available yet
+		</h2>
 	) : (
 		<div className={style.paddingBox}>
 			<Modal

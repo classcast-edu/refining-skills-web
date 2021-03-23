@@ -137,7 +137,7 @@ const PastTestSeries = () => {
 	};
 	return (
 		<>
-			<h2 className={`${style.h2}`}>Past Test Series</h2>
+			<h2 className={`${style.h2}`}>Test Series</h2>
 			<div className={style.ongoingLiveTestContainer}>
 				{listBlock()}
 				{/* <ViewAllIcon className={style.viewAllIcon} /> */}
@@ -237,7 +237,7 @@ const Test = () => {
 		<div className="test">
 			<h1 className="secondary text-align-center">Test</h1>
 			{/* <UpcomingLiveTests /> */}
-			<OngoingTestSeries />
+			{/* <OngoingTestSeries /> */}
 			<PastTestSeries />
 		</div>
 	);
