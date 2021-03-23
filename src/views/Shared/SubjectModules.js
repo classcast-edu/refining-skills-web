@@ -18,6 +18,7 @@ import "react-circular-progressbar/dist/styles.css";
 import getColorById from "components/helpers/getColorById";
 import * as animationData1 from "assets/lottie/progress.json";
 import * as animationData2 from "assets/lottie/hi2.json";
+
 import "./collapse.css";
 
 import useQuery from "components/hooks/useQuery";
@@ -155,12 +156,26 @@ const SubjectModules = () => {
 				);
 			})
 		) : (
-			<>
-				<Lottie options={defaultOptionsPlaceholder} height={200} width={200} />
-				<h3 className="text-align-center">
-					Preparing Awesome Content for you. Check back this section later
-				</h3>
-			</>
+			<div
+				style={{
+					display: "flex",
+					alignItems: "center",
+					width: "100%",
+					flexDirection: "column",
+				}}
+			>
+				<img
+					src={require("assets/empty.gif").default}
+					height={260}
+					width={260}
+					alt="no modules"
+				/>
+				<h2 className="text-align-center black">
+					{/* <Lottie options={defaultOptionsPlaceholder} height={200} width={200} /> */}
+					Preparing Awesome Content for you. <br /> Check back this section
+					later
+				</h2>
+			</div>
 		);
 	};
 	return loading ? (
