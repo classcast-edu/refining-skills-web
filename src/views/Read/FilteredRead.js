@@ -11,6 +11,7 @@ import CustomSpinner from "components/CustomSpinner";
 
 const FilteredRead = () => {
 	const { id } = useParams();
+	const [readablesList, setReadablesList] = useState([]);
 
 	const isMount = useIsMount();
 	const dispatch = useDispatch();
@@ -20,6 +21,9 @@ const FilteredRead = () => {
 		resetReadables();
 		dispatch(fetchSubjects());
 		dispatch(fetchReadables());
+		return () => {
+			setReadablesList([]);
+		};
 	}, []);
 	const subjects = useSelector((state) => Object.values(state.subjects));
 
@@ -27,8 +31,6 @@ const FilteredRead = () => {
 		(state) => state.readables
 	);
 	const books = Object.values(data);
-
-	const [readablesList, setReadablesList] = useState([]);
 
 	const colors = [
 		"#FF6633",
@@ -131,6 +133,7 @@ const FilteredRead = () => {
 			"#6680B3",
 			"#66991A",
 			"#FF99E6",
+			"#49c0c1",
 		];
 		return subjects.map(({ name, id, bgcolor }, index) => (
 			<button

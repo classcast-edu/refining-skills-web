@@ -33,7 +33,7 @@ const ReadBook = () => {
 			}
 		);
 
-		setUrl(`https://cors-anywhere.herokuapp.com/${res.data}`);
+		setUrl(res.data);
 	};
 
 	useEffect(() => {
