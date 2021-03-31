@@ -26,7 +26,9 @@ const initialState = {
 		},
 	},
 	loading: false,
-	data: JSON.parse(window.localStorage.getItem("readables")) || {},
+	data: JSON.parse(
+		JSON.stringify(window?.localStorage.getItem("readables") ?? {})
+	),
 	error: null,
 };
 
