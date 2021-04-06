@@ -23,10 +23,10 @@ const getSubjects = (instituteId) => {
 			return subjectsIGCSE;
 
 		case 30:
-			return subjectsICSE;
+			return subjectsCBSE;
 
 		default:
-			return subjectsCBSE;
+			return subjectsICSE;
 	}
 };
 const subjectsCBSE = [
