@@ -7,6 +7,7 @@ import { ReactComponent as ScienceIcon } from "../../../assets/subjects/ScienceI
 import { ReactComponent as SocialSciencesIcon } from "../../../assets/subjects/SocialSciences.svg";
 
 import { ReactComponent as ArrowRightCircleIcon } from "../../../assets/subjects/ArrowRightCircle.svg";
+import { ReactComponent as ComputerApplicationsIcon } from "../../../assets/subjects/ComputerApplications.svg";
 import style from "./practiceBySubject.module.css";
 
 // import axios from "axios";
@@ -36,17 +37,25 @@ const PracticeBySubject = (props) => {
 			case 26:
 				return <ScienceIcon />;
 			case 33:
+			case 42:
 				return <HindiIcon />;
 			case 20:
 			case 35:
+			case 48:
+			case 46:
+			case 47:
 				return <SocialSciencesIcon />;
 			case 36:
 			case 37:
 			case 38:
 			case 41:
+			case 43:
+			case 45:
 				return <EnglishIcon />;
 			case 34:
 				return <KannadaIcon />;
+			case 44:
+				return <ComputerApplicationsIcon />;
 			default:
 				// console.log(id);
 				return <KannadaIcon />;
