@@ -8,6 +8,7 @@ import { ReactComponent as RevisionNotesIcon } from "../../assets/read/Group 163
 import { ReactComponent as PastYearIcon } from "../../assets/read/Group 1633.svg";
 import { ReactComponent as FormulasIcon } from "../../assets/read/Group 1634.svg";
 import { ReactComponent as NcertBooksIcon } from "../../assets/read/Group 1650.svg";
+import { ReactComponent as SolutionsIcon } from "../../assets/read/Solutions.svg";
 
 import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
 import style from "./read.module.css";
@@ -48,6 +49,8 @@ const Read = () => {
 				return <NcertBooksIcon />;
 			case "Formulas":
 				return <FormulasIcon />;
+			case "Solutions":
+				return <SolutionsIcon />;
 			default:
 				break;
 		}
@@ -55,12 +58,13 @@ const Read = () => {
 
 	const listBlock = () => {
 		return Object.values(types).map(({ name }) => (
-			<div className={style.readBlock} key={name}>
+			<div
+				className={style.readBlock}
+				key={name}
+				onClick={() => history.push(`/admin/read/${name}`)}
+			>
 				{getIconByName(name)}
-				<button
-					className={style.readArrow}
-					onClick={() => history.push(`/admin/read/${name}`)}
-				>
+				<button className={style.readArrow}>
 					<ArrowRightCircleIcon style={{ height: "7.3rem", width: "7.3rem" }} />
 				</button>
 			</div>
