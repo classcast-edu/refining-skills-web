@@ -16,6 +16,7 @@ export const fetchReadables = () => async (dispatch, getState) => {
 		dispatch({ type: FETCH_READ_SUCCESS, payload: res.data.data });
 	} catch (error) {
 		console.error(error);
+
 		dispatch({ type: FETCH_READ_FAIL, payload: error.message });
 	}
 };
