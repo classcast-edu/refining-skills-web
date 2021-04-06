@@ -2,6 +2,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 //read routes
 import Read from "views/Read/Read";
+import ReadStandAloneBook from "views/Read/ReadStandAloneBook";
 import FilteredRead from "views/Read/FilteredRead";
 import ReadBook from "views/Read/ReadBook";
 
@@ -26,6 +27,9 @@ const DashBoardLayout = () => {
 			<SideNav />
 			<main className="mainContent" id="mainContent">
 				<Switch>
+					<Route path="/admin/read/book">
+						<ReadStandAloneBook />
+					</Route>
 					<Route path="/admin/read/:id/:bookId">
 						<ReadBook />
 					</Route>
