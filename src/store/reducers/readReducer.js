@@ -24,6 +24,10 @@ const initialState = {
 			id: 5,
 			name: "Formulas",
 		},
+		6: {
+			id: 6,
+			name: "Solutions",
+		},
 	},
 	loading: false,
 	data: {},
