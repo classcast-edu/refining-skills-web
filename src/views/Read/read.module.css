@@ -11,6 +11,11 @@
 	/* margin-bottom: 2rem; */
 	width: 30.5rem;
 	height: 24rem;
+	cursor: pointer !important;
+	transition: all 0.3s ease-in;
+}
+.readBlock:hover {
+	transform: translateY(-2%);
 }
 .readArrow {
 	position: absolute;
