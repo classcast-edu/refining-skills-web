@@ -131,7 +131,7 @@
 	font-weight: 600;
 	font-size: 2.4rem;
 	line-height: 2.8rem;
-
+	padding-right: 1rem;
 	/* Bluish grey */
 	color: var(--info);
 }
