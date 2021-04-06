@@ -10,7 +10,7 @@ import Lottie from "react-lottie";
 
 import axios from "axios";
 import Collapsible from "react-collapsible";
-import { FaClipboardList, FaPlay } from "react-icons/fa";
+import { FaBook, FaClipboardList, FaPlay } from "react-icons/fa";
 import style from "./practiceBySubject.module.css";
 import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
@@ -22,6 +22,7 @@ import * as animationData2 from "assets/lottie/hi2.json";
 import "./collapse.css";
 
 import useQuery from "components/hooks/useQuery";
+import { RiBook2Fill } from "react-icons/ri";
 
 const defaultOptionsProgress = {
 	loop: false,
@@ -58,14 +59,21 @@ const CollapseContent = (props) => {
 							<>
 								<li
 									onClick={() => {
-										history.push(`${match.url}/${url}`);
+										parseInt(block_type) === 4
+											? history.push(`${match.url}/${url}`)
+											: history.push(`/admin/read/book?url=${url}`);
 									}}
 									key={chapter_id}
+									style={{ display: "flex", alignItems: "center" }}
 								>
 									{parseInt(block_type) === 4 ? (
 										<FaClipboardList />
 									) : (
-										<FaPlay />
+										<span
+											style={{ marginRight: "1rem", verticalAlign: "bottom" }}
+										>
+											<FaBook />
+										</span>
 									)}
 									{display_name}
 								</li>
