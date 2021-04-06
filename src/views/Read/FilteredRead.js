@@ -22,9 +22,11 @@ const FilteredRead = () => {
 		dispatch(fetchSubjects());
 		dispatch(fetchReadables());
 		return () => {
+			window.localStorage.setItem("readables", readablesList);
 			setReadablesList([]);
 		};
 	}, []);
+
 	const subjects = useSelector((state) => Object.values(state.subjects));
 
 	const { loading, error, types, data } = useSelector(
@@ -84,20 +86,24 @@ const FilteredRead = () => {
 	];
 
 	const listReadables = () => {
-		return readablesList.map((readable) => {
-			return (
-				<div
-					key={readable.id}
-					className={styles.filteredReadable}
-					style={{
-						backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-					}}
-					onClick={() => history.push(`/admin/read/${id}/${readable.id}`)}
-				>
-					{readable.display_name}
-				</div>
-			);
-		});
+		return (
+			readablesList &&
+			readablesList.map((readable) => {
+				return (
+					<div
+						key={readable.id}
+						className={styles.filteredReadable}
+						style={{
+							backgroundColor:
+								colors[Math.floor(Math.random() * colors.length)],
+						}}
+						onClick={() => history.push(`/admin/read/${id}/${readable.id}`)}
+					>
+						{readable.display_name}
+					</div>
+				);
+			})
+		);
 	};
 	const resetReadables = () => {
 		// console.log(books);
@@ -163,6 +169,10 @@ const FilteredRead = () => {
 			/>
 		);
 	};
+
+	useEffect(() => {
+		resetReadables();
+	}, [loading]);
 
 	return loading ? (
 		<CustomSpinner />

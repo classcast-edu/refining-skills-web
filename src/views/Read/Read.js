@@ -24,10 +24,8 @@ const Read = () => {
 	);
 
 	useEffect(() => {
-		if (!isMount) {
-			dispatch(fetchReadables());
-		}
-	}, []);
+		// dispatch(fetchReadables());
+	}, [dispatch]);
 
 	// useEffect(() => {
 	// 	Object.values(types).map(({ name }) =>

@@ -51,7 +51,7 @@ const ReadBook = () => {
 					position: "absolute",
 					zIndex: 1000,
 				}}
-				onClick={() => history.push(`/admin/read/${id}`)}
+				onClick={() => history.goBack()}
 			>
 				<ArrowRightCircleIcon />
 			</button>
