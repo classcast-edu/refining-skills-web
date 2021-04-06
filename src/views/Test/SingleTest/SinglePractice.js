@@ -14,6 +14,7 @@ import PracticeResults from "./PracticeResults";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
+import QuestionsScroll from "./QuestionsScroll";
 const SingleTest = () => {
 	const { id, courseId, testId } = useParams();
 
@@ -175,7 +176,7 @@ const SingleTest = () => {
 		});
 	};
 
-	const changeQuestion = (value) => {
+	const changeQuestion = (value, answer, shouldNotScroll) => {
 		if (currentQuestionIndex + value === testData.length) {
 			return endTestHandler();
 		}
@@ -210,7 +211,6 @@ const SingleTest = () => {
 			);
 		}
 		return formikRef.current && formikRef.current.resetForm();
-
 		// !shouldNotScroll && executeScroll();
 	};
 
@@ -253,6 +253,18 @@ const SingleTest = () => {
 		} else {
 			submitProps.setErrors({ option: values.option });
 		}
+	};
+
+	const questionButtonRef = useRef(null);
+	const dummyRef = useRef(null);
+	const executeScroll = () => {
+		// console.log(questionButtonRef.current);
+		questionButtonRef.current &&
+			questionButtonRef.current.scrollIntoView({
+				behavior: "smooth",
+				block: "center",
+				inline: "center",
+			});
 	};
 
 	const [open, setOpen] = useState(false);
@@ -348,6 +360,14 @@ const SingleTest = () => {
 				{(formik) => {
 					return (
 						<Form>
+							<QuestionsScroll
+								dummyRef={dummyRef}
+								changeQuestion={changeQuestion}
+								questionButtonRef={questionButtonRef}
+								questionsLength={testData.length}
+								currentQuestionIndex={currentQuestionIndex}
+							/>
+
 							<div className={style.timerContainer}>
 								{testMeta.duration_minutes && (
 									<TimerClock
@@ -362,7 +382,7 @@ const SingleTest = () => {
 									className={style.endButton}
 									onClick={stopTime ? onOpenModal : endTestHandler}
 								>
-									{stopTime ? "View Results" : "End"}
+									End
 								</button>
 							</div>
 							<div className={style.container}>
