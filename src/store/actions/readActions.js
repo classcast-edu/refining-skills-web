@@ -3,6 +3,7 @@ import { FETCH_READ_SUCCESS } from "store/constants/readConstants";
 import { FETCH_READ_FAIL } from "store/constants/readConstants";
 import { FETCH_READ_REQUEST } from "store/constants/readConstants";
 import _ from "lodash";
+
 export const fetchReadables = () => async (dispatch, getState) => {
 	const instituteId = getState().instituteId;
 	dispatch({ type: FETCH_READ_REQUEST });
@@ -14,6 +15,7 @@ export const fetchReadables = () => async (dispatch, getState) => {
 		);
 		dispatch({ type: FETCH_READ_SUCCESS, payload: res.data.data });
 	} catch (error) {
+		console.error(error);
 		dispatch({ type: FETCH_READ_FAIL, payload: error.message });
 	}
 };
