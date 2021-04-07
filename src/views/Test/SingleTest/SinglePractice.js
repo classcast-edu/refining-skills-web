@@ -1,7 +1,7 @@
 import FormikControl from "components/Formik/FormikControl";
 import { Form, Formik } from "formik";
 
-import style from "./singlePractice.module.css";
+import style from "./singleTest.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import _ from "lodash";
