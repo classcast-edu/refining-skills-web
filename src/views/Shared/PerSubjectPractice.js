@@ -8,11 +8,12 @@ import { fetchSubjects } from "store/actions/practiceBySubjectActions";
 import CustomSpinner from "components/CustomSpinner";
 import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
 import getColorById from "components/helpers/getColorById";
+import keyBy from "lodash/keyBy";
 
 const PerSubjectPractice = () => {
 	const { id } = useParams();
 	const instituteId = useSelector((state) => state.instituteId);
-	const subjects = useSelector((state) => state.subjects);
+	const subjects = useSelector((state) => keyBy(state.subjects, "id"));
 	const [data, setData] = useState([]);
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
