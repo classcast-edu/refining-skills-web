@@ -56,7 +56,16 @@ const ReadStandAloneBook = (props) => {
 					))}
 				</Document>
 			) : (
-				<h1 className="reactPdf_error text-align-center primary">No content</h1>
+				<h1
+					className="reactPdf_error text-align-center primary "
+					style={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "center",
+					}}
+				>
+					No content
+				</h1>
 			)}
 		</div>
 	);
