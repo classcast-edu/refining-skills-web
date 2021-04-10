@@ -14,31 +14,37 @@ const ReadBook = () => {
 	const { id, bookId } = useParams();
 	const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
-	const { loading, error, types, data } = useSelector(
-		(state) => state.readables
-	);
+	const { loading, types, data } = useSelector((state) => state.readables);
 	const [url, setUrl] = useState("");
+	const [error, setError] = useState(null);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	useEffect(() => {
 		dispatch(fetchReadables());
-	}, []);
-
-	const fetchBook = async () => {
-		const res = await axios.post(
-			`https://classcast-198812.appspot.com/content/generateSignedUrl/`,
-			{
-				path: data[bookId].path,
-			}
-		);
-
-		setUrl(res.data);
-	};
+	}, [dispatch]);
 
 	useEffect(() => {
-		fetchBook();
-	}, []);
+		const fetchBook = async () => {
+			try {
+				const res = await axios.post(
+					`https://classcast-198812.appspot.com/content/generateSignedUrl/`,
+					{
+						path: data[bookId]?.path,
+					}
+				);
+
+				setUrl(res.data);
+			} catch (error) {
+				setError(true);
+			}
+		};
+
+		if (!loading) {
+			fetchBook();
+		}
+	}, [loading, bookId, data]);
+
 	function onDocumentLoadSuccess({ numPages, ...rest }) {
 		setNumPages(numPages);
 	}
@@ -55,7 +61,12 @@ const ReadBook = () => {
 			>
 				<ArrowRightCircleIcon />
 			</button>
-			{url || loading ? (
+			{error && (
+				<h1 className="reactPdf_error text-align-center primary">
+					Something went wrong! Please try again
+				</h1>
+			)}
+			{url && !loading ? (
 				<Document
 					file={url}
 					onLoadSuccess={onDocumentLoadSuccess}

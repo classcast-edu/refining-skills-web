@@ -15,7 +15,7 @@ const ReadStandAloneBook = (props) => {
 	const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
 	const query = useQuery();
-	const [url, setUrl] = useState(query.get("url"));
+	const [url] = useState(query.get("url"));
 
 	const history = useHistory();
 
@@ -56,12 +56,8 @@ const ReadStandAloneBook = (props) => {
 					))}
 				</Document>
 			) : (
-				<CustomSpinner />
+				<h1 className="reactPdf_error text-align-center primary">No content</h1>
 			)}
-
-			{/* <p>
-				Page {pageNumber} of {numPages}
-			</p> */}
 		</div>
 	);
 };

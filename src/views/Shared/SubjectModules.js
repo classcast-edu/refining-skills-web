@@ -48,7 +48,7 @@ const CollapseContent = (props) => {
 
 	const match = useRouteMatch();
 	return (
-		<ul key={props.key}>
+		<ul {...props}>
 			{data &&
 				data.map(
 					(
@@ -61,7 +61,9 @@ const CollapseContent = (props) => {
 									onClick={() => {
 										parseInt(block_type) === 4
 											? history.push(`${match.url}/${url}`)
-											: history.push(`/admin/read/book?url=${url}`);
+											: history.push(
+													`/admin/read/book?url=${encodeURIComponent(url)}`
+											  );
 									}}
 									key={chapter_id}
 									style={{ display: "flex", alignItems: "center" }}
