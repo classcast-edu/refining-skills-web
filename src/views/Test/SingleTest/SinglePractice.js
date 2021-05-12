@@ -15,6 +15,12 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
 import QuestionsScroll from "./QuestionsScroll";
+
+const QUESTION_TYPES = {
+	FILL: 4,
+	TRUE_FALSE: 5,
+};
+
 const SingleTest = () => {
 	const { id, courseId, testId } = useParams();
 
@@ -38,7 +44,9 @@ const SingleTest = () => {
 	const [disableSolutionButton, setDisableSolutionButton] = useState(true);
 	const [correctAnswer, setCorrectAnswer] = useState(null);
 	const [initialValues, setInitialValues] = useState({
-		option: Number(studentAnswers[Number(currentQuestionIndex)]),
+		option:
+			testData[currentQuestionIndex] &&
+			studentAnswers[Number(currentQuestionIndex)],
 	});
 	const instituteId = useSelector((state) => state.instituteId);
 
@@ -75,7 +83,9 @@ const SingleTest = () => {
 		//if user has answered a question it is stored in an object
 		//which is accessed whenever that question is again viewed
 		setInitialValues({
-			option: Number(studentAnswers[Number(currentQuestionIndex)]),
+			option:
+				testData[currentQuestionIndex] &&
+				studentAnswers[Number(currentQuestionIndex)],
 		});
 		setCorrectAnswer(null);
 		setShowCorrectAnswer(false);
@@ -86,6 +96,9 @@ const SingleTest = () => {
 	const [studentTestData, setStudentTestData] = useState({});
 	const handleStudentTestData = () => {
 		const {
+			question_type,
+			fitb_correct,
+			is_True,
 			is_option_1_correct,
 			is_option_2_correct,
 			is_option_3_correct,
@@ -99,35 +112,47 @@ const SingleTest = () => {
 			is_option_3_correct,
 			is_option_4_correct,
 		];
-
 		const answer = formikRef.current && formikRef.current.values.option;
 		if (!answer) return null;
-		else if (options[Number(answer) - 1]) {
-			setStudentTestData((ans) => {
-				return {
-					...ans,
-					[Number(currentQuestionIndex)]: {
-						correct: true,
-						attempt: true,
-						max_marks,
-						negative_marks,
-					},
-				};
-			});
+		if (question_type == QUESTION_TYPES.FILL) {
+			const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
+			if (answer.trim().toLowerCase() === fillAnswer) {
+				return studentTestDataHelper(true, true, max_marks, negative_marks);
+			} else {
+				return studentTestDataHelper(false, true, max_marks, negative_marks);
+			}
+		} else if (question_type == QUESTION_TYPES.TRUE_FALSE) {
+			console.log(answer, is_True);
+			return studentTestDataHelper(
+				is_True ? "2" == answer : "1" == answer,
+				true,
+				max_marks,
+				negative_marks
+			);
+		} else if (options[Number(answer) - 1]) {
+			return studentTestDataHelper(true, true, max_marks, negative_marks);
 		} else {
-			setStudentTestData((ans) => {
-				return {
-					...ans,
-					[Number(currentQuestionIndex)]: {
-						correct: false,
-						attempt: true,
-						max_marks,
-						negative_marks,
-					},
-				};
-			});
+			return studentTestDataHelper(false, true, max_marks, negative_marks);
 		}
 	};
+
+	const studentTestDataHelper = (
+		correct,
+		attempt = true,
+		max_marks,
+		negative_marks
+	) =>
+		setStudentTestData((ans) => {
+			return {
+				...ans,
+				[Number(currentQuestionIndex)]: {
+					correct,
+					attempt,
+					max_marks,
+					negative_marks,
+				},
+			};
+		});
 
 	const [stats, setStats] = useState({
 		correct: 0,
@@ -135,6 +160,7 @@ const SingleTest = () => {
 		score: 0,
 		totalQuestions: 0,
 	});
+
 	const calculateStats = () => {
 		const { h, m, s } = timerClockRef.current.state;
 		setStats(() => {
@@ -184,7 +210,7 @@ const SingleTest = () => {
 			setStudentAnswers((ans) => {
 				return {
 					...ans,
-					[currentQuestionIndex]: Number(formikRef.current.values.option),
+					[currentQuestionIndex]: formikRef.current.values.option,
 				};
 			});
 		}
@@ -192,14 +218,8 @@ const SingleTest = () => {
 			handleStudentTestData();
 		}
 		setCurrentQuestionIndex(currentQuestionIndex + value);
-		const {
-			option_1,
-			option_2,
-			option_3,
-			option_4,
-			question,
-			solution,
-		} = testData[currentQuestionIndex + value];
+		const { option_1, option_2, option_3, option_4, question, solution } =
+			testData[currentQuestionIndex + value];
 		//putting 4 options in an array and setting it whenever question changes
 		setQuestion(question);
 		setSolution(solution);
@@ -224,6 +244,9 @@ const SingleTest = () => {
 			return { ...ans, [currentQuestionIndex]: Number(values.option) };
 		});
 		const {
+			is_True,
+			fitb_correct,
+			question_type,
 			is_option_1_correct,
 			is_option_2_correct,
 			is_option_3_correct,
@@ -245,6 +268,21 @@ const SingleTest = () => {
 		setCorrectAnswer(
 			_.findIndex(checkOptions, (option) => option === true) + 1
 		);
+		const answer = values.option;
+
+		if (question_type == QUESTION_TYPES.FILL) {
+			const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
+			if (answer.trim().toLowerCase() === fillAnswer) {
+				return setShowCorrectAnswer(true);
+			}
+		}
+		if (
+			question_type == QUESTION_TYPES.TRUE_FALSE && is_True
+				? "2" == answer
+				: "1" == answer
+		) {
+			return setShowCorrectAnswer(true);
+		}
 		if (checkOptions[Number(values.option) - 1]) {
 			setCorrectAnswer(
 				_.findIndex(checkOptions, (option) => option === true) + 1
@@ -306,7 +344,7 @@ const SingleTest = () => {
 	};
 	useEffect(() => {
 		if (showSolution) {
-			solutionRef.current.scrollIntoView("alignToTop");
+			solutionRef.current?.scrollIntoView("alignToTop");
 		}
 	}, [showSolution]);
 	useEffect(() => {
@@ -353,6 +391,7 @@ const SingleTest = () => {
 
 			<Formik
 				initialValues={initialValues}
+				key={currentQuestionIndex}
 				enableReinitialize
 				onSubmit={onSubmit}
 				innerRef={formikRef}
@@ -396,14 +435,39 @@ const SingleTest = () => {
 										}}
 									></span>
 								</div>
-								<FormikControl
-									control="customRadio"
-									name={"option"}
-									options={options}
-									showCorrectAnswer={showCorrectAnswer}
-									correctAnswer={correctAnswer}
-									// disabled={showCorrectAnswer}
-								/>
+								{testData[currentQuestionIndex] &&
+								testData[currentQuestionIndex].question_type ==
+									QUESTION_TYPES.FILL ? (
+									<FormikControl
+										control="customInput"
+										name="option"
+										disabled={showSolution}
+										solution={testData[currentQuestionIndex].fitb_correct}
+									/>
+								) : testData[currentQuestionIndex].question_type ==
+								  QUESTION_TYPES.TRUE_FALSE ? (
+									<FormikControl
+										control="customRadio"
+										name={"option"}
+										options={["False", "True"]}
+										showCorrectAnswer={showCorrectAnswer}
+										correctAnswer={
+											testData[currentQuestionIndex].is_True ? "2" : "1"
+										}
+
+										// disabled={showCorrectAnswer}
+									/>
+								) : (
+									<FormikControl
+										control="customRadio"
+										name={"option"}
+										options={options}
+										showCorrectAnswer={showCorrectAnswer}
+										correctAnswer={correctAnswer}
+										// disabled={showCorrectAnswer}
+									/>
+								)}
+
 								{showSolution && solution && (
 									<div className={style.solutionBox} ref={solutionRef}>
 										<h3 className={style.solutionText}>Solution</h3>
@@ -420,9 +484,13 @@ const SingleTest = () => {
 								<button
 									className={style.previousButton}
 									disabled={
-										testData[currentQuestionIndex] &&
-										testData[currentQuestionIndex].question_type == 1 &&
-										disableSolutionButton
+										(testData[currentQuestionIndex] &&
+											testData[currentQuestionIndex].question_type == 1) ||
+										testData[currentQuestionIndex].question_type ==
+											QUESTION_TYPES.FILL ||
+										(testData[currentQuestionIndex].question_type ==
+											QUESTION_TYPES.TRUE_FALSE &&
+											disableSolutionButton)
 									}
 									type="button"
 									onClick={() => {
@@ -435,7 +503,11 @@ const SingleTest = () => {
 								{/* if question type is not 1 then show next button */}
 								{showCorrectAnswer ||
 								(testData[currentQuestionIndex] &&
-									testData[currentQuestionIndex].question_type != 1) ? (
+									testData[currentQuestionIndex].question_type != 1 &&
+									testData[currentQuestionIndex].question_type !=
+										QUESTION_TYPES.FILL &&
+									testData[currentQuestionIndex].question_type !=
+										QUESTION_TYPES.TRUE_FALSE) ? (
 									<button
 										className={style.nextButton}
 										type="button"

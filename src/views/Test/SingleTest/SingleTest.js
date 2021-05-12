@@ -13,6 +13,10 @@ import TestResults from "./TestResults";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
+const QUESTION_TYPES = {
+	FILL: 4,
+	TRUE_FALSE: 5,
+};
 
 const SingleTest = () => {
 	const [options, setOptions] = useState([]);
@@ -34,7 +38,9 @@ const SingleTest = () => {
 
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [initialValues, setInitialValues] = useState({
-		option: Number(studentAnswers[Number(currentQuestionIndex)]),
+		option:
+			testData[currentQuestionIndex] &&
+			studentAnswers[Number(currentQuestionIndex)],
 	});
 	const instituteId = useSelector((state) => state.instituteId);
 
@@ -71,7 +77,9 @@ const SingleTest = () => {
 		//if user has answered a question it iw stored in an object
 		//which is accessed whenever that question is again viewed
 		setInitialValues({
-			option: Number(studentAnswers[Number(currentQuestionIndex)]),
+			option:
+				testData[currentQuestionIndex] &&
+				studentAnswers[Number(currentQuestionIndex)],
 		});
 	}, [currentQuestionIndex]);
 	useEffect(() => {
@@ -81,6 +89,9 @@ const SingleTest = () => {
 	const [studentTestData, setStudentTestData] = useState({});
 	const handleStudentTestData = () => {
 		const {
+			question_type,
+			fitb_correct,
+			is_True,
 			is_option_1_correct,
 			is_option_2_correct,
 			is_option_3_correct,
@@ -97,32 +108,50 @@ const SingleTest = () => {
 
 		const answer = formikRef.current && formikRef.current.values.option;
 		if (!answer) return null;
-		else if (options[Number(answer) - 1]) {
-			setStudentTestData((ans) => {
-				return {
-					...ans,
-					[Number(currentQuestionIndex)]: {
-						correct: true,
-						attempt: true,
-						max_marks,
-						negative_marks,
-					},
-				};
-			});
+		if (question_type == QUESTION_TYPES.FILL) {
+			const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
+			if (answer.trim().toLowerCase() === fillAnswer) {
+				return studentTestDataHelper(true, true, max_marks, negative_marks);
+			} else {
+				return studentTestDataHelper(false, true, max_marks, negative_marks);
+			}
+		}
+		if (
+			question_type == QUESTION_TYPES.TRUE_FALSE && is_True
+				? "2" == answer
+				: "1" == answer
+		) {
+			return studentTestDataHelper(
+				is_True ? "2" == answer : "1" == answer,
+				true,
+				max_marks,
+				negative_marks
+			);
+		}
+		if (options[Number(answer) - 1]) {
+			return studentTestDataHelper(true, true, max_marks, negative_marks);
 		} else {
-			setStudentTestData((ans) => {
-				return {
-					...ans,
-					[Number(currentQuestionIndex)]: {
-						correct: false,
-						attempt: true,
-						max_marks,
-						negative_marks,
-					},
-				};
-			});
+			return studentTestDataHelper(false, true, max_marks, negative_marks);
 		}
 	};
+
+	const studentTestDataHelper = (
+		correct,
+		attempt = true,
+		max_marks,
+		negative_marks
+	) =>
+		setStudentTestData((ans) => {
+			return {
+				...ans,
+				[Number(currentQuestionIndex)]: {
+					correct,
+					attempt,
+					max_marks,
+					negative_marks,
+				},
+			};
+		});
 
 	const [stats, setStats] = useState({
 		correct: 0,
@@ -130,6 +159,7 @@ const SingleTest = () => {
 		score: 0,
 		totalQuestions: 0,
 	});
+
 	const calculateStats = () => {
 		const { m, s } = timerClockRef.current.state;
 		setStats(() => {
@@ -183,7 +213,7 @@ const SingleTest = () => {
 			setStudentAnswers((ans) => {
 				return {
 					...ans,
-					[currentQuestionIndex]: Number(formikRef.current.values.option),
+					[currentQuestionIndex]: formikRef.current.values.option,
 				};
 			});
 		}
@@ -191,14 +221,8 @@ const SingleTest = () => {
 			handleStudentTestData();
 		}
 		setCurrentQuestionIndex(currentQuestionIndex + value);
-		const {
-			option_1,
-			option_2,
-			option_3,
-			option_4,
-			question,
-			solution,
-		} = testData[currentQuestionIndex + value];
+		const { option_1, option_2, option_3, option_4, question, solution } =
+			testData[currentQuestionIndex + value];
 		//putting 4 options in an array and setting it whenever question changes
 		setQuestion(question);
 		setSolution(solution);
@@ -222,6 +246,9 @@ const SingleTest = () => {
 			return { ...ans, [currentQuestionIndex]: Number(values.option) };
 		});
 		const {
+			question_type,
+			fitb_correct,
+			is_True,
 			is_option_1_correct,
 			is_option_2_correct,
 			is_option_3_correct,
@@ -236,8 +263,25 @@ const SingleTest = () => {
 
 		// changeQuestion(1);
 		// submitProps.resetForm();
-		if (checkOptions[Number(values.option) - 1]) {
-			setCorrectAnswers((ca) => ca + 1);
+		const answer = values.option;
+		if (question_type == QUESTION_TYPES.FILL) {
+			console.log(answer, "fill");
+
+			const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
+			if (answer.trim().toLowerCase() === fillAnswer) {
+				return setCorrectAnswers((ca) => ca + 1);
+			}
+		} else if (
+			question_type == QUESTION_TYPES.TRUE_FALSE && is_True
+				? "2" == answer
+				: "1" == answer
+		) {
+			console.log(answer, is_True);
+			return setCorrectAnswers((ca) => ca + 1);
+		} else if (checkOptions[Number(answer) - 1]) {
+			console.log(answer, "mcq");
+
+			return setCorrectAnswers((ca) => ca + 1);
 		}
 		// submitProps.resetForm();
 		changeQuestion(1);
@@ -340,6 +384,7 @@ const SingleTest = () => {
 			</Modal>
 
 			<Formik
+				key={currentQuestionIndex}
 				initialValues={initialValues}
 				enableReinitialize
 				onSubmit={onSubmit}
@@ -385,11 +430,30 @@ const SingleTest = () => {
 									></span>
 								</div>
 
-								<FormikControl
+								{testData[currentQuestionIndex] &&
+								testData[currentQuestionIndex].question_type ==
+									QUESTION_TYPES.FILL ? (
+									<FormikControl control="customInput" name="option" />
+								) : testData[currentQuestionIndex].question_type ==
+								  QUESTION_TYPES.TRUE_FALSE ? (
+									<FormikControl
+										control="customRadio"
+										name={"option"}
+										options={["False", "True"]}
+									/>
+								) : (
+									<FormikControl
+										control="customRadio"
+										name={"option"}
+										options={options}
+									/>
+								)}
+								{/* <FormikControl
 									control="customRadio"
 									name={"option"}
 									options={options}
-								/>
+								/> */}
+
 								{showSolution && solution && (
 									<div className={style.solutionBox} ref={solutionRef}>
 										<h3 className={style.solutionText}>Solution</h3>
