@@ -2,8 +2,15 @@ import { Field, ErrorMessage } from "formik";
 import TextError from "./TextError";
 import style from "./customInput.module.css";
 import { FaCheck, FaTimes } from "react-icons/fa";
-
+import React from "react";
 function CustomInput(props) {
+	const ref = React.createRef(null);
+
+	//   	const handleMouseOut = (currentRef) => {
+	//     if (document.activeElement === currentRef) {
+	//       console.log("Yesss");
+	//     }
+	//   };
 	const { label, name, solution, ...rest } = props;
 	return (
 		<div className="form-control">
@@ -20,12 +27,13 @@ function CustomInput(props) {
 					let isCorrect = null;
 					// console.log(rest);
 					if (fillAnswer) {
-						if (field?.value?.trim().toLowerCase() === fillAnswer) {
+						if (field?.value?.trim()?.toLowerCase() === fillAnswer) {
 							isCorrect = true;
 						} else {
 							isCorrect = false;
 						}
 					}
+					const show = meta.touched && isCorrect !== null;
 					return (
 						<div className={style.inputBox}>
 							<input
@@ -36,18 +44,13 @@ function CustomInput(props) {
 								className={style.input}
 								style={{
 									border: !isCorrect
-										? meta.touched &&
-										  isCorrect !== null &&
-										  "2px solid var(--danger)"
-										: meta.touched &&
-										  isCorrect !== null &&
-										  "2px solid var(--success)",
+										? show && "2px solid var(--danger)"
+										: show && "2px solid var(--success)",
 								}}
 							/>
 
 							{!isCorrect
-								? meta.touched &&
-								  isCorrect !== null && (
+								? show && (
 										<FaTimes
 											style={{
 												marginLeft: "auto",
@@ -57,8 +60,7 @@ function CustomInput(props) {
 											}}
 										/>
 								  )
-								: meta.touched &&
-								  isCorrect !== null && (
+								: show && (
 										<FaCheck
 											style={{
 												marginLeft: "auto",
