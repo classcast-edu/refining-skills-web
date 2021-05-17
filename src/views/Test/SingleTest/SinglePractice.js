@@ -122,9 +122,9 @@ const SingleTest = () => {
 				return studentTestDataHelper(false, true, max_marks, negative_marks);
 			}
 		} else if (question_type == QUESTION_TYPES.TRUE_FALSE) {
-			console.log(answer, is_True);
+			// console.log(answer, is_True);
 			return studentTestDataHelper(
-				is_True ? "2" == answer : "1" == answer,
+				is_True ? "1" == answer : "2" == answer,
 				true,
 				max_marks,
 				negative_marks
@@ -270,16 +270,19 @@ const SingleTest = () => {
 		);
 		const answer = values.option;
 
+		const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
 		if (question_type == QUESTION_TYPES.FILL) {
-			const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
 			if (answer.trim().toLowerCase() === fillAnswer) {
+				submitProps.setErrors({
+					option: fillAnswer,
+				});
 				return setShowCorrectAnswer(true);
-			}
+			} else submitProps.setErrors({ option: fillAnswer });
 		}
 		if (
 			question_type == QUESTION_TYPES.TRUE_FALSE && is_True
-				? "2" == answer
-				: "1" == answer
+				? "1" == answer
+				: "2" == answer
 		) {
 			return setShowCorrectAnswer(true);
 		}
@@ -289,7 +292,10 @@ const SingleTest = () => {
 			);
 			return setShowCorrectAnswer(true);
 		} else {
-			submitProps.setErrors({ option: values.option });
+			submitProps.setErrors({
+				option:
+					question_type == QUESTION_TYPES.FILL ? fillAnswer : values.option,
+			});
 		}
 	};
 
@@ -406,7 +412,7 @@ const SingleTest = () => {
 								questionsLength={testData.length}
 								currentQuestionIndex={currentQuestionIndex}
 							/>
-
+							{/* {JSON.stringify(formik.errors)} */}
 							<div className={style.timerContainer}>
 								{testMeta.duration_minutes && (
 									<TimerClock
@@ -442,6 +448,7 @@ const SingleTest = () => {
 										control="customInput"
 										name="option"
 										disabled={showSolution}
+										showCorrectAnswer={showCorrectAnswer}
 										solution={testData[currentQuestionIndex].fitb_correct}
 									/>
 								) : testData[currentQuestionIndex].question_type ==
@@ -449,10 +456,10 @@ const SingleTest = () => {
 									<FormikControl
 										control="customRadio"
 										name={"option"}
-										options={["False", "True"]}
+										options={["True", "False"]}
 										showCorrectAnswer={showCorrectAnswer}
 										correctAnswer={
-											testData[currentQuestionIndex].is_True ? "2" : "1"
+											testData[currentQuestionIndex].is_True ? "1" : "2"
 										}
 
 										// disabled={showCorrectAnswer}
@@ -485,12 +492,10 @@ const SingleTest = () => {
 									className={style.previousButton}
 									disabled={
 										(testData[currentQuestionIndex] &&
-											testData[currentQuestionIndex].question_type == 1) ||
-										testData[currentQuestionIndex].question_type ==
-											QUESTION_TYPES.FILL ||
-										(testData[currentQuestionIndex].question_type ==
-											QUESTION_TYPES.TRUE_FALSE &&
-											disableSolutionButton)
+											![...Object.values(QUESTION_TYPES), 1].includes(
+												Number(testData[currentQuestionIndex].question_type)
+											)) ||
+										disableSolutionButton
 									}
 									type="button"
 									onClick={() => {
@@ -502,12 +507,9 @@ const SingleTest = () => {
 								</button>
 								{/* if question type is not 1 then show next button */}
 								{showCorrectAnswer ||
-								(testData[currentQuestionIndex] &&
-									testData[currentQuestionIndex].question_type != 1 &&
-									testData[currentQuestionIndex].question_type !=
-										QUESTION_TYPES.FILL &&
-									testData[currentQuestionIndex].question_type !=
-										QUESTION_TYPES.TRUE_FALSE) ? (
+								![...Object.values(QUESTION_TYPES), 1].includes(
+									Number(testData[currentQuestionIndex].question_type)
+								) ? (
 									<button
 										className={style.nextButton}
 										type="button"

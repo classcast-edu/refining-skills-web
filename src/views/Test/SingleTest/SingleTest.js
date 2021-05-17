@@ -118,11 +118,11 @@ const SingleTest = () => {
 		}
 		if (
 			question_type == QUESTION_TYPES.TRUE_FALSE && is_True
-				? "2" == answer
-				: "1" == answer
+				? "1" == answer
+				: "2" == answer
 		) {
 			return studentTestDataHelper(
-				is_True ? "2" == answer : "1" == answer,
+				is_True ? "1" == answer : "2" == answer,
 				true,
 				max_marks,
 				negative_marks
@@ -273,8 +273,8 @@ const SingleTest = () => {
 			}
 		} else if (
 			question_type == QUESTION_TYPES.TRUE_FALSE && is_True
-				? "2" == answer
-				: "1" == answer
+				? "1" == answer
+				: "2" == answer
 		) {
 			console.log(answer, is_True);
 			return setCorrectAnswers((ca) => ca + 1);
@@ -439,7 +439,7 @@ const SingleTest = () => {
 									<FormikControl
 										control="customRadio"
 										name={"option"}
-										options={["False", "True"]}
+										options={["True", "False"]}
 									/>
 								) : (
 									<FormikControl

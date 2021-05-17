@@ -23,7 +23,10 @@ function CustomInput(props) {
 					form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 					meta,
 				}) => {
-					const fillAnswer = solution?.trim().replace(".", "").toLowerCase();
+					const fillAnswer = errors.option
+						?.trim()
+						.replace(".", "")
+						.toLowerCase();
 					let isCorrect = null;
 					// console.log(rest);
 					if (fillAnswer) {
