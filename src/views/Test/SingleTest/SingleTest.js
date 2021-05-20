@@ -16,6 +16,7 @@ import CustomSpinner from "components/CustomSpinner";
 const QUESTION_TYPES = {
 	FILL: 4,
 	TRUE_FALSE: 5,
+	SUBJECTIVE: 6,
 };
 
 const SingleTest = () => {

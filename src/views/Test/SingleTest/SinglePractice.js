@@ -19,6 +19,7 @@ import QuestionsScroll from "./QuestionsScroll";
 const QUESTION_TYPES = {
 	FILL: 4,
 	TRUE_FALSE: 5,
+	SUBJECTIVE: 6,
 };
 
 const SingleTest = () => {
@@ -59,7 +60,7 @@ const SingleTest = () => {
 			try {
 				setLoading(true);
 				const response = await axios.get(
-					`/content/test_data_v2/${instituteId}/${testId}`
+					`/content/test_data_v2/${instituteId}/${testId}/`
 				);
 				setTestData(response.data.data);
 				setLoading(false);

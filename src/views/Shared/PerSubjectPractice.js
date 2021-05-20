@@ -35,9 +35,6 @@ const PerSubjectPractice = () => {
 		};
 		fetchData();
 	}, []);
-	useEffect(() => {
-		console.log(data);
-	}, [data]);
 
 	return (
 		<>
