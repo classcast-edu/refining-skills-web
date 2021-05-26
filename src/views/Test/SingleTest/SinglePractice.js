@@ -90,7 +90,13 @@ const SingleTest = () => {
 		});
 		setCorrectAnswer(null);
 		setShowCorrectAnswer(false);
-		setDisableSolutionButton(true);
+		if (
+			testData[currentQuestionIndex] &&
+			testData[currentQuestionIndex].question_type == QUESTION_TYPES.SUBJECTIVE
+		) {
+			setDisableSolutionButton(false);
+			setShowCorrectAnswer(true);
+		} else setDisableSolutionButton(true);
 		setShowSolution(false);
 	}, [currentQuestionIndex]);
 
@@ -351,9 +357,14 @@ const SingleTest = () => {
 	};
 	useEffect(() => {
 		if (showSolution) {
-			solutionRef.current?.scrollIntoView("alignToTop");
+			solutionRef.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "nearest",
+				inline: "start",
+			});
 		}
 	}, [showSolution]);
+
 	useEffect(() => {
 		if (questionRef.current) questionRef.current.scrollTop = 0;
 	}, [questionRef, question]);
@@ -462,8 +473,6 @@ const SingleTest = () => {
 										correctAnswer={
 											testData[currentQuestionIndex].is_True ? "1" : "2"
 										}
-
-										// disabled={showCorrectAnswer}
 									/>
 								) : (
 									<FormikControl
@@ -506,7 +515,7 @@ const SingleTest = () => {
 								>
 									View Solution
 								</button>
-								{/* if question type is not 1 then show next button */}
+								{/* OutDated: if question type is not 1 then show next button */}
 								{showCorrectAnswer ||
 								![...Object.values(QUESTION_TYPES), 1].includes(
 									Number(testData[currentQuestionIndex].question_type)
