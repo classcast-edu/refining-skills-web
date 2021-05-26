@@ -45,7 +45,13 @@ input[type="number"] {
 }
 
 .w-70 {
-	width: 70%;
+	width: 100%;
+}
+
+@media all and (min-width: 1280px) {
+	.w-70 {
+		width: 70%;
+	}
 }
 .cursor-pointer {
 	cursor: pointer !important;
