@@ -30,6 +30,7 @@ const initialState = {
 		},
 	},
 	loading: false,
+	loaded: false,
 	data: {},
 	// data: JSON.parse(
 	// 	JSON.stringify(window?.localStorage.getItem("readables") ?? {})
@@ -40,11 +41,16 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
 	switch (type) {
 		case FETCH_READ_REQUEST:
-			return { ...state, loading: true };
+			return { ...state, loading: true, loaded: false };
 		case FETCH_READ_SUCCESS:
-			return { ...state, loading: false, data: _.keyBy(payload, "id") };
+			return {
+				...state,
+				loading: false,
+				loaded: true,
+				data: _.keyBy(payload, "id"),
+			};
 		case FETCH_READ_REQUEST:
-			return { ...state, loading: false, error: payload };
+			return { ...state, loading: false, loaded: false, error: payload };
 		default:
 			return state;
 	}

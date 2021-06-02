@@ -21,7 +21,7 @@ const PerSubjectPractice = () => {
 	const history = useHistory();
 	useEffect(() => {
 		if (_.isEmpty(subjects)) {
-			dispatch(fetchSubjects());
+			//dispatch(fetchSubjects());
 		}
 	}, []);
 	useEffect(() => {

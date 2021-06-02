@@ -24,7 +24,7 @@ const PracticeBySubject = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchSubjects());
+		//dispatch(fetchSubjects());
 	}, []);
 
 	const getIconById = (id) => {

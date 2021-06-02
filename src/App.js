@@ -3,9 +3,11 @@ import Login from "views/Login/Login";
 import DashBoardLayout from "components/Layout/DashBoardLayout";
 import history from "./history";
 import PrivateRoute from "components/PrivateRoute";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import SetProfile from "views/Login/SetProfile";
+import { fetchSubjects } from "store/actions/practiceBySubjectActions";
+import { useEffect } from "react";
 const App = () => {
 	//axios
 	axios.interceptors.request.use(
@@ -29,6 +31,10 @@ const App = () => {
 	axios.defaults.headers["Authorization"] = accessToken;
 	axios.defaults.headers.post["Content-Type"] = "application/json";
 
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(fetchSubjects());
+	}, []);
 	return (
 		<Router history={history}>
 			<Switch>
