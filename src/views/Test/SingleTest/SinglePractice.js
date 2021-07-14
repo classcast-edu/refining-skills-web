@@ -457,6 +457,7 @@ const SingleTest = () => {
                     Q {currentQuestionIndex + 1}{" "}
                   </span>
                   <span
+                    className={style.questionContentContainer}
                     dangerouslySetInnerHTML={{
                       __html: question,
                     }}
