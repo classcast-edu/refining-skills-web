@@ -233,3 +233,7 @@ path:nth-of-type(11) {
   text-align: center;
   font-size: 2em;
 }
+
+.loading {
+  text-align: center;
+}

@@ -161,7 +161,11 @@ const UserProfile = () => {
             instituteGoals.map((data, i) => (
               <button
                 key={i}
-                className={data.id === goals[0].id ? style.btnActive : ""}
+                className={
+                  goals.length > 0 && goals[0].id == data.id
+                    ? style.btnActive
+                    : ""
+                }
                 onClick={() => setGoalApi(data.id)}
               >
                 {data.name}
@@ -169,7 +173,7 @@ const UserProfile = () => {
             ))}
         </div>
       ) : (
-        " "
+        <div className={style.loading}>Loading ...</div>
       )}
     </>
   );
