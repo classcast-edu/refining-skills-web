@@ -129,6 +129,11 @@
   /* font-size: 1.6rem; */
   /* white-space: initial;
 	word-wrap: break-word; */
+  overflow: hidden;
+}
+
+.solution img {
+  max-width: 400px;
 }
 
 .actions {
