@@ -1,0 +1,13 @@
+.searchBox {
+  width: 50%;
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-bottom: 3rem;
+  padding: 5px;
+  height: 5.4rem;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  justify-content: left;
+  outline: none;
+}
