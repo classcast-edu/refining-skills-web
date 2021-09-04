@@ -15,11 +15,33 @@ import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import CustomSpinner from "components/CustomSpinner";
 import QuestionsScroll from "./QuestionsScroll";
+import { toast } from "react-hot-toast";
+import Lottie from "react-lottie";
+import animationData from "assets/lottie/wrong_answer.json";
+import correctAnswerr from "assets/lottie/correct_answer.json";
 
 const QUESTION_TYPES = {
   FILL: 4,
   TRUE_FALSE: 5,
   SUBJECTIVE: 6,
+};
+
+const wrongAnswerLottie = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
+
+const correctAnswerLottie = {
+  loop: true,
+  autoplay: true,
+  animationData: correctAnswerr,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
 };
 
 const SingleTest = () => {
@@ -292,19 +314,80 @@ const SingleTest = () => {
         submitProps.setErrors({
           option: fillAnswer,
         });
+        console.log("CORRECT");
         return setShowCorrectAnswer(true);
-      } else submitProps.setErrors({ option: fillAnswer });
+      } else {
+        submitProps.setErrors({ option: fillAnswer });
+        // If the answer in wrong, show the correct solution
+        console.log("ERROR FAILED");
+        setShowSolution(true);
+        setShowCorrectAnswer(true);
+      }
     }
     if (
       question_type == QUESTION_TYPES.TRUE_FALSE && is_True
         ? "1" == answer
         : "2" == answer
     ) {
+      if (
+        (question_type == QUESTION_TYPES.TRUE_FALSE && is_True
+          ? "1" == answer
+          : "2" == answer) == false
+      ) {
+        toast(
+          <div className="d-flex align-items-center">
+            <span
+              className="font-weight-bolder"
+              style={{ fontSize: "1.2em !important" }}
+            >
+              oops, that's incorrect
+            </span>
+          </div>,
+          {
+            icon: <Lottie options={wrongAnswerLottie} height={60} width={60} />,
+          }
+        );
+      } else {
+        toast(
+          <div className="d-flex align-items-center">
+            <span
+              className="font-weight-bolder"
+              style={{ fontSize: "1.2em !important" }}
+            >
+              You got it; Keep it up
+            </span>
+          </div>,
+          {
+            icon: (
+              <Lottie options={correctAnswerLottie} height={60} width={60} />
+            ),
+          }
+        );
+      }
+
+      // If the answer in wrong, show the correct solution
+      setShowSolution(true);
+      setShowCorrectAnswer(true);
       return setShowCorrectAnswer(true);
     }
     if (checkOptions[Number(values.option) - 1]) {
       setCorrectAnswer(
         _.findIndex(checkOptions, (option) => option === true) + 1
+      );
+      setShowSolution(true);
+      setShowCorrectAnswer(true);
+      toast(
+        <div className="d-flex align-items-center">
+          <span
+            className="font-weight-bolder"
+            style={{ fontSize: "1.2em !important" }}
+          >
+            You got it; Keep it up
+          </span>
+        </div>,
+        {
+          icon: <Lottie options={correctAnswerLottie} height={60} width={60} />,
+        }
       );
       return setShowCorrectAnswer(true);
     } else {
@@ -312,6 +395,22 @@ const SingleTest = () => {
         option:
           question_type == QUESTION_TYPES.FILL ? fillAnswer : values.option,
       });
+      // If the answer in wrong, show the correct solution
+      setShowSolution(true);
+      setShowCorrectAnswer(true);
+      toast(
+        <div className="d-flex align-items-center">
+          <span
+            className="font-weight-bolder"
+            style={{ fontSize: "1.2em !important" }}
+          >
+            oops, that's incorrect
+          </span>
+        </div>,
+        {
+          icon: <Lottie options={wrongAnswerLottie} height={60} width={60} />,
+        }
+      );
     }
   };
 
@@ -508,7 +607,7 @@ const SingleTest = () => {
                 )}
               </div>
               <div className={style.actions}>
-                <button
+                {/* <button
                   className={style.previousButton}
                   disabled={
                     (testData[currentQuestionIndex] &&
@@ -524,7 +623,7 @@ const SingleTest = () => {
                   }}
                 >
                   View Solution
-                </button>
+                </button> */}
                 {/* OutDated: if question type is not 1 then show next button */}
                 {showCorrectAnswer ||
                 ![...Object.values(QUESTION_TYPES), 1].includes(

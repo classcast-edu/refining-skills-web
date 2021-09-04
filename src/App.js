@@ -6,6 +6,7 @@ import PrivateRoute from "components/PrivateRoute";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import SetProfile from "views/Login/SetProfile";
+import { Toaster, resolveValue, toast } from "react-hot-toast";
 const App = () => {
   //axios
   axios.interceptors.request.use(
@@ -32,6 +33,12 @@ const App = () => {
 
   return (
     <Router history={history}>
+      <Toaster
+        position="bottom-right"
+        containerStyle={{
+          fontSize: 18,
+        }}
+      />
       <Switch>
         <PrivateRoute path="/admin" component={DashBoardLayout} />
         <Route path="/auth/login">
