@@ -66,6 +66,7 @@ const SingleTest = () => {
   const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
   const [disableSolutionButton, setDisableSolutionButton] = useState(true);
   const [correctAnswer, setCorrectAnswer] = useState(null);
+  const [disableCheck, setDisableCheck] = useState(false);
   const [initialValues, setInitialValues] = useState({
     option:
       testData[currentQuestionIndex] &&
@@ -244,6 +245,11 @@ const SingleTest = () => {
     if (currentQuestionIndex + value === testData.length) {
       return endTestHandler();
     }
+
+    if (Number(testData[currentQuestionIndex].question_type) === 6) {
+      if (disableCheck) setDisableCheck(false);
+    }
+
     if (formikRef.current && formikRef.current.values.option) {
       setStudentAnswers((ans) => {
         return {
@@ -268,6 +274,7 @@ const SingleTest = () => {
         )
       );
     }
+
     return formikRef.current && formikRef.current.resetForm();
     // !shouldNotScroll && executeScroll();
   };
@@ -277,6 +284,10 @@ const SingleTest = () => {
     if (!values.option && testData[currentQuestionIndex].question_type != 6) {
       return null;
     }
+    if (Number(testData[currentQuestionIndex].question_type) === 6) {
+      setDisableCheck(true);
+    }
+
     //saving user option
     setStudentAnswers((ans) => {
       return { ...ans, [currentQuestionIndex]: Number(values.option) };
@@ -625,24 +636,44 @@ const SingleTest = () => {
                   View Solution
                 </button> */}
                 {/* OutDated: if question type is not 1 then show next button */}
+                {console.log(
+                  "Current Question type :" +
+                    testData[currentQuestionIndex].question_type
+                )}
                 {showCorrectAnswer ||
                 ![...Object.values(QUESTION_TYPES), 1].includes(
                   Number(testData[currentQuestionIndex].question_type)
-                ) ? (
-                  <button
-                    className={style.nextButton}
-                    type="button"
-                    onClick={() => changeQuestion(1)}
-                  >
-                    {currentQuestionIndex + 1 === testData.length ? (
-                      "Submit"
+                ) ||
+                Number(testData[currentQuestionIndex].question_type) === 6 ? (
+                  <>
+                    {Number(testData[currentQuestionIndex].question_type) ===
+                    6 ? (
+                      <button
+                        className={[style.nextButton, style.mr_1].join(" ")}
+                        type="submit"
+                        disabled={disableCheck}
+                      >
+                        Answer/Solution
+                      </button>
                     ) : (
-                      <>
-                        Next
-                        <FaAngleRight />
-                      </>
+                      ""
                     )}
-                  </button>
+
+                    <button
+                      className={[style.nextButton, style.ml_1].join(" ")}
+                      type="button"
+                      onClick={() => changeQuestion(1)}
+                    >
+                      {currentQuestionIndex + 1 === testData.length ? (
+                        "Submit"
+                      ) : (
+                        <>
+                          Next
+                          <FaAngleRight />
+                        </>
+                      )}
+                    </button>
+                  </>
                 ) : (
                   <button className={style.nextButton} type="submit">
                     Check
