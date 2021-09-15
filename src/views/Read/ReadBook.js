@@ -50,7 +50,7 @@ const ReadBook = () => {
   }
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <button
         style={{
           transform: "rotate(180deg)",
@@ -61,6 +61,31 @@ const ReadBook = () => {
       >
         <ArrowRightCircleIcon />
       </button>
+
+      <a
+        style={{
+          position: "absolute",
+          zIndex: "1000",
+          left: "100px",
+          backgroundColor: "white",
+          borderRadius: "100px",
+          padding: "1em 1.4em",
+          fontWeight: "600",
+          margin: "1.2em 0",
+          cursor: "pointer",
+          fontSize: "1.4rem",
+          color: "#ff8058",
+          textDecoration: "none",
+          boxShadow:
+            "rgb(0 0 0 / 1%) 0px 1px 1px, rgb(0 0 0 / 0%) 0px 2px 2px, rgb(0 0 0 / 0%) 0px 4px 4px, rgb(0 0 0 / 5%) 0px 6px 8px, rgb(0 0 0 / 8%) 0px 8px 22px",
+        }}
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        download
+      >
+        Download PDF
+      </a>
       {error && (
         <h1 className="reactPdf_error text-align-center primary">
           Something went wrong! Please try again
