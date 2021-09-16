@@ -325,6 +325,21 @@ const SingleTest = () => {
         submitProps.setErrors({
           option: fillAnswer,
         });
+        toast(
+          <div className="d-flex align-items-center">
+            <span
+              className="font-weight-bolder"
+              style={{ fontSize: "1.2em !important" }}
+            >
+              You got it; Keep it up
+            </span>
+          </div>,
+          {
+            icon: (
+              <Lottie options={correctAnswerLottie} height={60} width={60} />
+            ),
+          }
+        );
         console.log("CORRECT");
         return setShowCorrectAnswer(true);
       } else {
@@ -342,7 +357,19 @@ const SingleTest = () => {
         : "2" == answer
     ) {
       console.log("TRUE/FALSE");
-
+      toast(
+        <div className="d-flex align-items-center">
+          <span
+            className="font-weight-bolder"
+            style={{ fontSize: "1.2em !important" }}
+          >
+            You got it; Keep it up
+          </span>
+        </div>,
+        {
+          icon: <Lottie options={correctAnswerLottie} height={60} width={60} />,
+        }
+      );
       // if (
       //     (question_type == QUESTION_TYPES.SUBJECTIVE && is_True
       //       ? "1" == answer
