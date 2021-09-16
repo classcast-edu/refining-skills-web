@@ -335,52 +335,52 @@ const SingleTest = () => {
         setShowCorrectAnswer(true);
       }
     }
+    console.log("QUESTION TYPE", question_type);
     if (
       question_type == QUESTION_TYPES.TRUE_FALSE && is_True
         ? "1" == answer
         : "2" == answer
     ) {
-      if (
-        (question_type == QUESTION_TYPES.TRUE_FALSE && is_True
-          ? "1" == answer
-          : "2" == answer) == false
-      ) {
-        toast(
-          <div className="d-flex align-items-center">
-            <span
-              className="font-weight-bolder"
-              style={{ fontSize: "1.2em !important" }}
-            >
-              oops, that's incorrect
-            </span>
-          </div>,
-          {
-            icon: <Lottie options={wrongAnswerLottie} height={60} width={60} />,
-          }
-        );
-      } else {
-        toast(
-          <div className="d-flex align-items-center">
-            <span
-              className="font-weight-bolder"
-              style={{ fontSize: "1.2em !important" }}
-            >
-              You got it; Keep it up
-            </span>
-          </div>,
-          {
-            icon: (
-              <Lottie options={correctAnswerLottie} height={60} width={60} />
-            ),
-          }
-        );
-      }
+      console.log("TRUE/FALSE");
+
+      // if (
+      //     (question_type == QUESTION_TYPES.SUBJECTIVE && is_True
+      //       ? "1" == answer
+      //       : "2" == answer) == false
+      //   ) {
+      //     console.log("SUBJECTIVE");
+      //   } else {
+      //     console.log("ELSE BLOCK");
+      //     toast(
+      //       <div className="d-flex align-items-center">
+      //         <span
+      //           className="font-weight-bolder"
+      //           style={{ fontSize: "1.2em !important" }}
+      //         >
+      //           You got it; Keep it up
+      //         </span>
+      //       </div>,
+      //       {
+      //         icon: (
+      //           <Lottie options={correctAnswerLottie} height={60} width={60} />
+      //         ),
+      //       }
+      //     );
+      //   }
 
       // If the answer in wrong, show the correct solution
       setShowSolution(true);
       setShowCorrectAnswer(true);
       return setShowCorrectAnswer(true);
     }
+
+    if (question_type == QUESTION_TYPES.SUBJECTIVE) {
+      console.log("SUBJECTIVE");
+      setShowSolution(true);
+      setShowCorrectAnswer(true);
+      return setShowCorrectAnswer(true);
+    }
+
     if (checkOptions[Number(values.option) - 1]) {
       setCorrectAnswer(
         _.findIndex(checkOptions, (option) => option === true) + 1
@@ -409,6 +409,7 @@ const SingleTest = () => {
       // If the answer in wrong, show the correct solution
       setShowSolution(true);
       setShowCorrectAnswer(true);
+
       toast(
         <div className="d-flex align-items-center">
           <span
