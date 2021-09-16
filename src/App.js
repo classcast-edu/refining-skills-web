@@ -36,7 +36,7 @@ const App = () => {
       <Toaster
         position="bottom-right"
         containerStyle={{
-          fontSize: 18,
+          fontSize: 20,
         }}
       />
       <Switch>

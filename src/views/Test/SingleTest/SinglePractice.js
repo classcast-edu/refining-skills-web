@@ -38,6 +38,12 @@ const wrongAnswerLottie = {
   },
 };
 
+const toastStyleCorrect = { border: "3px solid #00F85A" };
+
+const toastStyleWrong = {
+  border: "3px solid #FF5050",
+};
+
 const correctAnswerLottie = {
   loop: true,
   autoplay: true,
@@ -357,8 +363,9 @@ const SingleTest = () => {
             </span>
           </div>,
           {
+            style: toastStyleCorrect,
             icon: (
-              <Lottie options={correctAnswerLottie} height={60} width={60} />
+              <Lottie options={correctAnswerLottie} height={80} width={80} />
             ),
           }
         );
@@ -390,7 +397,8 @@ const SingleTest = () => {
           </span>
         </div>,
         {
-          icon: <Lottie options={correctAnswerLottie} height={60} width={60} />,
+          style: toastStyleCorrect,
+          icon: <Lottie options={correctAnswerLottie} height={80} width={80} />,
         }
       );
       // if (
@@ -412,7 +420,7 @@ const SingleTest = () => {
       //       </div>,
       //       {
       //         icon: (
-      //           <Lottie options={correctAnswerLottie} height={60} width={60} />
+      //           <Lottie options={correctAnswerLottie} height={80} width={80} />
       //         ),
       //       }
       //     );
@@ -448,7 +456,8 @@ const SingleTest = () => {
           </span>
         </div>,
         {
-          icon: <Lottie options={correctAnswerLottie} height={60} width={60} />,
+          style: toastStyleCorrect,
+          icon: <Lottie options={correctAnswerLottie} height={80} width={80} />,
         }
       );
       return setShowCorrectAnswer(true);
@@ -471,7 +480,8 @@ const SingleTest = () => {
           </span>
         </div>,
         {
-          icon: <Lottie options={wrongAnswerLottie} height={60} width={60} />,
+          icon: <Lottie options={wrongAnswerLottie} height={80} width={80} />,
+          style: toastStyleWrong,
         }
       );
     }
