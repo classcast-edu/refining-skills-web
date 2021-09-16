@@ -386,6 +386,7 @@ const SingleTest = () => {
     //then check it it's true since we get the option number from
     //values object which comes from formik valus.option
     setDisableSolutionButton(false);
+
     setCorrectAnswer(
       _.findIndex(checkOptions, (option) => option === true) + 1
     );
@@ -414,7 +415,7 @@ const SingleTest = () => {
             ),
           }
         );
-        console.log("CORRECT");
+        setShowSolution(true);
         return setShowCorrectAnswer(true);
       } else {
         submitProps.setErrors({ option: fillAnswer });
@@ -424,13 +425,15 @@ const SingleTest = () => {
         setShowCorrectAnswer(true);
       }
     }
-    console.log("QUESTION TYPE", question_type);
     if (
       question_type == QUESTION_TYPES.TRUE_FALSE && is_True
         ? "1" == answer
         : "2" == answer
+        ? question_type == QUESTION_TYPES.TRUE_FALSE
+          ? true
+          : false
+        : false
     ) {
-      console.log("TRUE/FALSE");
       playSound("correct");
       toast(
         <div className="d-flex align-items-center">
@@ -478,7 +481,6 @@ const SingleTest = () => {
     }
 
     if (question_type == QUESTION_TYPES.SUBJECTIVE) {
-      console.log("SUBJECTIVE");
       setShowSolution(true);
       setShowCorrectAnswer(true);
       return setShowCorrectAnswer(true);
@@ -488,8 +490,6 @@ const SingleTest = () => {
       setCorrectAnswer(
         _.findIndex(checkOptions, (option) => option === true) + 1
       );
-      setShowSolution(true);
-      setShowCorrectAnswer(true);
       playSound("correct");
       toast(
         <div className="d-flex align-items-center">
@@ -505,7 +505,23 @@ const SingleTest = () => {
           icon: <Lottie options={correctAnswerLottie} height={80} width={80} />,
         }
       );
-      return setShowCorrectAnswer(true);
+      setShowSolution(true);
+      setShowCorrectAnswer(true);
+      // playSound("correct");
+      // toast(
+      //   <div className="d-flex align-items-center">
+      //     <span
+      //       className="font-weight-bolder"
+      //       style={{ fontSize: "1.2em !important" }}
+      //     >
+      //       You got it; Keep it up
+      //     </span>
+      //   </div>,
+      //   {
+      //     style: toastStyleCorrect,
+      //     icon: <Lottie options={correctAnswerLottie} height={80} width={80} />,
+      //   }
+      // );
     } else {
       submitProps.setErrors({
         option:
@@ -550,19 +566,6 @@ const SingleTest = () => {
   const onCloseModal = () => setOpen(false);
   const [endTest, setEndTest] = useState(false);
   const [stopTime, setStopTime] = useState(false);
-
-  const checkString = (string) => {
-    let temp = string.split(/<img[^>]*>/);
-    for (var i = 1; i < temp.length; i += 2) {
-      temp[i] = (
-        <span className="match" key={i}>
-          {temp[i]}
-        </span>
-      );
-    }
-    console.log(temp);
-    return temp[0];
-  };
 
   useEffect(() => {
     if (endTest) {
@@ -712,14 +715,16 @@ const SingleTest = () => {
                     }
                   />
                 ) : (
-                  <FormikControl
-                    control="customRadio"
-                    name={"option"}
-                    options={options}
-                    showCorrectAnswer={showCorrectAnswer}
-                    correctAnswer={correctAnswer}
-                    // disabled={showCorrectAnswer}
-                  />
+                  <>
+                    <FormikControl
+                      control="customRadio"
+                      name={"option"}
+                      options={options}
+                      showCorrectAnswer={showCorrectAnswer}
+                      correctAnswer={correctAnswer}
+                      // disabled={showCorrectAnswer}
+                    />
+                  </>
                 )}
 
                 {showSolution && solution && (
@@ -750,10 +755,7 @@ const SingleTest = () => {
                   View Solution
                 </button> */}
                 {/* OutDated: if question type is not 1 then show next button */}
-                {console.log(
-                  "Current Question type :" +
-                    testData[currentQuestionIndex].question_type
-                )}
+
                 {showCorrectAnswer ||
                 ![...Object.values(QUESTION_TYPES), 1].includes(
                   Number(testData[currentQuestionIndex].question_type)
