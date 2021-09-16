@@ -1,6 +1,6 @@
 import FormikControl from "components/Formik/FormikControl";
 import { Form, Formik } from "formik";
-
+import parse, { attributesToProps } from "html-react-parser";
 import style from "./singleTest.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -22,6 +22,7 @@ import correctAnswerr from "assets/lottie/correct_answer.json";
 import correctAnswerAudio from "assets/audio/correct.mp3";
 import incorrectAnswerAudio from "assets/audio/incorrect.mp3";
 import submitAnswerAudio from "assets/audio/popup.mp3";
+import PinchZoomPan from "react-responsive-pinch-zoom-pan";
 
 const QUESTION_TYPES = {
   FILL: 4,
@@ -50,6 +51,27 @@ const correctAnswerLottie = {
   animationData: correctAnswerr,
   rendererSettings: {
     preserveAspectRatio: "xMidYMid slice",
+  },
+};
+
+const zoomOptions = {
+  replace: (domNode) => {
+    if (domNode.attribs && domNode.name === "img") {
+      const props = attributesToProps(domNode.attribs);
+      return (
+        <div style={{ position: "relative" }}>
+          <PinchZoomPan
+            doubleTapBehavior="reset"
+            position="center"
+            initialScale={1}
+            minScale={1}
+            maxScale={4}
+          >
+            <img {...props} />
+          </PinchZoomPan>
+        </div>
+      );
+    }
   },
 };
 
@@ -506,6 +528,19 @@ const SingleTest = () => {
   const [endTest, setEndTest] = useState(false);
   const [stopTime, setStopTime] = useState(false);
 
+  const checkString = (string) => {
+    let temp = string.split(/<img[^>]*>/);
+    for (var i = 1; i < temp.length; i += 2) {
+      temp[i] = (
+        <span className="match" key={i}>
+          {temp[i]}
+        </span>
+      );
+    }
+    console.log(temp);
+    return temp[0];
+  };
+
   useEffect(() => {
     if (endTest) {
       setStopTime(true);
@@ -628,12 +663,9 @@ const SingleTest = () => {
                   <span className={style.questionNumber}>
                     Q {currentQuestionIndex + 1}{" "}
                   </span>
-                  <span
-                    className={style.questionContentContainer}
-                    dangerouslySetInnerHTML={{
-                      __html: question,
-                    }}
-                  ></span>
+                  <span className={style.questionContentContainer}>
+                    {parse(question, zoomOptions)}
+                  </span>
                 </div>
                 {testData[currentQuestionIndex] &&
                 testData[currentQuestionIndex].question_type ==
@@ -670,12 +702,9 @@ const SingleTest = () => {
                 {showSolution && solution && (
                   <div className={style.solutionBox} ref={solutionRef}>
                     <h3 className={style.solutionText}>Solution</h3>
-                    <span
-                      className={style.solution}
-                      dangerouslySetInnerHTML={{
-                        __html: solution,
-                      }}
-                    ></span>
+                    <span className={style.solution}>
+                      {parse(solution, zoomOptions)}
+                    </span>
                   </div>
                 )}
               </div>
