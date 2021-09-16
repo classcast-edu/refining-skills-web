@@ -184,3 +184,23 @@
 .ml_1 {
   margin-left: 1em;
 }
+
+.toolBarContainer {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.zoomControlsStyles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  background-color: var(--primary);
+  color: white;
+  border: 1px solid var(--primary);
+  margin-right: 1em;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition: all 0.3s;
+}

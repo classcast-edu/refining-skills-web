@@ -22,7 +22,7 @@ import correctAnswerr from "assets/lottie/correct_answer.json";
 import correctAnswerAudio from "assets/audio/correct.mp3";
 import incorrectAnswerAudio from "assets/audio/incorrect.mp3";
 import submitAnswerAudio from "assets/audio/popup.mp3";
-import PinchZoomPan from "react-responsive-pinch-zoom-pan";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const QUESTION_TYPES = {
   FILL: 4,
@@ -60,15 +60,38 @@ const zoomOptions = {
       const props = attributesToProps(domNode.attribs);
       return (
         <div style={{ position: "relative" }}>
-          <PinchZoomPan
-            doubleTapBehavior="reset"
-            position="center"
-            initialScale={1}
-            minScale={1}
-            maxScale={4}
-          >
-            <img {...props} />
-          </PinchZoomPan>
+          <TransformWrapper initialScale={1}>
+            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+              <>
+                <div className={["tools", style.toolBarContainer].join(" ")}>
+                  <button
+                    type="button"
+                    className={style.zoomControlsStyles}
+                    onClick={() => zoomIn()}
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    className={style.zoomControlsStyles}
+                    onClick={() => zoomOut()}
+                  >
+                    -
+                  </button>
+                  {/* <button
+                    type="button"
+                    className={style.zoomControlsStyles}
+                    sonClick={() => resetTransform()}
+                  >
+                    x
+                  </button> */}
+                </div>
+                <TransformComponent>
+                  <img {...props} />
+                </TransformComponent>
+              </>
+            )}
+          </TransformWrapper>
         </div>
       );
     }
