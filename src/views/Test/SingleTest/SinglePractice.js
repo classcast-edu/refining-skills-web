@@ -19,6 +19,9 @@ import { toast } from "react-hot-toast";
 import Lottie from "react-lottie";
 import animationData from "assets/lottie/wrong_answer.json";
 import correctAnswerr from "assets/lottie/correct_answer.json";
+import correctAnswerAudio from "assets/audio/correct.mp3";
+import incorrectAnswerAudio from "assets/audio/incorrect.mp3";
+import submitAnswerAudio from "assets/audio/popup.mp3";
 
 const QUESTION_TYPES = {
   FILL: 4,
@@ -45,6 +48,10 @@ const correctAnswerLottie = {
 };
 
 const SingleTest = () => {
+  const correctAudio = new Audio(correctAnswerAudio);
+  const incorrectAudio = new Audio(incorrectAnswerAudio);
+  const submitAudio = new Audio(submitAnswerAudio);
+
   const { id, courseId, testId } = useParams();
 
   const timerClockRef = useRef(null);
@@ -133,6 +140,19 @@ const SingleTest = () => {
   }, [currentQuestionIndex]);
 
   const [studentTestData, setStudentTestData] = useState({});
+
+  const playSound = (type) => {
+    if (type === "correct") {
+      correctAudio.play();
+    }
+    if (type === "incorrect") {
+      incorrectAudio.play();
+    }
+    if (type === "submit") {
+      submitAudio.play();
+    }
+  };
+
   const handleStudentTestData = () => {
     const {
       question_type,
@@ -243,6 +263,7 @@ const SingleTest = () => {
 
   const changeQuestion = (value, answer, shouldNotScroll) => {
     if (currentQuestionIndex + value === testData.length) {
+      playSound("submit");
       return endTestHandler();
     }
 
@@ -325,6 +346,7 @@ const SingleTest = () => {
         submitProps.setErrors({
           option: fillAnswer,
         });
+        playSound("correct");
         toast(
           <div className="d-flex align-items-center">
             <span
@@ -357,6 +379,7 @@ const SingleTest = () => {
         : "2" == answer
     ) {
       console.log("TRUE/FALSE");
+      playSound("correct");
       toast(
         <div className="d-flex align-items-center">
           <span
@@ -414,6 +437,7 @@ const SingleTest = () => {
       );
       setShowSolution(true);
       setShowCorrectAnswer(true);
+      playSound("correct");
       toast(
         <div className="d-flex align-items-center">
           <span
@@ -436,7 +460,7 @@ const SingleTest = () => {
       // If the answer in wrong, show the correct solution
       setShowSolution(true);
       setShowCorrectAnswer(true);
-
+      playSound("incorrect");
       toast(
         <div className="d-flex align-items-center">
           <span
