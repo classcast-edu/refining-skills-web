@@ -23,6 +23,9 @@ import correctAnswerAudio from "assets/audio/correct.mp3";
 import incorrectAnswerAudio from "assets/audio/incorrect.mp3";
 import submitAnswerAudio from "assets/audio/popup.mp3";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+var visitedQuestions = [];
+var wasWrongAnswer = [];
+var solutionEnabled = [];
 
 const QUESTION_TYPES = {
   FILL: 4,
@@ -125,6 +128,7 @@ const SingleTest = () => {
   const [disableSolutionButton, setDisableSolutionButton] = useState(true);
   const [correctAnswer, setCorrectAnswer] = useState(null);
   const [disableCheck, setDisableCheck] = useState(false);
+  const [initialErrors, setInitialErrors] = useState(null);
   const [initialValues, setInitialValues] = useState({
     option:
       testData[currentQuestionIndex] &&
@@ -173,22 +177,74 @@ const SingleTest = () => {
   useEffect(() => {
     //if user has answered a question it is stored in an object
     //which is accessed whenever that question is again viewed
+    setCorrectAnswer(null);
+    setShowSolution(false);
+    setShowCorrectAnswer(false);
+    setInitialErrors(null);
     setInitialValues({
       option:
         testData[currentQuestionIndex] &&
         studentAnswers[Number(currentQuestionIndex)],
     });
-    setCorrectAnswer(null);
-    setShowCorrectAnswer(false);
+    if (visitedQuestions.includes(currentQuestionIndex)) {
+      // formikRef.current.setErrors({ options: 1 });
+
+      console.log("visitedQUestions", visitedQuestions);
+      console.log("Already visited Question");
+      const {
+        is_option_1_correct,
+        is_option_2_correct,
+        is_option_3_correct,
+        is_option_4_correct,
+        solution,
+      } = testData[currentQuestionIndex];
+
+      console.log(solution);
+
+      const checkOptions = [
+        is_option_1_correct,
+        is_option_2_correct,
+        is_option_3_correct,
+        is_option_4_correct,
+      ];
+
+      //same concept as pulling options
+      //we pull which options are correct arrange them in array
+      //then check it it's true since we get the option number from
+      //values object which comes from formik valus.option
+      setDisableSolutionButton(true);
+      setInitialValues({
+        option:
+          testData[currentQuestionIndex] &&
+          studentAnswers[Number(currentQuestionIndex)],
+      });
+
+      if (wasWrongAnswer.includes(currentQuestionIndex))
+        setInitialErrors({
+          option:
+            testData[currentQuestionIndex] &&
+            studentAnswers[Number(currentQuestionIndex)],
+        });
+
+      setCorrectAnswer(
+        _.findIndex(checkOptions, (option) => option === true) + 1
+      );
+      setSolution(solution);
+      setShowCorrectAnswer(true);
+      setShowSolution(true);
+    }
+    // setCorrectAnswer(null);
+    // setShowCorrectAnswer(false);
     if (
       testData[currentQuestionIndex] &&
       testData[currentQuestionIndex].question_type == QUESTION_TYPES.SUBJECTIVE
     ) {
       setDisableSolutionButton(false);
       setShowCorrectAnswer(true);
-    } else setDisableSolutionButton(true);
-    setShowSolution(false);
-  }, [currentQuestionIndex]);
+    }
+    // } else setDisableSolutionButton(true);
+    // setShowSolution(false);
+  }, [currentQuestionIndex, testData]);
 
   const [studentTestData, setStudentTestData] = useState({});
 
@@ -364,6 +420,8 @@ const SingleTest = () => {
     setStudentAnswers((ans) => {
       return { ...ans, [currentQuestionIndex]: Number(values.option) };
     });
+    console.log("VISI COUNT UPDATED");
+    visitedQuestions.push(currentQuestionIndex);
     const {
       is_True,
       fitb_correct,
@@ -528,6 +586,7 @@ const SingleTest = () => {
           question_type == QUESTION_TYPES.FILL ? fillAnswer : values.option,
       });
       // If the answer in wrong, show the correct solution
+      wasWrongAnswer.push(currentQuestionIndex);
       setShowSolution(true);
       setShowCorrectAnswer(true);
       playSound("incorrect");
@@ -651,10 +710,11 @@ const SingleTest = () => {
 
       <Formik
         initialValues={initialValues}
+        initialErrors={initialErrors}
         key={currentQuestionIndex}
         enableReinitialize
         onSubmit={onSubmit}
-        innerRef={formikRef}
+        ref={formikRef}
       >
         {(formik) => {
           return (
@@ -726,11 +786,12 @@ const SingleTest = () => {
                     />
                   </>
                 )}
-
+                {console.log("JSX SOLUTION", showSolution, solution)}
                 {showSolution && solution && (
                   <div className={style.solutionBox} ref={solutionRef}>
                     <h3 className={style.solutionText}>Solution</h3>
                     <span className={style.solution}>
+                      {console.log("SOLUTIOn")}
                       {parse(solution, zoomOptions)}
                     </span>
                   </div>
