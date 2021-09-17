@@ -10,7 +10,7 @@ import Lottie from "react-lottie";
 
 import axios from "axios";
 import Collapsible from "react-collapsible";
-import { FaBook, FaClipboardList, FaPlay } from "react-icons/fa";
+import { FaBook, FaClipboardList, FaPlay, FaDownload } from "react-icons/fa";
 import style from "./practiceBySubject.module.css";
 import { ReactComponent as ArrowRightCircleIcon } from "../../assets/subjects/ArrowRightCircle.svg";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
@@ -72,13 +72,52 @@ const CollapseContent = (props) => {
                   {parseInt(block_type) === 4 ? (
                     <FaClipboardList />
                   ) : (
-                    <span
+                    <div
                       style={{ marginRight: "1rem", verticalAlign: "bottom" }}
                     >
                       <FaBook />
-                    </span>
+                    </div>
                   )}
-                  {display_name}
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div> {display_name} </div>
+                    {parseInt(block_type) === 3 ? (
+                      <>
+                        {/* <span>
+                        <FaClipboardList />
+                      </span> */}
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            marginRight: "1em",
+                          }}
+                        >
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noreferrer"
+                            download
+                            style={{
+                              textDecoration: "none",
+                              color: "var(--info)",
+                            }}
+                          >
+                            <FaDownload />
+                          </a>
+                        </div>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </li>
               </>
             );
