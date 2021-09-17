@@ -188,9 +188,6 @@ const SingleTest = () => {
     });
     if (visitedQuestions.includes(currentQuestionIndex)) {
       // formikRef.current.setErrors({ options: 1 });
-
-      console.log("visitedQUestions", visitedQuestions);
-      console.log("Already visited Question");
       const {
         is_option_1_correct,
         is_option_2_correct,
@@ -200,8 +197,6 @@ const SingleTest = () => {
         question_type,
         fitb_correct,
       } = testData[currentQuestionIndex];
-
-      console.log(testData[currentQuestionIndex]);
 
       const checkOptions = [
         is_option_1_correct,
@@ -430,7 +425,6 @@ const SingleTest = () => {
     setStudentAnswers((ans) => {
       return { ...ans, [currentQuestionIndex]: Number(values.option) };
     });
-    console.log("VISI COUNT UPDATED");
     visitedQuestions.push(currentQuestionIndex);
     const {
       is_True,
@@ -488,7 +482,6 @@ const SingleTest = () => {
       } else {
         submitProps.setErrors({ option: fillAnswer });
         // If the answer in wrong, show the correct solution
-        console.log("ERROR FAILED");
         setShowSolution(true);
         setShowCorrectAnswer(true);
       }
@@ -796,12 +789,10 @@ const SingleTest = () => {
                     />
                   </>
                 )}
-                {console.log("JSX SOLUTION", showSolution, solution)}
                 {showSolution && solution && (
                   <div className={style.solutionBox} ref={solutionRef}>
                     <h3 className={style.solutionText}>Solution</h3>
                     <span className={style.solution}>
-                      {console.log("SOLUTIOn")}
                       {parse(solution, zoomOptions)}
                     </span>
                   </div>
