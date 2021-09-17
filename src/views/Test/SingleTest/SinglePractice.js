@@ -197,9 +197,11 @@ const SingleTest = () => {
         is_option_3_correct,
         is_option_4_correct,
         solution,
+        question_type,
+        fitb_correct,
       } = testData[currentQuestionIndex];
 
-      console.log(solution);
+      console.log(testData[currentQuestionIndex]);
 
       const checkOptions = [
         is_option_1_correct,
@@ -220,11 +222,19 @@ const SingleTest = () => {
       });
 
       if (wasWrongAnswer.includes(currentQuestionIndex))
-        setInitialErrors({
-          option:
-            testData[currentQuestionIndex] &&
-            studentAnswers[Number(currentQuestionIndex)],
-        });
+        if (Number(question_type) == QUESTION_TYPES.FILL) {
+          const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
+
+          setInitialErrors({
+            option: fillAnswer,
+          });
+        } else {
+          setInitialErrors({
+            option:
+              testData[currentQuestionIndex] &&
+              studentAnswers[Number(currentQuestionIndex)],
+          });
+        }
 
       setCorrectAnswer(
         _.findIndex(checkOptions, (option) => option === true) + 1
@@ -714,7 +724,7 @@ const SingleTest = () => {
         key={currentQuestionIndex}
         enableReinitialize
         onSubmit={onSubmit}
-        ref={formikRef}
+        innerRef={formikRef}
       >
         {(formik) => {
           return (
@@ -759,7 +769,7 @@ const SingleTest = () => {
                   <FormikControl
                     control="customInput"
                     name="option"
-                    disabled={showSolution}
+                    // disabled={showSolution}
                     showCorrectAnswer={showCorrectAnswer}
                     solution={testData[currentQuestionIndex].fitb_correct}
                   />
