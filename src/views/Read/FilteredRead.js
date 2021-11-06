@@ -134,23 +134,11 @@ const FilteredRead = () => {
   };
 
   const renderSubjects = () => {
-    const colors = [
-      "#ff8058",
-      "#ffb038",
-      "#49c0c1",
-      "#ff78a3",
-      // "#57628e",
-      "#f36450",
-      "#809900",
-      "#E6B3B3",
-      "#6680B3",
-      "#66991A",
-      "#FF99E6",
-      "#49c0c1",
-    ];
     return subjects.map(({ name, id, bgcolor }, index) => (
       <button
-        style={{ backgroundColor: colors[index] }}
+        style={{
+          backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+        }}
         key={id}
         className={styles.filterBySubjectButton}
         onClick={() => {
