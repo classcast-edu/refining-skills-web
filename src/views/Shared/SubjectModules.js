@@ -63,7 +63,7 @@ const CollapseContent = (props) => {
                     parseInt(block_type) === 4
                       ? history.push(`${match.url}/${url}`)
                       : history.push(
-                          `/admin/read/book?url=${encodeURIComponent(url)}`
+                          `/admin/test/read/book?url=${encodeURIComponent(url)}`
                         );
                   }}
                   key={chapter_id}
