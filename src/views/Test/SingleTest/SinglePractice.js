@@ -186,66 +186,78 @@ const SingleTest = () => {
         testData[currentQuestionIndex] &&
         studentAnswers[Number(currentQuestionIndex)],
     });
-    if (visitedQuestions.includes(currentQuestionIndex)) {
-      // formikRef.current.setErrors({ options: 1 });
-      const {
-        is_option_1_correct,
-        is_option_2_correct,
-        is_option_3_correct,
-        is_option_4_correct,
-        solution,
-        question_type,
-        fitb_correct,
-      } = testData[currentQuestionIndex];
 
-      const checkOptions = [
-        is_option_1_correct,
-        is_option_2_correct,
-        is_option_3_correct,
-        is_option_4_correct,
-      ];
+    if (currentQuestionIndex && testData.length > 0) {
+      if (visitedQuestions.includes(currentQuestionIndex)) {
+        // formikRef.current.setErrors({ options: 1 });
+        console.log(
+          "question index",
+          currentQuestionIndex,
+          testData[currentQuestionIndex]
+        );
+        const {
+          is_option_1_correct,
+          is_option_2_correct,
+          is_option_3_correct,
+          is_option_4_correct,
+          solution,
+          question_type,
+          fitb_correct,
+        } = testData[currentQuestionIndex];
 
-      //same concept as pulling options
-      //we pull which options are correct arrange them in array
-      //then check it it's true since we get the option number from
-      //values object which comes from formik valus.option
-      setDisableSolutionButton(true);
-      setInitialValues({
-        option:
-          testData[currentQuestionIndex] &&
-          studentAnswers[Number(currentQuestionIndex)],
-      });
+        const checkOptions = [
+          is_option_1_correct,
+          is_option_2_correct,
+          is_option_3_correct,
+          is_option_4_correct,
+        ];
 
-      if (wasWrongAnswer.includes(currentQuestionIndex))
-        if (Number(question_type) == QUESTION_TYPES.FILL) {
-          const fillAnswer = fitb_correct.trim().replace(".", "").toLowerCase();
+        //same concept as pulling options
+        //we pull which options are correct arrange them in array
+        //then check it it's true since we get the option number from
+        //values object which comes from formik valus.option
+        setDisableSolutionButton(true);
+        setInitialValues({
+          option:
+            testData[currentQuestionIndex] &&
+            studentAnswers[Number(currentQuestionIndex)],
+        });
 
-          setInitialErrors({
-            option: fillAnswer,
-          });
-        } else {
-          setInitialErrors({
-            option:
-              testData[currentQuestionIndex] &&
-              studentAnswers[Number(currentQuestionIndex)],
-          });
-        }
+        if (wasWrongAnswer.includes(currentQuestionIndex))
+          if (Number(question_type) == QUESTION_TYPES.FILL) {
+            const fillAnswer = fitb_correct
+              .trim()
+              .replace(".", "")
+              .toLowerCase();
 
-      setCorrectAnswer(
-        _.findIndex(checkOptions, (option) => option === true) + 1
-      );
-      setSolution(solution);
-      setShowCorrectAnswer(true);
-      setShowSolution(true);
-    }
-    // setCorrectAnswer(null);
-    // setShowCorrectAnswer(false);
-    if (
-      testData[currentQuestionIndex] &&
-      testData[currentQuestionIndex].question_type == QUESTION_TYPES.SUBJECTIVE
-    ) {
-      setDisableSolutionButton(false);
-      setShowCorrectAnswer(true);
+            setInitialErrors({
+              option: fillAnswer,
+            });
+          } else {
+            setInitialErrors({
+              option:
+                testData[currentQuestionIndex] &&
+                studentAnswers[Number(currentQuestionIndex)],
+            });
+          }
+
+        setCorrectAnswer(
+          _.findIndex(checkOptions, (option) => option === true) + 1
+        );
+        setSolution(solution);
+        setShowCorrectAnswer(true);
+        setShowSolution(true);
+      }
+      // setCorrectAnswer(null);
+      // setShowCorrectAnswer(false);
+      if (
+        testData[currentQuestionIndex] &&
+        testData[currentQuestionIndex].question_type ==
+          QUESTION_TYPES.SUBJECTIVE
+      ) {
+        setDisableSolutionButton(false);
+        setShowCorrectAnswer(true);
+      }
     }
     // } else setDisableSolutionButton(true);
     // setShowSolution(false);
